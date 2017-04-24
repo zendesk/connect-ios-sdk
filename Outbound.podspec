@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.homepage          = "http://www.outbound.io"
   s.license           = { :type => "Commercial", :text => "              All text and design is copyright © 2015 Outbound Solutions, Inc.\n\n              All rights reserved.\n\n              http://www.outbound.io\n" }
   s.author            = { "Dhruv Mehta" => "dhruv@outbound.io" }
-  s.source            = { :git => "https://github.com/outboundio/iOS.git", :tag => s.version.to_s }
+  s.source            = { :git => "git@github.com:outboundio/ios-sdk.git", :tag => s.version.to_s }
   s.social_media_url  = 'https://twitter.com/OutboundIO'
   s.documentation_url = 'https://github.com/outboundio/api'
 
