@@ -91,9 +91,9 @@
     if (config.fetchDate && [config.fetchDate compare:[NSDate dateWithTimeIntervalSinceNow:-600]] == NSOrderedDescending) {
         completion(config);
     } else {
-        [OBNetwork getPath:[NSString stringWithFormat:@"i/config/sdk/%@/%@", OBClientName, OBClientVersion] withAPIKey:[[OBMainController sharedInstance] apiKey] andCompletion:^(NSInteger statusCode, NSError *error, NSObject *response) {
-            if (!error && response) {
-                [config completeWithData:(NSDictionary *)response];
+        [OBNetwork getPath:[NSString stringWithFormat:@"i/config/sdk/%@/%@", OBClientName, OBClientVersion] withAPIKey:[[OBMainController sharedInstance] apiKey] andCompletion:^(id json, NSInteger statusCode, NSError *error) {
+            if (!error && json) {
+                [config completeWithData:(NSDictionary *)json];
                 config.fetchDate = [NSDate date];
                 [config save];
             }

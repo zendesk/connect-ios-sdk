@@ -10,7 +10,7 @@
 
 @implementation OBNetwork (UnitTests)
 
-+ (void)getPath:(NSString *)path withAPIKey:(NSString *)key andCompletion:(void (^)(NSInteger statusCode, NSError *error, NSObject *response))completion {
++ (void)getPath:(NSString *)path withAPIKey:(NSString *)key andCompletion:(void (^)(id json, NSInteger statusCode, NSError *error))completion {
     if ([path hasPrefix:@"i/config/sdk"]) {
         
         BOOL sdkEnabled = ![key isEqualToString:@"disabled"];

@@ -178,7 +178,7 @@
                                    [NSNumber numberWithInt:code], @"code",
                                    [[[OBMainController sharedInstance] config] pushToken], @"deviceToken",
                                    [[UIDevice currentDevice] name], @"deviceName", nil];
-    [OBNetwork postPath:@"i/testsend/push/pair/ios" withAPIKey:apikey parameters:params andCompletion:^(NSInteger statusCode, NSError *error, NSObject *response) {
+    [OBNetwork postPath:@"i/testsend/push/pair/ios" withAPIKey:apikey parameters:params andCompletion:^(id json, NSInteger statusCode, NSError *error) {
         if (statusCode == 200) {
             OBDebug(@"[OB] Correct code %d", code);
             self.subtitleLabel.text = @"Success!";

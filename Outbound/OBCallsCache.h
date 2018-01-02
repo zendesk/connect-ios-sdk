@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "OBReachability.h"
 
+typedef void (^OBAddCallCompletion)(BOOL success);
+
 /** 
  The OBCallsCache class is a cache layer that abstracts away the caching logic for Outbound API network calls. It monitors the device's network status and decides when to perform network requests and when to store them to disk. It also stores the user ID and the device's push token and adds them to request parameters when necessary.
  It conforms to the [NSCoding protocol](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/index.html) to be persisted to disk.
@@ -78,5 +80,7 @@
  @param parameters The call POST parameters.
  */
 - (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters;
+
+- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters completion:(nullable OBAddCallCompletion)completion;
 
 @end

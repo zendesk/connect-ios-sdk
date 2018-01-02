@@ -132,27 +132,36 @@
 // This function actually gets called from `application:didReceiveRemoteNotification:fetchCompletionHandler:`
 // which gets called twice. Once when the device receives the push notification (app.applicationState is `UIApplicationStateBackground`)
 // and then optionally asecond time if the user clicks the push notification (app.applicationState is `UIApplicationStateInactive`)
-+ (bool)isUninstallTracker:(NSDictionary *)userInfo {
++ (void)processNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBProcessNotificationCompletion)completion
+{
+    NSParameterAssert(completion != nil);
+
+    // All outbound push notifications, uninstall trackers, or otherwise have _oid.
+    if (![userInfo objectForKey:@"_oid"] && ![userInfo objectForKey:@"_otm"]) {
+        completion(NO, YES);
+        return;
+    }
+
     OBMainController *mc = [OBMainController sharedInstance];
     if (mc.config && [mc.config remoteKill]) {
         OBDebug(@"The SDK is disabled due to remote kill");
-        return false;
-    }
-    
-    // All outbound push notifications, uninstall trackers, or otherwise have _oid.
-    if (![userInfo objectForKey:@"_oid"] && ![userInfo objectForKey:@"_otm"]) {
-        return false;
+        completion(YES, YES);
+        return;
     }
 
-    UIApplication* app = [UIApplication sharedApplication];
+    UIApplication *app = [UIApplication sharedApplication];
     
     // Does the app still have permissions to receive and display
     // user visible notifications?
-    bool hasPushPermissions = true;
+    BOOL hasPushPermissions = YES;
     if ([app respondsToSelector:@selector(currentUserNotificationSettings)] &&
         [app currentUserNotificationSettings].types == UIUserNotificationTypeNone) {
-        hasPushPermissions = false;
+        hasPushPermissions = NO;
     }
+
+    void (^callCompleted)(BOOL) = ^(BOOL success) {
+        completion(YES, success);
+    };
 
     // Is this an uninstall tracker?
     if (userInfo[@"_ogp"]) {
@@ -162,41 +171,44 @@
         }
         
         if (!hasPushPermissions) {
-            [ret setValue:[NSNumber numberWithBool:YES] forKey:@"revoked"];
+            [ret setValue:@YES forKey:@"revoked"];
         }
         
         [mc checkForSdkInitAndExecute:^{
             // Tell the server that we received the uninstall tracker.
-            [mc.callsCache addCall:@"i/ios/uninstall_tracker" withParameters:ret];
+            [mc.callsCache addCall:@"i/ios/uninstall_tracker" withParameters:ret completion:callCompleted];
         }];
-        
-        return true;
-    } else if(([userInfo objectForKey:@"_oid"] || [userInfo objectForKey:@"_otm"]) && hasPushPermissions) {
+    } else if (hasPushPermissions) {
         // Any other push notification -- pingback
         
         [mc checkForSdkInitAndExecute:^{
-            // Check if the application was opened.
-            if (app.applicationState == UIApplicationStateInactive) {
+            switch (app.applicationState) {
+            case UIApplicationStateInactive:
                 // If the notification has a deeplink url, the we go there.
-                if (userInfo[@"_odl"]) {
+                if (userInfo[@"_odl"] != nil) {
                     NSURL *url = [NSURL URLWithString:userInfo[@"_odl"]];
-                    if ([app canOpenURL:url]) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if ([app canOpenURL:url]) {
                             [app openURL:url];
-                        });
-                    }
+                        }
+                    });
                 }
-                
-                [mc.callsCache addCall:@"i/ios/opened" withParameters:userInfo];
-            } else if(app.applicationState == UIApplicationStateBackground) {
+
+                [mc.callsCache addCall:@"i/ios/opened" withParameters:userInfo completion:callCompleted];
+
+                break;
+            case UIApplicationStateBackground:
                 // Push notification just received. App has not been opened yet.
-                [mc.callsCache addCall:@"i/ios/received" withParameters:userInfo];
+                [mc.callsCache addCall:@"i/ios/received" withParameters:userInfo completion:callCompleted];
+
+                break;
+            default:
+                completion(YES, NO);
+                break;
             }
         }];
-        
-        return false;
     } else {
-        return false;
+        completion(YES, NO);
     }
 }
 

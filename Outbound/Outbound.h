@@ -19,6 +19,8 @@
  about how they'll benefit from uploading a picture.
  */
 
+typedef void (^OBProcessNotificationCompletion)(BOOL didProcess, BOOL success);
+
 @interface Outbound : NSObject
 
 /**
@@ -127,6 +129,6 @@
  */
 + (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(NSDictionary *)groupAttributes andUserAttributes:(NSDictionary *)userAttributes;
 
-+ (bool)isUninstallTracker:(NSDictionary *)userInfo;
++ (void)processNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBProcessNotificationCompletion)completion;
 + (void)logout;
 @end

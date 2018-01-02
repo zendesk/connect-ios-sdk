@@ -208,6 +208,10 @@
 #pragma mark - Actions
 
 - (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters {
+    [self addCall:path withParameters:parameters completion:nil];
+}
+
+- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters completion:(OBAddCallCompletion)completion {
     OBDebug(@"Adding '%@' call", path);
     
     // Create call object
@@ -233,6 +237,10 @@
         // Network OK
         // Send the call right away
         [call sendCallWithCompletion:^(BOOL mustRetry) {
+            if (completion != nil) {
+                completion(!mustRetry);
+            }
+
             // The call failed
             // Store it and retry wih exponential back off
             if (mustRetry) {
