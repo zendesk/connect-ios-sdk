@@ -46,13 +46,6 @@
 
 #pragma mark - Helpers
 
-+ (NSString *)uuid {
-    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
-    NSString * uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
-    CFRelease(newUniqueId);
-    return uuidString;
-}
-
 + (NSMutableURLRequest *)requestWithPath:(NSString *)path APIKey:(NSString *)key {
     // Build endpoint URL
     NSString *url = [NSString stringWithFormat:@"%@/%@", OBServerUrl, path];
@@ -62,7 +55,7 @@
     // Set headers
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:key forHTTPHeaderField:@"X-Outbound-Key"];
-    [request setValue:[OBNetwork uuid] forHTTPHeaderField:@"X-Outbound-GUID"];
+    [request setValue:[NSUUID UUID].UUIDString forHTTPHeaderField:@"X-Outbound-GUID"];
     [request setValue:[NSString stringWithFormat:@"%@/%@", OBClientName, OBClientVersion] forHTTPHeaderField:@"X-Outbound-Client"];
     
     return request;

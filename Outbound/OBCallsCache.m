@@ -220,7 +220,7 @@
     } else {
         if (!self.tempUserId) {
             // Create temporary user ID
-            self.tempUserId = [OBNetwork uuid];
+            self.tempUserId = [[NSUUID UUID] UUIDString];
             [self saveCache];
         }
         
