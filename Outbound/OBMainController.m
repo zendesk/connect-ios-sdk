@@ -178,14 +178,18 @@
 
 - (void)registerDeviceToken:(NSData *)deviceToken {
     if (deviceToken && [deviceToken isKindOfClass:[NSData class]]) {
-        const unsigned *tokenBytes = [deviceToken bytes];
         NSString *stringToken;
         
         if (deviceToken) {
-            stringToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
-                           ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
-                           ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
-                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
+            NSMutableString *mutableStringToken = [[NSMutableString alloc] init];
+
+            [deviceToken enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
+                for (int i = 0; i < byteRange.length; i++) {
+                    [mutableStringToken appendFormat:@"%02x", ((uint8_t *)bytes)[i]];
+                }
+            }];
+
+            stringToken = [mutableStringToken copy];
         } else {
             stringToken = self.config.pushToken;
         }
