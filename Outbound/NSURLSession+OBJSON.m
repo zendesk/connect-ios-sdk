@@ -29,6 +29,3 @@
 }
 
 @end
-
-static void OBDebugRequest(NSURLRequest *request, NSInteger statusCode, NSError *error, id json) {
-}
