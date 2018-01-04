@@ -14,14 +14,14 @@
 @interface OBMainController () <UIAlertViewDelegate>
 
 /**-----------------------------------------------------------------------------
- * @name Private prrperties
+ * @name Private properties
  * -----------------------------------------------------------------------------
  */
 
 /**
  @abstract User has already been asked for permissions.
  */
-@property (nonatomic) bool askedForPrePermissions;
+@property (nonatomic) BOOL askedForPrePermissions;
 
 /**
  @abstract Blocks awating execution once the SDK is initialized.
@@ -145,7 +145,7 @@
             [self registerForPush];
         }
     }
-    self.askedForPrePermissions = true;
+    self.askedForPrePermissions = YES;
 }
 
 // Delegate method for the pre-permission alert dialog
@@ -171,8 +171,9 @@
             [app registerForRemoteNotificationTypes:
              UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
         }
+        
         [self.callsCache addCall:@"i/ios/permissions/requested" withParameters:nil];
-        self.config.hasBeenPrompted = true;
+        self.config.hasBeenPrompted = YES;
     }
 }
 

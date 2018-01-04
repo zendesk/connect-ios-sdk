@@ -103,20 +103,20 @@
     }
 }
 
-- (void)setHasBeenPrompted:(bool)hasBeenPrompted {
+- (void)setHasBeenPrompted:(BOOL)hasBeenPrompted {
     _hasBeenPrompted = hasBeenPrompted;
     [self save];
 }
 
-- (void)setGavePermission:(bool)gavePermission {
-    _hasBeenPrompted = true;
+- (void)setGavePermission:(BOOL)gavePermission {
+    _hasBeenPrompted = YES;
     _gavePermission = gavePermission;
     [self save];
 }
 
 - (void)setPushToken:(NSString *)pushToken {
-    _hasBeenPrompted = true;
-    _gavePermission = true;
+    _hasBeenPrompted = YES;
+    _gavePermission = YES;
     _pushToken = pushToken;
     [self save];
 }
