@@ -123,12 +123,21 @@
     } else {
         // Otherwise create an empty cache
         cache = [[OBCallsCache alloc] init];
-        cache.calls = [NSMutableArray array];
     }
     
-    // Start Reachability notifier
-    [cache setup];
     return cache;
+}
+
+- (instancetype)init {
+    self = [super init];
+
+    if (self) {
+        _calls = [NSMutableArray array];
+
+        [self setup];
+    }
+
+    return self;
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -140,6 +149,8 @@
         _calls = [NSMutableArray arrayWithArray:[coder decodeObjectForKey:OBCacheCalls]];
         
         OBDebug(@"Loaded cache (%@ saved calls)", @([_calls count]));
+
+        [self setup];
     }
     return self;
 }

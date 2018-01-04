@@ -10,6 +10,8 @@
 #import "Outbound.h"
 #import "OBReachability.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** 
  The OBCallsCache class is a cache layer that abstracts away the caching logic for Outbound API network calls. It monitors the device's network status and decides when to perform network requests and when to store them to disk. It also stores the user ID and the device's push token and adds them to request parameters when necessary.
  It conforms to the [NSCoding protocol](https://developer.apple.com/library/mac/documentation/Cocoa/Reference/Foundation/Protocols/NSCoding_Protocol/index.html) to be persisted to disk.
@@ -29,7 +31,7 @@
  
  userId is persisted to the cache file so that it is available on subsequent app launches.
 */
-@property (nonatomic) NSString *userId;
+@property (nullable, nonatomic) NSString *userId;
 
 /**
  @abstract A temporary user ID created by the SDK to track calls before a user is identified.
@@ -37,7 +39,7 @@
  
  tempUserId is persisted to the cache file so that it is available on subsequent app launches.
  */
-@property (nonatomic) NSString *tempUserId;
+@property (nullable, nonatomic) NSString *tempUserId;
 
 /**
  @abstract The current user's iOS push notification token.
@@ -45,7 +47,7 @@
  
  pushToken is persisted to the cache file so that it is available on subsequent app launches.
  */
-@property (nonatomic) NSString *pushToken;
+@property (nullable, nonatomic) NSString *pushToken;
 
 /**
  @abstract A list of stored calls that haven't been performed yet.
@@ -83,3 +85,5 @@
 - (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters completion:(nullable OBOperationCompletion)completion;
 
 @end
+
+NS_ASSUME_NONNULL_END
