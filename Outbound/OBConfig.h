@@ -42,9 +42,7 @@
  */
 @property (nonatomic) NSDictionary* prePrompt;
 
-@property (nonatomic) BOOL hasBeenPrompted;
-@property (nonatomic) BOOL gavePermission;
-@property (nonatomic) NSString* pushToken;
+@property (nonatomic, copy) NSString* pushToken;
 @property (nonatomic) BOOL remoteKill;
 
 /**

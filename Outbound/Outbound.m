@@ -41,6 +41,10 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
             params[@"timezone"] = [[NSTimeZone systemTimeZone] name];
             [mc.callsCache addCall:@"v2/identify" withParameters:params];
         }
+
+        if (mc.config.promptAtInstall) {
+            [mc promptForPermissions];
+        }
     }];
 }
 
@@ -62,6 +66,10 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 
     [mc checkForSdkInitAndExecute:^{
         [mc.callsCache addCall:@"v2/identify" withParameters:attributes];
+
+        if (mc.config.promptAtInstall) {
+            [mc promptForPermissions];
+        }
     }];
 }
 
@@ -102,9 +110,9 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 + (void)disableDeviceToken {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        if (mc.callsCache.pushToken) {
-            [mc.callsCache addCall:@"v2/apns/disable" withParameters:@{@"token": mc.callsCache.pushToken}];
-            mc.callsCache.pushToken = nil;
+        if (mc.config.pushToken != nil) {
+            [mc.callsCache addCall:@"v2/apns/disable" withParameters:@{@"token": mc.config.pushToken}];
+            mc.config.pushToken = nil;
         }
     }];
 }

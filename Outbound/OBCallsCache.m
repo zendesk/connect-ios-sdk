@@ -145,7 +145,6 @@
     if (self) {
         _userId = [coder decodeObjectForKey:OBCacheUser];
         _tempUserId = [coder decodeObjectForKey:OBCacheTempUser];
-        _pushToken = [coder decodeObjectForKey:OBCacheToken];
         _calls = [NSMutableArray arrayWithArray:[coder decodeObjectForKey:OBCacheCalls]];
         
         OBDebug(@"Loaded cache (%@ saved calls)", @([_calls count]));
@@ -158,7 +157,6 @@
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.userId forKey:OBCacheUser];
     [coder encodeObject:self.tempUserId forKey:OBCacheTempUser];
-    [coder encodeObject:self.pushToken forKey:OBCacheToken];
     [coder encodeObject:self.calls forKey:OBCacheCalls];
 }
 
@@ -314,12 +312,6 @@
     }
     
     _userId = newUserId;
-    [self saveCache];
-}
-
-- (void)setPushToken:(NSString *)pushToken {
-    OBDebug(@"Setting push token %@", pushToken);
-    _pushToken = pushToken;
     [self saveCache];
 }
 

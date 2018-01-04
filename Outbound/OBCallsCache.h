@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  pushToken is persisted to the cache file so that it is available on subsequent app launches.
  */
-@property (nullable, nonatomic) NSString *pushToken;
+//@property (nullable, nonatomic) NSString *pushToken;
 
 /**
  @abstract A list of stored calls that haven't been performed yet.
@@ -80,9 +80,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param path The path or the API endpoint. Possible paths as defined by the [Outbound API](https://github.com/outboundio/api) are `identify`, `track`, `apns/register`, `apns/disable`.
  @param parameters The call POST parameters.
  */
-- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters;
+- (void)addCall:(NSString *)path withParameters:(nullable NSDictionary *)parameters;
 
-- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters completion:(nullable OBOperationCompletion)completion;
+- (void)addCall:(NSString *)path withParameters:(nullable NSDictionary *)parameters completion:(nullable OBOperationCompletion)completion;
 
 @end
 

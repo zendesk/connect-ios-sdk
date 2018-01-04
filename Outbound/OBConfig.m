@@ -9,9 +9,6 @@
 #import "OBConfig.h"
 #import "OBNetwork.h"
 
-#define kHasBeenPrompted @"hasBeenPrompted"
-#define kGavePermission  @"gavePermission"
-#define kPushToken       @"pushToken"
 #define kFetchDate       @"fetchDate"
 #define kPromptEvent     @"promptEvent"
 #define kPrePrompt       @"prePrompt"
@@ -48,10 +45,7 @@
 }
 
 - (void)encodeWithCoder: (NSCoder*) encoder {
-    [encoder encodeBool:self.hasBeenPrompted forKey:kHasBeenPrompted];
-    [encoder encodeBool:self.gavePermission forKey:kGavePermission];
     [encoder encodeBool:self.remoteKill forKey:kRemoteKill];
-    [encoder encodeObject:self.pushToken forKey:kPushToken];
     [encoder encodeObject:self.fetchDate forKey:kFetchDate];
     [encoder encodeObject:self.promptAtEvent forKey:kPromptEvent];
     [encoder encodeObject:self.prePrompt forKey:kPrePrompt];
@@ -62,10 +56,7 @@
 - (id)initWithCoder: (NSCoder*) decoder {
     self = [super init];
     if (self) {
-        self.hasBeenPrompted = [decoder decodeBoolForKey:kHasBeenPrompted];
-        self.gavePermission = [decoder decodeBoolForKey:kGavePermission];
         self.remoteKill = [decoder decodeBoolForKey:kRemoteKill];
-        self.pushToken = [decoder decodeObjectForKey:kPushToken];
         self.fetchDate = [decoder decodeObjectForKey:kFetchDate];
         self.promptAtEvent = [decoder decodeObjectForKey:kPromptEvent];
         self.prePrompt = [decoder decodeObjectForKey:kPrePrompt];
@@ -101,24 +92,6 @@
             completion(config);
         }];
     }
-}
-
-- (void)setHasBeenPrompted:(BOOL)hasBeenPrompted {
-    _hasBeenPrompted = hasBeenPrompted;
-    [self save];
-}
-
-- (void)setGavePermission:(BOOL)gavePermission {
-    _hasBeenPrompted = YES;
-    _gavePermission = gavePermission;
-    [self save];
-}
-
-- (void)setPushToken:(NSString *)pushToken {
-    _hasBeenPrompted = YES;
-    _gavePermission = YES;
-    _pushToken = pushToken;
-    [self save];
 }
 
 + (NSString *)configFilePath {
