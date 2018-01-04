@@ -19,6 +19,7 @@
  about how they'll benefit from uploading a picture.
  */
 
+#import <Foundation/Foundation.h>
 #import <UserNotifications/UserNotifications.h>
 
 typedef void (^OBOperationCompletion)(BOOL success);

@@ -123,6 +123,7 @@
         if (!self.executeAfterInit) {
             self.executeAfterInit = [NSMutableArray array];
         }
+        
         [self.executeAfterInit addObject:block];
     }
 }
@@ -180,7 +181,10 @@
              UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
         }
         
-        [self.callsCache addCall:@"i/ios/permissions/requested" withParameters:nil];
+        [self checkForSdkInitAndExecute:^{
+            [self.callsCache addCall:@"i/ios/permissions/requested" withParameters:nil];
+        }];
+        
         self.config.hasBeenPrompted = YES;
     }
 }

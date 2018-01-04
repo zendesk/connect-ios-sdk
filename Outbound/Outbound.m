@@ -28,7 +28,7 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 }
 
 + (void)setDebug:(BOOL)debug {
-    [[OBMainController sharedInstance] setDebug:debug];
+    [OBMainController sharedInstance].debug = debug;
 }
 
 + (void)identifyUserWithId:(NSString *)userId attributes:(NSDictionary *)attributes {
@@ -59,7 +59,10 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
     if (prevId) {
         [attributes setValue:prevId forKey:@"previous_id"];
     }
-    [mc.callsCache addCall:@"v2/identify" withParameters:attributes];
+
+    [mc checkForSdkInitAndExecute:^{
+        [mc.callsCache addCall:@"v2/identify" withParameters:attributes];
+    }];
 }
 
 + (void)trackEvent:(NSString *)event withProperties:(NSDictionary *)properties {
@@ -85,14 +88,14 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 
 + (void)registerDeviceToken:(NSData *)deviceToken {
     OBMainController *mainController = [OBMainController sharedInstance];
-    [mainController checkForSdkInitAndExecute:^{
-        [self getNotificationAuthorizationStatusWithCompletion:^(BOOL isAuthorized) {
-            // We want to send the token to Outbound only if the user gives permissions. If they don't
-            // the token will still come through for "background app refresh", but it's not a real token.
-            if (isAuthorized) {
+    [self getNotificationAuthorizationStatusWithCompletion:^(BOOL isAuthorized) {
+        // We want to send the token to Outbound only if the user gives permissions. If they don't
+        // the token will still come through for "background app refresh", but it's not a real token.
+        if (isAuthorized) {
+            [mainController checkForSdkInitAndExecute:^{
                 [mainController registerDeviceToken:deviceToken];
-            }
-        }];
+            }];
+        }
     }];
 }
 
@@ -141,11 +144,15 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 
 + (void)handleDeepLinkForNotificationUserInfo:(NSDictionary *)userInfo completion:(void (^)(BOOL success))completion {
     NSURL *deepLinkURL = [NSURL URLWithString:userInfo[OBNotificationUserInfoKeyDeepLink]];
-    
+
     if (deepLinkURL != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([[UIApplication sharedApplication] canOpenURL:deepLinkURL]) {
-                [[UIApplication sharedApplication] openURL:deepLinkURL];
+                if (@available(iOS 10.0, *)) {
+                    [[UIApplication sharedApplication] openURL:deepLinkURL options:@{} completionHandler:nil];
+                } else {
+                    [[UIApplication sharedApplication] openURL:deepLinkURL];
+                }
             }
         });
     }
@@ -163,10 +170,14 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
             });
         }];
     } else if (@available(iOS 8.0, *)) {
-        UIUserNotificationSettings *notificationSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
-        completion(notificationSettings.types != UIUserNotificationTypeNone);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIUserNotificationSettings *notificationSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
+            completion(notificationSettings.types != UIUserNotificationTypeNone);
+        });
     } else {
-        completion(YES);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(YES);
+        });
     }
 }
 
@@ -210,7 +221,7 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
     OBMainController *mainController = [OBMainController sharedInstance];
 
     NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
-    NSString *identifier = userInfo[@"_oid"];
+    NSString *identifier = userInfo[OBNotificationUserInfoKeyIdentifier];
 
     if (identifier != nil) {
         metadata[@"i"] = identifier;
@@ -228,27 +239,30 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 
 
 + (void)handleStandardNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBOperationCompletion)completion {
-    switch ([UIApplication sharedApplication].applicationState) {
-        case UIApplicationStateActive:
-            completion(NO);
-            break;
-        case UIApplicationStateInactive:
-            if (@available(iOS 10.0, *)) {} else {
-                [self handleDeepLinkForNotificationUserInfo:userInfo completion:completion];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch ([UIApplication sharedApplication].applicationState) {
+            case UIApplicationStateActive:
+                completion(YES);
+                break;
+            case UIApplicationStateInactive:
+                if (@available(iOS 10.0, *)) {
+                } else {
+                    [self handleDeepLinkForNotificationUserInfo:userInfo completion:completion];
+                    break;
+                }
+
+            case UIApplicationStateBackground: {
+                OBMainController *mainController = [OBMainController sharedInstance];
+
+                 // Push notification just received. App has not been opened yet.
+                [mainController checkForSdkInitAndExecute:^{
+                    [mainController.callsCache addCall:@"i/ios/received" withParameters:userInfo completion:completion];
+                }];
+
                 break;
             }
-
-        case UIApplicationStateBackground: {
-            OBMainController *mainController = [OBMainController sharedInstance];
-
-            // Push notification just received. App has not been opened yet.
-            [mainController checkForSdkInitAndExecute:^{
-                [mainController.callsCache addCall:@"i/ios/received" withParameters:userInfo completion:completion];
-            }];
-
-            break;
         }
-    }
+    });
 }
 
 + (void)logout {

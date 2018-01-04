@@ -136,7 +136,7 @@ static NSString * const kBackgroundURLSessionIdentifier = @"io.outbound.urlsessi
 
     if (request != nil) {
         NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] ob_jsonDataTaskForRequest:request completion:^(id json, NSURLResponse *response, NSError *error) {
-            NSParameterAssert([response isKindOfClass:[NSHTTPURLResponse class]]);
+            NSParameterAssert(response == nil || [response isKindOfClass:[NSHTTPURLResponse class]]);
 
             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
             [self debugRequest:request withStatusCode:httpResponse.statusCode error:error andJson:json];
@@ -146,8 +146,9 @@ static NSString * const kBackgroundURLSessionIdentifier = @"io.outbound.urlsessi
 
         [dataTask resume];
     } else {
+        [self debugRequest:request withStatusCode:0 error:error andJson:nil];
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self debugRequest:request withStatusCode:0 error:error andJson:nil];
             completion(nil, 0, error);
         });
     }
