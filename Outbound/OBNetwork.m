@@ -114,7 +114,7 @@ static NSString * const kBackgroundURLSessionIdentifier = @"io.outbound.urlsessi
 
     NSURLRequest *request = [self requestWithPath:path APIKey:key];
     NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] ob_jsonDataTaskForRequest:request completion:^(id json, NSURLResponse *response, NSError *error) {
-        NSParameterAssert([response isKindOfClass:[NSHTTPURLResponse class]]);
+        NSParameterAssert(response == nil || [response isKindOfClass:[NSHTTPURLResponse class]]);
 
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         [self debugRequest:request withStatusCode:httpResponse.statusCode error:error andJson:json];

@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Outbound.io. All rights reserved.
 //
 
+#import <UserNotifications/UserNotifications.h>
+
 #import "OBMainController.h"
 #import "OBPopupWindow.h"
 #import "OBAdminViewController.h"
@@ -159,15 +161,21 @@
 // Display the actual iOS prompt to ask permission for push notifications
 - (void)registerForPush {
     if (!self.config.hasBeenPrompted) {
-        UIApplication* app = [UIApplication sharedApplication];
-        if ([app respondsToSelector:@selector(registerForRemoteNotifications)]) {
-            // iOS 8+
+        UIApplication *app = [UIApplication sharedApplication];
+
+        if(@available(iOS 10.0, *)) {
+            UNAuthorizationOptions authorizationOptions = UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionCarPlay;
+            [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authorizationOptions completionHandler:^(__unused BOOL granted, __unused NSError *error) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [app registerForRemoteNotifications];
+                });
+            }];
+        } else if (@available(iOS 8.0, *)) {
             UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
             UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
             [app registerUserNotificationSettings:settings];
             [app registerForRemoteNotifications];
         } else {
-            // iOS < 8
             [app registerForRemoteNotificationTypes:
              UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
         }

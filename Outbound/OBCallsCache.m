@@ -211,7 +211,7 @@
     [self addCall:path withParameters:parameters completion:nil];
 }
 
-- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters completion:(OBAddCallCompletion)completion {
+- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters completion:(OBOperationCompletion)completion {
     OBDebug(@"Adding '%@' call", path);
     
     // Create call object

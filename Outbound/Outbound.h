@@ -19,7 +19,9 @@
  about how they'll benefit from uploading a picture.
  */
 
-typedef void (^OBProcessNotificationCompletion)(BOOL didProcess, BOOL success);
+#import <UserNotifications/UserNotifications.h>
+
+typedef void (^OBOperationCompletion)(BOOL success);
 
 @interface Outbound : NSObject
 
@@ -129,6 +131,8 @@ typedef void (^OBProcessNotificationCompletion)(BOOL didProcess, BOOL success);
  */
 + (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(NSDictionary *)groupAttributes andUserAttributes:(NSDictionary *)userAttributes;
 
-+ (void)processNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBProcessNotificationCompletion)completion;
++ (BOOL)isUninstallTracker:(NSDictionary *)userInfo;
++ (void)handleNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBOperationCompletion)completion;
++ (void)handleNotificationResponse:(UNNotificationResponse *)response;
 + (void)logout;
 @end
