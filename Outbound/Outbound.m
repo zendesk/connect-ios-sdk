@@ -34,13 +34,10 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 + (void)identifyUserWithId:(NSString *)userId attributes:(NSDictionary *)attributes {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        // Checking for class is important here because pointers are integers
-        if (userId && [userId isKindOfClass:[NSString class]]) {
-            NSMutableDictionary* params = [NSMutableDictionary dictionaryWithDictionary:attributes];
-            mc.callsCache.userId = userId;
-            params[@"timezone"] = [[NSTimeZone systemTimeZone] name];
-            [mc.callsCache addCall:@"v2/identify" withParameters:params];
-        }
+        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithDictionary:attributes];
+        mc.callsCache.userId = userId;
+        params[@"timezone"] = [[NSTimeZone systemTimeZone] name];
+        [mc.callsCache addCall:@"v2/identify" withParameters:params];
 
         if (mc.config.promptAtInstall) {
             [mc promptForPermissions];
@@ -76,20 +73,17 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 + (void)trackEvent:(NSString *)event withProperties:(NSDictionary *)properties {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        // Make sure a valid string event was passed
-        if (event && [event isKindOfClass:[NSString class]]) {
-            // Create the params dict for the API call with the event and its properties
-            NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-            parameters[@"event"] = event;
-            if (properties && [properties isKindOfClass:[NSDictionary class]]) {
-                parameters[@"properties"] = properties;
-            }
-            [mc.callsCache addCall:@"v2/track" withParameters:parameters];
-            
-            // Ask for push notification permissions if appropriate.
-            if (mc.config.promptAtEvent && [mc.config.promptAtEvent isEqualToString:event]) {
-                [mc promptForPermissions];
-            }
+        // Create the params dict for the API call with the event and its properties
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        parameters[@"event"] = event;
+        if (properties && [properties isKindOfClass:[NSDictionary class]]) {
+            parameters[@"properties"] = properties;
+        }
+        [mc.callsCache addCall:@"v2/track" withParameters:parameters];
+
+        // Ask for push notification permissions if appropriate.
+        if (mc.config.promptAtEvent && [mc.config.promptAtEvent isEqualToString:event]) {
+            [mc promptForPermissions];
         }
     }];
 }
@@ -120,25 +114,23 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 + (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(NSDictionary *)groupAttributes andUserAttributes:(NSDictionary *)userAttributes {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        if (groupId && [groupId isKindOfClass:[NSString class]] && userId && [userId isKindOfClass:[NSString class]]) {
-            // Create the params dict for the API call with the group ID, its attributes, and user attributes
-            // The user ID is added separately by OBCallsCache when necessary
-            NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-            parameters[@"group_id"] = groupId;
-            if (groupAttributes && [groupAttributes isKindOfClass:[NSDictionary class]]) {
-                parameters[@"group_attributes"] = groupAttributes;
-            }
-            
-            if (userAttributes && [userAttributes isKindOfClass:[NSDictionary class]]) {
-                parameters[@"attributes"] = [NSMutableDictionary dictionaryWithDictionary:userAttributes];
-            } else {
-                parameters[@"attributes"] = [NSMutableDictionary dictionary];
-            }
-            parameters[@"attributes"][@"timezone"] = [[NSTimeZone systemTimeZone] name];
-            
-            mc.callsCache.userId = userId;
-            [mc.callsCache addCall:@"v2/identify" withParameters:parameters];
+        // Create the params dict for the API call with the group ID, its attributes, and user attributes
+        // The user ID is added separately by OBCallsCache when necessary
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        parameters[@"group_id"] = groupId;
+        if (groupAttributes && [groupAttributes isKindOfClass:[NSDictionary class]]) {
+            parameters[@"group_attributes"] = groupAttributes;
         }
+
+        if (userAttributes && [userAttributes isKindOfClass:[NSDictionary class]]) {
+            parameters[@"attributes"] = [NSMutableDictionary dictionaryWithDictionary:userAttributes];
+        } else {
+            parameters[@"attributes"] = [NSMutableDictionary dictionary];
+        }
+        parameters[@"attributes"][@"timezone"] = [[NSTimeZone systemTimeZone] name];
+
+        mc.callsCache.userId = userId;
+        [mc.callsCache addCall:@"v2/identify" withParameters:parameters];
     }];
 }
 

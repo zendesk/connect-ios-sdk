@@ -147,10 +147,7 @@ static NSString * const kBackgroundURLSessionIdentifier = @"io.outbound.urlsessi
         [dataTask resume];
     } else {
         [self debugRequest:request withStatusCode:0 error:error andJson:nil];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completion(nil, 0, error);
-        });
+        completion(nil, 0, error);
     }
 }
 
