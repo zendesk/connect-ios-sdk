@@ -82,7 +82,7 @@
 
 /**
  @abstract Write the cached properties to the cache file.
- @discussion Cached properties are: userId, tempUserId, pushToken, calls.
+ @discussion Cached properties are: userId, tempUserId, calls.
  */
 - (void)saveCache;
 

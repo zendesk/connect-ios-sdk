@@ -82,10 +82,6 @@
                 // Initialize calls cache
                 self.callsCache = [OBCallsCache callsCache];
 
-                if (self.config.promptAtInstall) {
-                    [self promptForPermissions];
-                }
-
                 // Admin panel gesture
                 [self setupAdminGesture];
                 
@@ -134,15 +130,13 @@
     // in the new session and we wouldn't have push token because
     // application:didRegisterForRemoteNotification: would not have been called in this
     // session as well. So, we check if we already have permissions.
-    if (self.config.pushToken == nil) {
-        if (self.config.prePrompt && !self.askedForPrePermissions) {
+    if (self.config.prePrompt && !self.askedForPrePermissions) {
             // Display the pre-permission prompt
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:self.config.prePrompt[@"title"], OBClientName] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];   This is risky because it relies on the fact the the user-defined string "title" contains a %@ format, otherwise app will crash.
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.config.prePrompt[@"title"] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];
-            [alert show];
-        } else {
-            [self registerForPush];
-        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.config.prePrompt[@"title"] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];
+        [alert show];
+    } else {
+        [self registerForPush];
     }
 
     self.askedForPrePermissions = YES;

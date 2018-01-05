@@ -9,6 +9,7 @@
 #import "OBConfig.h"
 #import "OBNetwork.h"
 
+#define kPushToken       @"pushToken"
 #define kFetchDate       @"fetchDate"
 #define kPromptEvent     @"promptEvent"
 #define kPrePrompt       @"prePrompt"
@@ -46,6 +47,7 @@
 
 - (void)encodeWithCoder: (NSCoder*) encoder {
     [encoder encodeBool:self.remoteKill forKey:kRemoteKill];
+    [encoder encodeObject:self.pushToken forKey:kPushToken];
     [encoder encodeObject:self.fetchDate forKey:kFetchDate];
     [encoder encodeObject:self.promptAtEvent forKey:kPromptEvent];
     [encoder encodeObject:self.prePrompt forKey:kPrePrompt];
@@ -56,12 +58,13 @@
 - (id)initWithCoder: (NSCoder*) decoder {
     self = [super init];
     if (self) {
-        self.remoteKill = [decoder decodeBoolForKey:kRemoteKill];
-        self.fetchDate = [decoder decodeObjectForKey:kFetchDate];
-        self.promptAtEvent = [decoder decodeObjectForKey:kPromptEvent];
-        self.prePrompt = [decoder decodeObjectForKey:kPrePrompt];
-        self.promptForPermission = [decoder decodeBoolForKey:kPrompt];
-        self.promptAtInstall = [decoder decodeBoolForKey:kPromptInstall];
+        _remoteKill = [decoder decodeBoolForKey:kRemoteKill];
+        _fetchDate = [decoder decodeObjectForKey:kFetchDate];
+        _promptAtEvent = [decoder decodeObjectForKey:kPromptEvent];
+        _prePrompt = [decoder decodeObjectForKey:kPrePrompt];
+        _pushToken = [decoder decodeObjectForKey:kPushToken];
+        _promptForPermission = [decoder decodeBoolForKey:kPrompt];
+        _promptAtInstall = [decoder decodeBoolForKey:kPromptInstall];
     }
     return self;
 }
@@ -97,6 +100,11 @@
 + (NSString *)configFilePath {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     return [documentsPath stringByAppendingPathComponent:@"outbound.config"];
+}
+
+- (void)setPushToken:(NSString *)pushToken {
+    _pushToken = pushToken;
+    [self save];
 }
 
 @end

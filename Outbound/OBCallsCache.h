@@ -42,14 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic) NSString *tempUserId;
 
 /**
- @abstract The current user's iOS push notification token.
- @discussion We are storing this token after Outbound -registerDeviceToken: method is called so that we can disable this token when Outbound -disableDeviceToken is called without requiring the token to be passed again. Therefore the developer doesn't need to store the token solely for Outbound's purposes.
- 
- pushToken is persisted to the cache file so that it is available on subsequent app launches.
- */
-//@property (nullable, nonatomic) NSString *pushToken;
-
-/**
  @abstract A list of stored calls that haven't been performed yet.
  @discussion If the host app makes a request using the SDK but network connections are not avaiable, the
  request is stored in this array
