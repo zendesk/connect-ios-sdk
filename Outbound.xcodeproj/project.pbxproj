@@ -22,6 +22,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		03E54CB91FFC51DC0093217E /* NSURLSession+OBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E54CB71FFC51DC0093217E /* NSURLSession+OBJSON.h */; };
+		03E54CBA1FFC51DC0093217E /* NSURLSession+OBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E54CB81FFC51DC0093217E /* NSURLSession+OBJSON.m */; };
 		EB0BC9D11AE9804D002E2C5A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5ED0A81AE7EC3200839AA9 /* AudioToolbox.framework */; };
 		EB0BC9D21AE9804D002E2C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD90F5F1AE58C3E008B4149 /* Foundation.framework */; };
 		EB0BC9D31AE9804D002E2C5A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD90F631AE58C86008B4149 /* SystemConfiguration.framework */; };
@@ -98,6 +100,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03E54CB71FFC51DC0093217E /* NSURLSession+OBJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+OBJSON.h"; sourceTree = "<group>"; };
+		03E54CB81FFC51DC0093217E /* NSURLSession+OBJSON.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+OBJSON.m"; sourceTree = "<group>"; };
 		EB0BC9E21AE983D6002E2C5A /* OBCallTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBCallTests.m; sourceTree = "<group>"; };
 		EB0BC9E51AE987C6002E2C5A /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
 		EB0BC9E61AE987C6002E2C5A /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
@@ -287,6 +291,8 @@
 				EBD90F5B1AE564D4008B4149 /* OBCall.m */,
 				EBB25DEC1AE4465B0058917B /* OBNetwork.h */,
 				EBB25DED1AE4465B0058917B /* OBNetwork.m */,
+				03E54CB71FFC51DC0093217E /* NSURLSession+OBJSON.h */,
+				03E54CB81FFC51DC0093217E /* NSURLSession+OBJSON.m */,
 				EBB25DF51AE455740058917B /* OBReachability.h */,
 				EBB25DF61AE455740058917B /* OBReachability.m */,
 			);
@@ -375,6 +381,7 @@
 				EB5F73531AEDB02B0090A8D7 /* OBPopupWindow.h in Headers */,
 				EB5F73551AEDB02B0090A8D7 /* OBWindow.h in Headers */,
 				EB6132551B3380DF008F03DC /* OBDigitField.h in Headers */,
+				03E54CB91FFC51DC0093217E /* NSURLSession+OBJSON.h in Headers */,
 				EBB25DE51AE3FBB60058917B /* Outbound.h in Headers */,
 				FC612FF11B31AE92008E88B5 /* OBConfig.h in Headers */,
 				EBB25DF71AE455740058917B /* OBReachability.h in Headers */,
@@ -498,6 +505,7 @@
 				EB5F735D1AEDB13F0090A8D7 /* OBAdminViewController.m in Sources */,
 				EBDD8AF11AE2B3210032826A /* Outbound.m in Sources */,
 				EBB25DF31AE446770058917B /* OBCallsCache.m in Sources */,
+				03E54CBA1FFC51DC0093217E /* NSURLSession+OBJSON.m in Sources */,
 				EB5F73581AEDB02B0090A8D7 /* OBPopupRootViewController.m in Sources */,
 				FC612FF31B342586008E88B5 /* OBConfig.m in Sources */,
 				EBD90F5D1AE564D4008B4149 /* OBCall.m in Sources */,
@@ -654,7 +662,6 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Outbound/Outbound-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-fembed-bitcode";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -670,7 +677,6 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Outbound/Outbound-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-fembed-bitcode";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -698,7 +704,7 @@
 					"$(PROJECT_DIR)/OutboundTests/OCMock/include",
 				);
 				INFOPLIST_FILE = OutboundTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -731,7 +737,7 @@
 					"$(PROJECT_DIR)/OutboundTests/OCMock/include",
 				);
 				INFOPLIST_FILE = OutboundTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

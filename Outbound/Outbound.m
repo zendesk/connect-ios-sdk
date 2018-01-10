@@ -10,29 +10,37 @@
 #import "OBMainController.h"
 #import "OBCallsCache.h"
 
+#import <UserNotifications/UserNotifications.h>
+
+static NSString * const OBNotificationUserInfoKeyIdentifier = @"_oid";
+static NSString * const OBNotificationUserInfoKeyOTM = @"_otm";
+static NSString * const OBNotificationUserInfoKeyDeepLink = @"_odl";
+static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
+
 /**
  This class is the public interface of the Outbound SDK.
  */
 @implementation Outbound
 
-+ (void)initWithPrivateKey:(NSString *)apiKey{
++ (void)initWithPrivateKey:(NSString *)apiKey {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc initWithPrivateKey:apiKey];
 }
 
 + (void)setDebug:(BOOL)debug {
-    [[OBMainController sharedInstance] setDebug:debug];
+    [OBMainController sharedInstance].debug = debug;
 }
 
 + (void)identifyUserWithId:(NSString *)userId attributes:(NSDictionary *)attributes {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        // Checking for class is important here because pointers are integers
-        if (userId && [userId isKindOfClass:[NSString class]]) {
-            NSMutableDictionary* params = [NSMutableDictionary dictionaryWithDictionary:attributes];
-            mc.callsCache.userId = userId;
-            params[@"timezone"] = [[NSTimeZone systemTimeZone] name];
-            [mc.callsCache addCall:@"v2/identify" withParameters:params];
+        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithDictionary:attributes];
+        mc.callsCache.userId = userId;
+        params[@"timezone"] = [[NSTimeZone systemTimeZone] name];
+        [mc.callsCache addCall:@"v2/identify" withParameters:params];
+
+        if (mc.config.promptAtInstall) {
+            [mc promptForPermissions];
         }
     }];
 }
@@ -52,44 +60,43 @@
     if (prevId) {
         [attributes setValue:prevId forKey:@"previous_id"];
     }
-    [mc.callsCache addCall:@"v2/identify" withParameters:attributes];
+
+    [mc checkForSdkInitAndExecute:^{
+        [mc.callsCache addCall:@"v2/identify" withParameters:attributes];
+
+        if (mc.config.promptAtInstall) {
+            [mc promptForPermissions];
+        }
+    }];
 }
 
 + (void)trackEvent:(NSString *)event withProperties:(NSDictionary *)properties {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        // Make sure a valid string event was passed
-        if (event && [event isKindOfClass:[NSString class]]) {
-            // Create the params dict for the API call with the event and its properties
-            NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-            parameters[@"event"] = event;
-            if (properties && [properties isKindOfClass:[NSDictionary class]]) {
-                parameters[@"properties"] = properties;
-            }
-            [mc.callsCache addCall:@"v2/track" withParameters:parameters];
-            
-            // Ask for push notification permissions if appropriate.
-            if (mc.config.promptAtEvent && [mc.config.promptAtEvent isEqualToString:event]) {
-                [mc promptForPermissions];
-            }
+        // Create the params dict for the API call with the event and its properties
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        parameters[@"event"] = event;
+        if (properties && [properties isKindOfClass:[NSDictionary class]]) {
+            parameters[@"properties"] = properties;
+        }
+        [mc.callsCache addCall:@"v2/track" withParameters:parameters];
+
+        // Ask for push notification permissions if appropriate.
+        if (mc.config.promptAtEvent && [mc.config.promptAtEvent isEqualToString:event]) {
+            [mc promptForPermissions];
         }
     }];
 }
 
 + (void)registerDeviceToken:(NSData *)deviceToken {
-    OBMainController *mc = [OBMainController sharedInstance];
-    [mc checkForSdkInitAndExecute:^{
+    OBMainController *mainController = [OBMainController sharedInstance];
+    [self getNotificationAuthorizationStatusWithCompletion:^(BOOL isAuthorized) {
         // We want to send the token to Outbound only if the user gives permissions. If they don't
         // the token will still come through for "background app refresh", but it's not a real token.
-        bool hasPushPermissions = true;
-        UIApplication *app = [UIApplication sharedApplication];
-        if ([app respondsToSelector:@selector(currentUserNotificationSettings)] &&
-            [app currentUserNotificationSettings].types == UIUserNotificationTypeNone) {
-            hasPushPermissions = false;
-        }
-        
-        if (hasPushPermissions) {
-            [mc registerDeviceToken:deviceToken];
+        if (isAuthorized) {
+            [mainController checkForSdkInitAndExecute:^{
+                [mainController registerDeviceToken:deviceToken];
+            }];
         }
     }];
 }
@@ -97,9 +104,9 @@
 + (void)disableDeviceToken {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        if (mc.callsCache.pushToken) {
-            [mc.callsCache addCall:@"v2/apns/disable" withParameters:@{@"token": mc.callsCache.pushToken}];
-            mc.callsCache.pushToken = nil;
+        if (mc.config.pushToken != nil) {
+            [mc.callsCache addCall:@"v2/apns/disable" withParameters:@{@"token": mc.config.pushToken}];
+            mc.config.pushToken = nil;
         }
     }];
 }
@@ -107,97 +114,155 @@
 + (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(NSDictionary *)groupAttributes andUserAttributes:(NSDictionary *)userAttributes {
     OBMainController *mc = [OBMainController sharedInstance];
     [mc checkForSdkInitAndExecute:^{
-        if (groupId && [groupId isKindOfClass:[NSString class]] && userId && [userId isKindOfClass:[NSString class]]) {
-            // Create the params dict for the API call with the group ID, its attributes, and user attributes
-            // The user ID is added separately by OBCallsCache when necessary
-            NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-            parameters[@"group_id"] = groupId;
-            if (groupAttributes && [groupAttributes isKindOfClass:[NSDictionary class]]) {
-                parameters[@"group_attributes"] = groupAttributes;
-            }
-            
-            if (userAttributes && [userAttributes isKindOfClass:[NSDictionary class]]) {
-                parameters[@"attributes"] = [NSMutableDictionary dictionaryWithDictionary:userAttributes];
-            } else {
-                parameters[@"attributes"] = [NSMutableDictionary dictionary];
-            }
-            parameters[@"attributes"][@"timezone"] = [[NSTimeZone systemTimeZone] name];
-            
-            mc.callsCache.userId = userId;
-            [mc.callsCache addCall:@"v2/identify" withParameters:parameters];
+        // Create the params dict for the API call with the group ID, its attributes, and user attributes
+        // The user ID is added separately by OBCallsCache when necessary
+        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+        parameters[@"group_id"] = groupId;
+        if (groupAttributes && [groupAttributes isKindOfClass:[NSDictionary class]]) {
+            parameters[@"group_attributes"] = groupAttributes;
         }
+
+        if (userAttributes && [userAttributes isKindOfClass:[NSDictionary class]]) {
+            parameters[@"attributes"] = [NSMutableDictionary dictionaryWithDictionary:userAttributes];
+        } else {
+            parameters[@"attributes"] = [NSMutableDictionary dictionary];
+        }
+        parameters[@"attributes"][@"timezone"] = [[NSTimeZone systemTimeZone] name];
+
+        mc.callsCache.userId = userId;
+        [mc.callsCache addCall:@"v2/identify" withParameters:parameters];
     }];
+}
+
++ (void)handleNotificationResponse:(UNNotificationResponse *)response {
+    NSParameterAssert(response != nil);
+
+    if ([response.actionIdentifier isEqualToString:UNNotificationDefaultActionIdentifier]) {
+        [self handleDeepLinkForNotificationUserInfo:response.notification.request.content.userInfo completion:nil];
+    }
+}
+
++ (void)handleDeepLinkForNotificationUserInfo:(NSDictionary *)userInfo completion:(void (^)(BOOL success))completion {
+    NSURL *deepLinkURL = [NSURL URLWithString:userInfo[OBNotificationUserInfoKeyDeepLink]];
+
+    if (deepLinkURL != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[UIApplication sharedApplication] canOpenURL:deepLinkURL]) {
+                if (@available(iOS 10.0, *)) {
+                    [[UIApplication sharedApplication] openURL:deepLinkURL options:@{} completionHandler:nil];
+                } else {
+                    [[UIApplication sharedApplication] openURL:deepLinkURL];
+                }
+            }
+        });
+    }
+
+    [[OBMainController sharedInstance] checkForSdkInitAndExecute:^{
+        [[OBMainController sharedInstance].callsCache addCall:@"i/ios/opened" withParameters:userInfo completion:completion];
+    }];
+}
+
++ (void)getNotificationAuthorizationStatusWithCompletion:(void (^)(BOOL isAuthorized))completion {
+    if (@available(iOS 10.0, *)) {
+        [[UNUserNotificationCenter currentNotificationCenter] getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings *settings) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completion(settings.authorizationStatus == UNAuthorizationStatusAuthorized);
+            });
+        }];
+    } else if (@available(iOS 8.0, *)) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIUserNotificationSettings *notificationSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
+            completion(notificationSettings.types != UIUserNotificationTypeNone);
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(YES);
+        });
+    }
+}
+
++ (BOOL)isUninstallTracker:(NSDictionary *)userInfo {
+    return userInfo[OBNotificationUserInfoKeyOGP] != nil;
 }
 
 // This function actually gets called from `application:didReceiveRemoteNotification:fetchCompletionHandler:`
 // which gets called twice. Once when the device receives the push notification (app.applicationState is `UIApplicationStateBackground`)
 // and then optionally asecond time if the user clicks the push notification (app.applicationState is `UIApplicationStateInactive`)
-+ (bool)isUninstallTracker:(NSDictionary *)userInfo {
++ (void)handleNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBOperationCompletion)completion
+{
+    NSParameterAssert(userInfo != nil);
+    NSParameterAssert(completion != nil);
+
+    // All outbound push notifications, uninstall trackers, or otherwise have _oid.
+    if (userInfo[OBNotificationUserInfoKeyIdentifier] == nil && userInfo[OBNotificationUserInfoKeyOTM] == nil) {
+        completion(YES);
+        return;
+    }
+
     OBMainController *mc = [OBMainController sharedInstance];
     if (mc.config && [mc.config remoteKill]) {
         OBDebug(@"The SDK is disabled due to remote kill");
-        return false;
+        completion(YES);
+        return;
     }
     
-    // All outbound push notifications, uninstall trackers, or otherwise have _oid.
-    if (![userInfo objectForKey:@"_oid"] && ![userInfo objectForKey:@"_otm"]) {
-        return false;
+    [self getNotificationAuthorizationStatusWithCompletion:^(BOOL isAuthorized) {
+        if ([self isUninstallTracker:userInfo]) {
+            [self handleUninstallTrackerNotificationWithUserInfo:userInfo isAuthorized:isAuthorized completion:completion];
+        } else if (isAuthorized) {
+            [self handleStandardNotificationWithUserInfo:userInfo completion:completion];
+        } else {
+            completion(YES);
+        }
+    }];
+}
+
++ (void)handleUninstallTrackerNotificationWithUserInfo:(NSDictionary *)userInfo isAuthorized:(BOOL)isAuthorized completion:(OBOperationCompletion)completion {
+    OBMainController *mainController = [OBMainController sharedInstance];
+
+    NSMutableDictionary *metadata = [NSMutableDictionary dictionary];
+    NSString *identifier = userInfo[OBNotificationUserInfoKeyIdentifier];
+
+    if (identifier != nil) {
+        metadata[@"i"] = identifier;
     }
 
-    UIApplication* app = [UIApplication sharedApplication];
-    
-    // Does the app still have permissions to receive and display
-    // user visible notifications?
-    bool hasPushPermissions = true;
-    if ([app respondsToSelector:@selector(currentUserNotificationSettings)] &&
-        [app currentUserNotificationSettings].types == UIUserNotificationTypeNone) {
-        hasPushPermissions = false;
+    if (!isAuthorized) {
+        metadata[@"revoked"] = @YES;
     }
 
-    // Is this an uninstall tracker?
-    if (userInfo[@"_ogp"]) {
-        NSMutableDictionary *ret = [NSMutableDictionary dictionary];
-        if ([userInfo objectForKey:@"_oid"]) {
-            [ret setObject:userInfo[@"_oid"] forKey:@"i"];
-        }
-        
-        if (!hasPushPermissions) {
-            [ret setValue:[NSNumber numberWithBool:YES] forKey:@"revoked"];
-        }
-        
-        [mc checkForSdkInitAndExecute:^{
-            // Tell the server that we received the uninstall tracker.
-            [mc.callsCache addCall:@"i/ios/uninstall_tracker" withParameters:ret];
-        }];
-        
-        return true;
-    } else if(([userInfo objectForKey:@"_oid"] || [userInfo objectForKey:@"_otm"]) && hasPushPermissions) {
-        // Any other push notification -- pingback
-        
-        [mc checkForSdkInitAndExecute:^{
-            // Check if the application was opened.
-            if (app.applicationState == UIApplicationStateInactive) {
-                // If the notification has a deeplink url, the we go there.
-                if (userInfo[@"_odl"]) {
-                    NSURL *url = [NSURL URLWithString:userInfo[@"_odl"]];
-                    if ([app canOpenURL:url]) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [app openURL:url];
-                        });
-                    }
+    [mainController checkForSdkInitAndExecute:^{
+        // Tell the server that we received the uninstall tracker.
+        [mainController.callsCache addCall:@"i/ios/uninstall_tracker" withParameters:metadata completion:completion];
+    }];
+}
+
+
++ (void)handleStandardNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBOperationCompletion)completion {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch ([UIApplication sharedApplication].applicationState) {
+            case UIApplicationStateActive:
+                completion(YES);
+                break;
+            case UIApplicationStateInactive:
+                if (@available(iOS 10.0, *)) {
+                } else {
+                    [self handleDeepLinkForNotificationUserInfo:userInfo completion:completion];
+                    break;
                 }
-                
-                [mc.callsCache addCall:@"i/ios/opened" withParameters:userInfo];
-            } else if(app.applicationState == UIApplicationStateBackground) {
-                // Push notification just received. App has not been opened yet.
-                [mc.callsCache addCall:@"i/ios/received" withParameters:userInfo];
+
+            case UIApplicationStateBackground: {
+                OBMainController *mainController = [OBMainController sharedInstance];
+
+                 // Push notification just received. App has not been opened yet.
+                [mainController checkForSdkInitAndExecute:^{
+                    [mainController.callsCache addCall:@"i/ios/received" withParameters:userInfo completion:completion];
+                }];
+
+                break;
             }
-        }];
-        
-        return false;
-    } else {
-        return false;
-    }
+        }
+    });
 }
 
 + (void)logout {
@@ -205,4 +270,5 @@
     mc.callsCache.userId = @"";
     mc.callsCache.tempUserId = @"";
 }
+
 @end

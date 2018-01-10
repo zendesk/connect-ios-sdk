@@ -19,6 +19,13 @@
  about how they'll benefit from uploading a picture.
  */
 
+#import <Foundation/Foundation.h>
+#import <UserNotifications/UserNotifications.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^OBOperationCompletion)(BOOL success);
+
 @interface Outbound : NSObject
 
 /**
@@ -62,7 +69,7 @@
 - attributes: { } An optional dictionary of free-form properties you want
  to track for the user. It may contain nested fields and fields can be of any type.
  */
-+ (void)identifyUserWithId:(NSString *)userId attributes:(NSDictionary *)attributes;
++ (void)identifyUserWithId:(NSString *)userId attributes:(nullable NSDictionary *)attributes;
 
 /**
  @abstract Alias the current user to another a new user id.
@@ -91,7 +98,7 @@
  a property of the "signup" event and photo resolution could be a property of 
  the "upload a picture" event.
  */
-+ (void)trackEvent:(NSString *)event withProperties:(NSDictionary *)properties;
++ (void)trackEvent:(NSString *)event withProperties:(nullable NSDictionary *)properties;
 
 /**
  @abstract If you want your app to send push notifications, you can register the device token 
@@ -125,8 +132,12 @@
  @param userAttributes A dictionary of attributes associated with the user. See
  -identifyUserWithId:attributes:
  */
-+ (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(NSDictionary *)groupAttributes andUserAttributes:(NSDictionary *)userAttributes;
++ (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(nullable NSDictionary *)groupAttributes andUserAttributes:(nullable NSDictionary *)userAttributes;
 
-+ (bool)isUninstallTracker:(NSDictionary *)userInfo;
++ (BOOL)isUninstallTracker:(NSDictionary *)userInfo;
++ (void)handleNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBOperationCompletion)completion;
++ (void)handleNotificationResponse:(UNNotificationResponse *)response;
 + (void)logout;
 @end
+
+NS_ASSUME_NONNULL_END

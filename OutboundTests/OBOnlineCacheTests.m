@@ -39,9 +39,9 @@
     // Mock network, make it return 500s
     id mockClient = [OCMockObject mockForClass:[OBNetwork class]];
     [[[mockClient expect] andDo:^(NSInvocation *invocation) {
-        void (^completion)(NSInteger statusCode, NSError *error, NSObject *response) = nil;
+        void (^completion)(id json, NSInteger statusCode, NSError *error) = nil;
         [invocation getArgument:&completion atIndex:5];
-        completion(500, [NSError errorWithDomain:@"mock" code:500 userInfo:@{}], nil);
+        completion(nil, 500, [NSError errorWithDomain:@"mock" code:500 userInfo:@{}]);
     }] postPath:[OCMArg any] withAPIKey:[OCMArg any] parameters:[OCMArg any] andCompletion:[OCMArg any]];
     
     // Start SDK

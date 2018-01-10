@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Outbound.h"
 #import "OBReachability.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 /** 
  The OBCallsCache class is a cache layer that abstracts away the caching logic for Outbound API network calls. It monitors the device's network status and decides when to perform network requests and when to store them to disk. It also stores the user ID and the device's push token and adds them to request parameters when necessary.
@@ -28,7 +31,7 @@
  
  userId is persisted to the cache file so that it is available on subsequent app launches.
 */
-@property (nonatomic) NSString *userId;
+@property (nullable, nonatomic) NSString *userId;
 
 /**
  @abstract A temporary user ID created by the SDK to track calls before a user is identified.
@@ -36,15 +39,7 @@
  
  tempUserId is persisted to the cache file so that it is available on subsequent app launches.
  */
-@property (nonatomic) NSString *tempUserId;
-
-/**
- @abstract The current user's iOS push notification token.
- @discussion We are storing this token after Outbound -registerDeviceToken: method is called so that we can disable this token when Outbound -disableDeviceToken is called without requiring the token to be passed again. Therefore the developer doesn't need to store the token solely for Outbound's purposes.
- 
- pushToken is persisted to the cache file so that it is available on subsequent app launches.
- */
-@property (nonatomic) NSString *pushToken;
+@property (nullable, nonatomic) NSString *tempUserId;
 
 /**
  @abstract A list of stored calls that haven't been performed yet.
@@ -77,6 +72,10 @@
  @param path The path or the API endpoint. Possible paths as defined by the [Outbound API](https://github.com/outboundio/api) are `identify`, `track`, `apns/register`, `apns/disable`.
  @param parameters The call POST parameters.
  */
-- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters;
+- (void)addCall:(NSString *)path withParameters:(nullable NSDictionary *)parameters;
+
+- (void)addCall:(NSString *)path withParameters:(nullable NSDictionary *)parameters completion:(nullable OBOperationCompletion)completion;
 
 @end
+
+NS_ASSUME_NONNULL_END

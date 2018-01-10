@@ -82,7 +82,7 @@
 
 /**
  @abstract Write the cached properties to the cache file.
- @discussion Cached properties are: userId, tempUserId, pushToken, calls.
+ @discussion Cached properties are: userId, tempUserId, calls.
  */
 - (void)saveCache;
 
@@ -123,12 +123,21 @@
     } else {
         // Otherwise create an empty cache
         cache = [[OBCallsCache alloc] init];
-        cache.calls = [NSMutableArray array];
     }
     
-    // Start Reachability notifier
-    [cache setup];
     return cache;
+}
+
+- (instancetype)init {
+    self = [super init];
+
+    if (self) {
+        _calls = [NSMutableArray array];
+
+        [self setup];
+    }
+
+    return self;
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -136,10 +145,11 @@
     if (self) {
         _userId = [coder decodeObjectForKey:OBCacheUser];
         _tempUserId = [coder decodeObjectForKey:OBCacheTempUser];
-        _pushToken = [coder decodeObjectForKey:OBCacheToken];
         _calls = [NSMutableArray arrayWithArray:[coder decodeObjectForKey:OBCacheCalls]];
         
         OBDebug(@"Loaded cache (%@ saved calls)", @([_calls count]));
+
+        [self setup];
     }
     return self;
 }
@@ -147,7 +157,6 @@
 - (void)encodeWithCoder:(NSCoder *)coder {
     [coder encodeObject:self.userId forKey:OBCacheUser];
     [coder encodeObject:self.tempUserId forKey:OBCacheTempUser];
-    [coder encodeObject:self.pushToken forKey:OBCacheToken];
     [coder encodeObject:self.calls forKey:OBCacheCalls];
 }
 
@@ -208,6 +217,10 @@
 #pragma mark - Actions
 
 - (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters {
+    [self addCall:path withParameters:parameters completion:nil];
+}
+
+- (void)addCall:(NSString *)path withParameters:(NSDictionary *)parameters completion:(OBOperationCompletion)completion {
     OBDebug(@"Adding '%@' call", path);
     
     // Create call object
@@ -220,7 +233,7 @@
     } else {
         if (!self.tempUserId) {
             // Create temporary user ID
-            self.tempUserId = [OBNetwork uuid];
+            self.tempUserId = [[NSUUID UUID] UUIDString];
             [self saveCache];
         }
         
@@ -233,6 +246,10 @@
         // Network OK
         // Send the call right away
         [call sendCallWithCompletion:^(BOOL mustRetry) {
+            if (completion != nil) {
+                completion(!mustRetry);
+            }
+
             // The call failed
             // Store it and retry wih exponential back off
             if (mustRetry) {
@@ -295,12 +312,6 @@
     }
     
     _userId = newUserId;
-    [self saveCache];
-}
-
-- (void)setPushToken:(NSString *)pushToken {
-    OBDebug(@"Setting push token %@", pushToken);
-    _pushToken = pushToken;
     [self saveCache];
 }
 

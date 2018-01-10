@@ -9,8 +9,6 @@
 #import "OBConfig.h"
 #import "OBNetwork.h"
 
-#define kHasBeenPrompted @"hasBeenPrompted"
-#define kGavePermission  @"gavePermission"
 #define kPushToken       @"pushToken"
 #define kFetchDate       @"fetchDate"
 #define kPromptEvent     @"promptEvent"
@@ -48,8 +46,6 @@
 }
 
 - (void)encodeWithCoder: (NSCoder*) encoder {
-    [encoder encodeBool:self.hasBeenPrompted forKey:kHasBeenPrompted];
-    [encoder encodeBool:self.gavePermission forKey:kGavePermission];
     [encoder encodeBool:self.remoteKill forKey:kRemoteKill];
     [encoder encodeObject:self.pushToken forKey:kPushToken];
     [encoder encodeObject:self.fetchDate forKey:kFetchDate];
@@ -62,15 +58,13 @@
 - (id)initWithCoder: (NSCoder*) decoder {
     self = [super init];
     if (self) {
-        self.hasBeenPrompted = [decoder decodeBoolForKey:kHasBeenPrompted];
-        self.gavePermission = [decoder decodeBoolForKey:kGavePermission];
-        self.remoteKill = [decoder decodeBoolForKey:kRemoteKill];
-        self.pushToken = [decoder decodeObjectForKey:kPushToken];
-        self.fetchDate = [decoder decodeObjectForKey:kFetchDate];
-        self.promptAtEvent = [decoder decodeObjectForKey:kPromptEvent];
-        self.prePrompt = [decoder decodeObjectForKey:kPrePrompt];
-        self.promptForPermission = [decoder decodeBoolForKey:kPrompt];
-        self.promptAtInstall = [decoder decodeBoolForKey:kPromptInstall];
+        _remoteKill = [decoder decodeBoolForKey:kRemoteKill];
+        _fetchDate = [decoder decodeObjectForKey:kFetchDate];
+        _promptAtEvent = [decoder decodeObjectForKey:kPromptEvent];
+        _prePrompt = [decoder decodeObjectForKey:kPrePrompt];
+        _pushToken = [decoder decodeObjectForKey:kPushToken];
+        _promptForPermission = [decoder decodeBoolForKey:kPrompt];
+        _promptAtInstall = [decoder decodeBoolForKey:kPromptInstall];
     }
     return self;
 }
@@ -91,9 +85,9 @@
     if (config.fetchDate && [config.fetchDate compare:[NSDate dateWithTimeIntervalSinceNow:-600]] == NSOrderedDescending) {
         completion(config);
     } else {
-        [OBNetwork getPath:[NSString stringWithFormat:@"i/config/sdk/%@/%@", OBClientName, OBClientVersion] withAPIKey:[[OBMainController sharedInstance] apiKey] andCompletion:^(NSInteger statusCode, NSError *error, NSObject *response) {
-            if (!error && response) {
-                [config completeWithData:(NSDictionary *)response];
+        [OBNetwork getPath:[NSString stringWithFormat:@"i/config/sdk/%@/%@", OBClientName, OBClientVersion] withAPIKey:[[OBMainController sharedInstance] apiKey] andCompletion:^(id json, NSInteger statusCode, NSError *error) {
+            if (!error && json) {
+                [config completeWithData:(NSDictionary *)json];
                 config.fetchDate = [NSDate date];
                 [config save];
             }
@@ -103,27 +97,14 @@
     }
 }
 
-- (void)setHasBeenPrompted:(bool)hasBeenPrompted {
-    _hasBeenPrompted = hasBeenPrompted;
-    [self save];
-}
-
-- (void)setGavePermission:(bool)gavePermission {
-    _hasBeenPrompted = true;
-    _gavePermission = gavePermission;
-    [self save];
-}
-
-- (void)setPushToken:(NSString *)pushToken {
-    _hasBeenPrompted = true;
-    _gavePermission = true;
-    _pushToken = pushToken;
-    [self save];
-}
-
 + (NSString *)configFilePath {
     NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     return [documentsPath stringByAppendingPathComponent:@"outbound.config"];
+}
+
+- (void)setPushToken:(NSString *)pushToken {
+    _pushToken = pushToken;
+    [self save];
 }
 
 @end

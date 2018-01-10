@@ -99,7 +99,7 @@
     [OBNetwork postPath:self.path
              withAPIKey:[[OBMainController sharedInstance] apiKey]
              parameters:mutableParams
-          andCompletion:^(NSInteger statusCode, NSError *error, NSObject *response) {
+          andCompletion:^(id json, NSInteger statusCode, NSError *error) {
               
               // Check for response status code and set mustRetry parameter accordingly
               completion(statusCode == 0 || statusCode >= 500);

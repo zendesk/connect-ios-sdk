@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Outbound.io. All rights reserved.
 //
 
+#import <UserNotifications/UserNotifications.h>
+
 #import "OBMainController.h"
 #import "OBPopupWindow.h"
 #import "OBAdminViewController.h"
@@ -14,14 +16,14 @@
 @interface OBMainController () <UIAlertViewDelegate>
 
 /**-----------------------------------------------------------------------------
- * @name Private prrperties
+ * @name Private properties
  * -----------------------------------------------------------------------------
  */
 
 /**
  @abstract User has already been asked for permissions.
  */
-@property (nonatomic) bool askedForPrePermissions;
+@property (nonatomic) BOOL askedForPrePermissions;
 
 /**
  @abstract Blocks awating execution once the SDK is initialized.
@@ -74,20 +76,12 @@
         self.config = config;
         
         if (self.config) {
-            
             if (self.config.remoteKill) {
                 OBDebug(@"The SDK is disabled due to remote kill");
             } else {
-                if (self.config.promptAtInstall) {
-                    [self promptForPermissions];
-                }
-                if (self.config.pushToken) {
-                    self.callsCache.pushToken = self.config.pushToken;
-                }
-                
                 // Initialize calls cache
                 self.callsCache = [OBCallsCache callsCache];
-                
+
                 // Admin panel gesture
                 [self setupAdminGesture];
                 
@@ -121,6 +115,7 @@
         if (!self.executeAfterInit) {
             self.executeAfterInit = [NSMutableArray array];
         }
+        
         [self.executeAfterInit addObject:block];
     }
 }
@@ -135,18 +130,18 @@
     // in the new session and we wouldn't have push token because
     // application:didRegisterForRemoteNotification: would not have been called in this
     // session as well. So, we check if we already have permissions.
-    if (!self.askedForPrePermissions && !self.callsCache.pushToken && !self.config.hasBeenPrompted) {
-        if (self.config.prePrompt) {
+    if (self.config.prePrompt && !self.askedForPrePermissions) {
             // Display the pre-permission prompt
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:self.config.prePrompt[@"title"], OBClientName] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];   This is risky because it relies on the fact the the user-defined string "title" contains a %@ format, otherwise app will crash.
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.config.prePrompt[@"title"] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];
-            [alert show];
-        } else {
-            [self registerForPush];
-        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.config.prePrompt[@"title"] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];
+        [alert show];
+    } else {
+        [self registerForPush];
     }
-    self.askedForPrePermissions = true;
+
+    self.askedForPrePermissions = YES;
 }
+
 
 // Delegate method for the pre-permission alert dialog
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -158,43 +153,44 @@
 
 // Display the actual iOS prompt to ask permission for push notifications
 - (void)registerForPush {
-    if (!self.config.hasBeenPrompted) {
-        UIApplication* app = [UIApplication sharedApplication];
-        if ([app respondsToSelector:@selector(registerForRemoteNotifications)]) {
-            // iOS 8+
-            UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
-            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
-            [app registerUserNotificationSettings:settings];
-            [app registerForRemoteNotifications];
-        } else {
-            // iOS < 8
-            [app registerForRemoteNotificationTypes:
-             UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
-        }
-        [self.callsCache addCall:@"i/ios/permissions/requested" withParameters:nil];
-        self.config.hasBeenPrompted = true;
+    UIApplication *app = [UIApplication sharedApplication];
+
+    if(@available(iOS 10.0, *)) {
+        UNAuthorizationOptions authorizationOptions = UNAuthorizationOptionBadge | UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionCarPlay;
+        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authorizationOptions completionHandler:^(__unused BOOL granted, __unused NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [app registerForRemoteNotifications];
+            });
+        }];
+    } else if (@available(iOS 8.0, *)) {
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
+        [app registerUserNotificationSettings:settings];
+        [app registerForRemoteNotifications];
+    } else {
+        [app registerForRemoteNotificationTypes:
+         UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     }
+
+    [self checkForSdkInitAndExecute:^{
+        [self.callsCache addCall:@"i/ios/permissions/requested" withParameters:nil];
+    }];
 }
 
 - (void)registerDeviceToken:(NSData *)deviceToken {
-    if (deviceToken && [deviceToken isKindOfClass:[NSData class]]) {
-        const unsigned *tokenBytes = [deviceToken bytes];
-        NSString *stringToken;
-        
-        if (deviceToken) {
-            stringToken = [NSString stringWithFormat:@"%08x%08x%08x%08x%08x%08x%08x%08x",
-                           ntohl(tokenBytes[0]), ntohl(tokenBytes[1]), ntohl(tokenBytes[2]),
-                           ntohl(tokenBytes[3]), ntohl(tokenBytes[4]), ntohl(tokenBytes[5]),
-                           ntohl(tokenBytes[6]), ntohl(tokenBytes[7])];
-        } else {
-            stringToken = self.config.pushToken;
-        }
+    NSParameterAssert(deviceToken != nil);
 
-        self.callsCache.pushToken = stringToken;
-        [self.callsCache addCall:@"v2/apns/register" withParameters:@{@"token": stringToken}];
-        [self.callsCache addCall:@"i/ios/permissions/granted" withParameters:nil];
-        self.config.pushToken = stringToken;
-    }
+    NSMutableString *tokenString = [[NSMutableString alloc] init];
+
+    [deviceToken enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
+        for (int i = 0; i < byteRange.length; i++) {
+            [tokenString appendFormat:@"%02x", ((uint8_t *)bytes)[i]];
+        }
+    }];
+
+    self.config.pushToken = tokenString;
+    [self.callsCache addCall:@"v2/apns/register" withParameters:@{@"token": tokenString}];
+    [self.callsCache addCall:@"i/ios/permissions/granted" withParameters:nil];
 }
 
 #pragma mark - Admin panel gesture

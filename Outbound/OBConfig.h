@@ -22,7 +22,7 @@
  @abstract Whether the SDK should ask for push notification permissions.
  @discussion This decides whether or not the SDK asks for push permissions.
  */
-@property (nonatomic) bool promptForPermission;
+@property (nonatomic) BOOL promptForPermission;
 
 /**
  @abstract If the SDK should prompt when a particular event happens.
@@ -34,7 +34,7 @@
  @abstract If the SDK should prompt at install.
  @discussion Typically only either this or `promptAtEvent` will be set.
  */
-@property (nonatomic) bool promptAtInstall;
+@property (nonatomic) BOOL promptAtInstall;
 
 /**
  @abstract What the SDK will ask before asking for push permissions.
@@ -42,10 +42,8 @@
  */
 @property (nonatomic) NSDictionary* prePrompt;
 
-@property (nonatomic) bool hasBeenPrompted;
-@property (nonatomic) bool gavePermission;
-@property (nonatomic) NSString* pushToken;
-@property (nonatomic) bool remoteKill;
+@property (nonatomic, copy) NSString* pushToken;
+@property (nonatomic) BOOL remoteKill;
 
 /**
  @abstract The date at which the config was last fetched.

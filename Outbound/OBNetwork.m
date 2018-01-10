@@ -7,6 +7,9 @@
 //
 
 #import "OBNetwork.h"
+#import "NSURLSession+OBJSON.h"
+
+static NSString * const kBackgroundURLSessionIdentifier = @"io.outbound.urlsession";
 
 @interface OBNetwork ()
 
@@ -15,7 +18,7 @@
  * -----------------------------------------------------------------------------
  */
 
-+ (NSMutableURLRequest *)requestWithPath:(NSString *)path APIKey:(NSString *)key;
++ (nullable NSMutableURLRequest *)requestWithPath:(NSString *)path APIKey:(NSString *)key;
 
 /**
  @abstract A helper method to build the [NSURLRequest](https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSURLRequest_Class/index.html) for an API call.
@@ -33,7 +36,7 @@
 - Serializing the parameters to JSON as the HTTPBody
  
  */
-+ (NSMutableURLRequest *)postRequestWithPath:(NSString *)path APIKey:(NSString *)key parameters:(NSDictionary *)params andError:(NSError **)error;
++ (nullable NSMutableURLRequest *)postRequestWithPath:(NSString *)path APIKey:(NSString *)key parameters:(NSDictionary *)params andError:(NSError * _Nullable *)error;
 
 /**
  @abstract A helper method to print details about the network request and its response to the console.
@@ -46,41 +49,49 @@
 
 #pragma mark - Helpers
 
-+ (NSString *)uuid {
-    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
-    NSString * uuidString = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
-    CFRelease(newUniqueId);
-    return uuidString;
-}
++ (NSURLRequest *)requestWithPath:(NSString *)path APIKey:(NSString *)key {
+    NSParameterAssert(path != nil);
+    NSParameterAssert(key != nil);
 
-+ (NSMutableURLRequest *)requestWithPath:(NSString *)path APIKey:(NSString *)key {
     // Build endpoint URL
-    NSString *url = [NSString stringWithFormat:@"%@/%@", OBServerUrl, path];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURL *serverURL = [NSURL URLWithString:OBServerUrl];
+    NSURL *endpointURL = [NSURL URLWithString:path relativeToURL:serverURL].absoluteURL;
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:endpointURL];
     request.timeoutInterval = OBNetworkTimeout;
     
     // Set headers
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request setValue:key forHTTPHeaderField:@"X-Outbound-Key"];
-    [request setValue:[OBNetwork uuid] forHTTPHeaderField:@"X-Outbound-GUID"];
+    [request setValue:[NSUUID UUID].UUIDString forHTTPHeaderField:@"X-Outbound-GUID"];
     [request setValue:[NSString stringWithFormat:@"%@/%@", OBClientName, OBClientVersion] forHTTPHeaderField:@"X-Outbound-Client"];
     
-    return request;
+    return [request copy];
 }
 
-+ (NSMutableURLRequest *)postRequestWithPath:(NSString *)path APIKey:(NSString *)key parameters:(NSDictionary *)params andError:(NSError **)error {
-    NSMutableURLRequest *request = [self requestWithPath:path APIKey:key];
++ (NSURLRequest *)postRequestWithPath:(NSString *)path APIKey:(NSString *)key parameters:(NSDictionary *)parameters andError:(NSError **)error {
+    NSParameterAssert(path != nil);
+    NSParameterAssert(key != nil);
+    NSParameterAssert(parameters != nil);
+
+    NSMutableURLRequest *request = [[self requestWithPath:path APIKey:key] mutableCopy];
     request.HTTPMethod = @"POST";
     
     // Serialize parameters into JSON
-    NSData *payloadData = [NSJSONSerialization dataWithJSONObject:params options:0 error:error];
-    
-    // Just return (error is already set) if we can't serialize the JSON.
-    if (!*error) {
+    NSError *serializationError = nil;
+    NSData *payloadData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:&serializationError];
+
+    if (payloadData != nil) {
         request.HTTPBody = payloadData;
+
+        return [request copy];
+    } else {
+        if (error != NULL) {
+            *error = serializationError;
+        }
+
+        return nil;
     }
-    
-    return request;
 }
 
 + (void)debugRequest:(NSURLRequest *)request withStatusCode:(NSInteger)code error:(NSError *)error andJson:(NSObject *)json {
@@ -96,53 +107,47 @@
 
 #pragma mark - Action
 
-+ (void)getPath:(NSString *)path withAPIKey:(NSString *)key andCompletion:(void (^)(NSInteger statusCode, NSError *error, NSObject *response))completion {
++ (void)getPath:(NSString *)path withAPIKey:(NSString *)key andCompletion:(void (^)(id json, NSInteger statusCode, NSError *error))completion {
+    NSParameterAssert(path != nil);
+    NSParameterAssert(key != nil);
+    NSParameterAssert(completion != nil);
 
-    NSMutableURLRequest *request = [self requestWithPath:path APIKey:key];
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *requestError) {
-                               NSObject *json = nil;
-                               
-                               // Deserialize response data
-                               if (data && !requestError && [data length] > 0) {
-                                   json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&requestError];
-                               }
-                               
-                               NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
-                               [self debugRequest:request withStatusCode:r.statusCode error:requestError andJson:json];
-                               
-                               // Execute completion block
-                               completion(r.statusCode, requestError, json);
+    NSURLRequest *request = [self requestWithPath:path APIKey:key];
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] ob_jsonDataTaskForRequest:request completion:^(id json, NSURLResponse *response, NSError *error) {
+        NSParameterAssert(response == nil || [response isKindOfClass:[NSHTTPURLResponse class]]);
+
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+        [self debugRequest:request withStatusCode:httpResponse.statusCode error:error andJson:json];
+
+        completion(json, httpResponse.statusCode, error);
     }];
+
+    [dataTask resume];
 }
 
-+ (void)postPath:(NSString *)path withAPIKey:(NSString *)key parameters:(NSDictionary *)params andCompletion:(void (^)(NSInteger statusCode, NSError *error, NSObject *response))completion {
-    // Build request
++ (void)postPath:(NSString *)path withAPIKey:(NSString *)key parameters:(NSDictionary *)parameters andCompletion:(void (^)(id json, NSInteger statusCode, NSError *error))completion {
+    NSParameterAssert(path != nil);
+    NSParameterAssert(key != nil);
+    NSParameterAssert(parameters != nil);
+    NSParameterAssert(completion != nil);
+
     NSError *error = nil;
-    NSURLRequest *request = [self postRequestWithPath:path APIKey:key parameters:params andError:&error];
-    if (error) {
-        completion(0, error, nil);
+    NSURLRequest *request = [self postRequestWithPath:path APIKey:key parameters:parameters andError:&error];
+
+    if (request != nil) {
+        NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] ob_jsonDataTaskForRequest:request completion:^(id json, NSURLResponse *response, NSError *error) {
+            NSParameterAssert(response == nil || [response isKindOfClass:[NSHTTPURLResponse class]]);
+
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            [self debugRequest:request withStatusCode:httpResponse.statusCode error:error andJson:json];
+
+            completion(json, httpResponse.statusCode, error);
+        }];
+
+        [dataTask resume];
     } else {
-        
-        // Send request
-        [NSURLConnection sendAsynchronousRequest:request
-                                           queue:[NSOperationQueue mainQueue]
-                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *requestError) {
-                                   
-                                   NSObject *json = nil;
-                                   
-                                   // Deserialize response data
-                                   if (data && !requestError && [data length] > 0) {
-                                       json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&requestError];
-                                   }
-                                   
-                                   NSHTTPURLResponse *r = (NSHTTPURLResponse *)response;
-                                   [self debugRequest:request withStatusCode:r.statusCode error:requestError andJson:json];
-                                   
-                                   // Execute completion block
-                                   completion(r.statusCode, requestError, json);
-                               }];
+        [self debugRequest:request withStatusCode:0 error:error andJson:nil];
+        completion(nil, 0, error);
     }
 }
 

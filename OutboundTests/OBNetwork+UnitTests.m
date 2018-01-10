@@ -10,7 +10,7 @@
 
 @implementation OBNetwork (UnitTests)
 
-+ (void)getPath:(NSString *)path withAPIKey:(NSString *)key andCompletion:(void (^)(NSInteger statusCode, NSError *error, NSObject *response))completion {
++ (void)getPath:(NSString *)path withAPIKey:(NSString *)key andCompletion:(void (^)(id json, NSInteger statusCode, NSError *error))completion {
     if ([path hasPrefix:@"i/config/sdk"]) {
         
         BOOL sdkEnabled = ![key isEqualToString:@"disabled"];
@@ -25,10 +25,10 @@
         if ([key isEqualToString:@"wait"]) {
             // delay response by 5 seconds
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-                completion(200, nil, response);
+                completion(response, 200, nil);
             });
         } else {
-            completion(200, nil, response);
+            completion(response, 200, nil);
         }
     }
 }
