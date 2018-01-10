@@ -23,11 +23,9 @@ Pod::Spec.new do |s|
 
   s.platform          = :ios, '7.0'
   s.requires_arc      = true
-                      
-  s.source_files      = '*.h'
-  s.preserve_paths    = ['libOutbound.a']
-  s.libraries         = ["Outbound"]
+
+  s.source_files       = 'Outbound/*.{h,m}'
+  s.prefix_header_file = 'Outbound/Outbound-Prefix.pch'
+  
   s.frameworks        = 'UIKit'
-                      
-  s.xcconfig          = { "LIBRARY_SEARCH_PATHS" => "\"$(PODS_ROOT)/Outbound\"" }
 end

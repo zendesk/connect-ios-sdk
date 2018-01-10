@@ -24,6 +24,7 @@
 /* Begin PBXBuildFile section */
 		03E54CB91FFC51DC0093217E /* NSURLSession+OBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E54CB71FFC51DC0093217E /* NSURLSession+OBJSON.h */; };
 		03E54CBA1FFC51DC0093217E /* NSURLSession+OBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E54CB81FFC51DC0093217E /* NSURLSession+OBJSON.m */; };
+		4B090F9F2005E04D00C6093D /* Outbound.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDD8AEE1AE2B3210032826A /* Outbound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB0BC9D11AE9804D002E2C5A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5ED0A81AE7EC3200839AA9 /* AudioToolbox.framework */; };
 		EB0BC9D21AE9804D002E2C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD90F5F1AE58C3E008B4149 /* Foundation.framework */; };
 		EB0BC9D31AE9804D002E2C5A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD90F631AE58C86008B4149 /* SystemConfiguration.framework */; };
@@ -49,7 +50,6 @@
 		EB6132551B3380DF008F03DC /* OBDigitField.h in Headers */ = {isa = PBXBuildFile; fileRef = EB6132531B3380DF008F03DC /* OBDigitField.h */; };
 		EB6132561B3380DF008F03DC /* OBDigitField.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6132541B3380DF008F03DC /* OBDigitField.m */; };
 		EBB25DE11AE3F74E0058917B /* OBMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB25DE01AE3F74E0058917B /* OBMainController.m */; };
-		EBB25DE51AE3FBB60058917B /* Outbound.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDD8AEE1AE2B3210032826A /* Outbound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EBB25DE61AE3FBB60058917B /* OBMainController.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB25DDF1AE3F74E0058917B /* OBMainController.h */; };
 		EBB25DEE1AE4465B0058917B /* OBNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB25DEC1AE4465B0058917B /* OBNetwork.h */; };
 		EBB25DEF1AE4465B0058917B /* OBNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB25DED1AE4465B0058917B /* OBNetwork.m */; };
@@ -374,6 +374,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B090F9F2005E04D00C6093D /* Outbound.h in Headers */,
 				EB5F735C1AEDB13F0090A8D7 /* OBAdminViewController.h in Headers */,
 				EBB25DF21AE446770058917B /* OBCallsCache.h in Headers */,
 				EBD90F5C1AE564D4008B4149 /* OBCall.h in Headers */,
@@ -382,7 +383,6 @@
 				EB5F73551AEDB02B0090A8D7 /* OBWindow.h in Headers */,
 				EB6132551B3380DF008F03DC /* OBDigitField.h in Headers */,
 				03E54CB91FFC51DC0093217E /* NSURLSession+OBJSON.h in Headers */,
-				EBB25DE51AE3FBB60058917B /* Outbound.h in Headers */,
 				FC612FF11B31AE92008E88B5 /* OBConfig.h in Headers */,
 				EBB25DF71AE455740058917B /* OBReachability.h in Headers */,
 				EBB25DE61AE3FBB60058917B /* OBMainController.h in Headers */,
