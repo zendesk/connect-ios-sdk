@@ -181,6 +181,11 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
     }
 }
 
++ (BOOL)isOutboundNotification:(NSDictionary *)userInfo {
+    // All outbound push notifications, uninstall trackers, or otherwise have _oid.
+    return userInfo[OBNotificationUserInfoKeyIdentifier] != nil || userInfo[OBNotificationUserInfoKeyOTM] != nil || userInfo[OBNotificationUserInfoKeyOGP] != nil;
+}
+
 + (BOOL)isUninstallTracker:(NSDictionary *)userInfo {
     return userInfo[OBNotificationUserInfoKeyOGP] != nil;
 }
@@ -193,8 +198,7 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
     NSParameterAssert(userInfo != nil);
     NSParameterAssert(completion != nil);
 
-    // All outbound push notifications, uninstall trackers, or otherwise have _oid.
-    if (userInfo[OBNotificationUserInfoKeyIdentifier] == nil && userInfo[OBNotificationUserInfoKeyOTM] == nil) {
+    if ([self isOutboundNotification:userInfo]) {
         completion(YES);
         return;
     }

@@ -134,6 +134,7 @@ typedef void (^OBOperationCompletion)(BOOL success);
  */
 + (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(nullable NSDictionary *)groupAttributes andUserAttributes:(nullable NSDictionary *)userAttributes;
 
++ (BOOL)isOutboundNotification:(NSDictionary *)userInfo;
 + (BOOL)isUninstallTracker:(NSDictionary *)userInfo;
 + (void)handleNotificationWithUserInfo:(NSDictionary *)userInfo completion:(OBOperationCompletion)completion;
 + (void)handleNotificationResponse:(UNNotificationResponse *)response;
