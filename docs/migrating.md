@@ -3,6 +3,9 @@
 The upgrade from 1.0.X to 1.1.X includes:
 - Improvements for iOS 10+
 - Changes to our SDK's notification API
+  - Removed `isUninstallTracker` and replaced with `isOutboundNotification`
+  - Added `handleNotificationWithUserInfo` to perform Outbound handling of notification
+    - Previously a side effect of `isUninstallTracker`
 
 ## Objective-C
 
