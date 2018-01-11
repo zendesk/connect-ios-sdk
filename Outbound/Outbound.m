@@ -198,7 +198,7 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
     NSParameterAssert(userInfo != nil);
     NSParameterAssert(completion != nil);
 
-    if ([self isOutboundNotification:userInfo]) {
+    if (![self isOutboundNotification:userInfo]) {
         completion(YES);
         return;
     }
