@@ -13,6 +13,8 @@
 #import "OBAdminViewController.h"
 #import "OBNetwork.h"
 
+static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermissions_granted";
+
 @interface OBMainController () <UIAlertViewDelegate>
 
 /**-----------------------------------------------------------------------------
@@ -130,16 +132,46 @@
     // in the new session and we wouldn't have push token because
     // application:didRegisterForRemoteNotification: would not have been called in this
     // session as well. So, we check if we already have permissions.
-    if (self.config.prePrompt && !self.askedForPrePermissions) {
-            // Display the pre-permission prompt
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:self.config.prePrompt[@"title"], OBClientName] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];   This is risky because it relies on the fact the the user-defined string "title" contains a %@ format, otherwise app will crash.
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL hasAcceptedPreprompt = [defaults boolForKey:OBUserDefaultPrePermissionsGrantedKey];
+    
+    // 5 states:
+    // - No preprompt -> just call [self registerForPush];
+    //   - self.config.prePrompt = NO
+    // - Preprompt and not displayed since last app launch -> Show preprompt
+    //   - self.config.prePrompt = YES
+    //   - self.askedForPrePermissions = NO
+    // - Preprompt and been displayed before and rejected -> Do nothing
+    //   - self.config.prePrompt = YES
+    //   - self.askedForPrePermissions = YES
+    //   - hasAcceptedPreprompt = NO
+    // - Preprompt and been displayed before and accepted -> just call [self registerForPush];
+    //   - self.config.prePrompt = YES
+    //   - self.askedForPrePermissions = YES
+    //   - hasAcceptedPreprompt = YES
+    // - Preprompt and been displayed in previous app launch and accepted -> just call [self registerForPush];
+    //   - self.config.prePrompt = YES
+    //   - self.askedForPrePermissions = NO
+    //   - hasAcceptedPreprompt = YES
+    
+    if (!self.config.prePrompt) {
+        [self registerForPush];
+        return;
+    }
+    
+    if (hasAcceptedPreprompt) {
+        [self registerForPush];
+        return;
+    }
+    
+    if (!self.askedForPrePermissions) {
+        // Display the pre-permission prompt
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:self.config.prePrompt[@"title"] message:self.config.prePrompt[@"body"] delegate:self cancelButtonTitle:self.config.prePrompt[@"no_button"] otherButtonTitles:self.config.prePrompt[@"yes_button"], nil];
         [alert show];
-    } else {
-        [self registerForPush];
+        
+        self.askedForPrePermissions = YES;
     }
-
-    self.askedForPrePermissions = YES;
 }
 
 
@@ -147,6 +179,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     // If the user pressed YES, for giving push notification permissions.
     if (buttonIndex == 1) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:YES forKey:OBUserDefaultPrePermissionsGrantedKey];
+        [defaults synchronize];
+        
         [self registerForPush];
     }
 }
