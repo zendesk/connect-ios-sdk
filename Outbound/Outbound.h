@@ -1,6 +1,6 @@
 
 /**
- SDK Version 1.0.3
+ SDK Version 1.1.0
  
  Outbound sends automated email, SMS and push notifications
  based on the actions users take or do not take in your app. The Outbound API 

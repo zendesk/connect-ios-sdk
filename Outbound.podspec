@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name              = "Outbound"
-  s.version           = "1.0.3"
+  s.version           = "1.1.0"
   s.summary           = "Better Messages for Web and Mobile Apps"
   s.description       = <<-DESC
                         Outbound makes it easy to send email and mobile messages based on user actions, then test how much each message helps your business.
