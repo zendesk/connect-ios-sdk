@@ -91,7 +91,7 @@ static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermiss
                 
                 // Execute instructions that were wating for init to complete
                 if (self.executeAfterInit && [self.executeAfterInit count] > 0) {
-                    for (void (^block)() in self.executeAfterInit) {
+                    for (OBDeferredExecution block in self.executeAfterInit) {
                         block();
                     }
                 }
@@ -101,7 +101,7 @@ static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermiss
     }];
 }
 
-- (void)checkForSdkInitAndExecute:(void (^)())block {
+- (void)checkForSdkInitAndExecute:(OBDeferredExecution)block {
     // Because the init method needs to make a network call before anything else can happen,
     // we need to delay any subsequent calls until we get a response.
     if (self.config) {
@@ -203,9 +203,6 @@ static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermiss
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes  categories:nil];
         [app registerUserNotificationSettings:settings];
         [app registerForRemoteNotifications];
-    } else {
-        [app registerForRemoteNotificationTypes:
-         UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     }
 
     [self checkForSdkInitAndExecute:^{

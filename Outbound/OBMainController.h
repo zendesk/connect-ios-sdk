@@ -9,6 +9,8 @@
 #import "OBCallsCache.h"
 #import "OBConfig.h"
 
+typedef void (^OBDeferredExecution)(void);
+
 /**
  The OBMainController class provides with global-level information and configuration of the Outbound library.
  This object doesn't do much at the moment besides holding an instance of OBCallsCache, but it is intended to serve as a basis for future additions to the SDK.
@@ -58,7 +60,7 @@
  */
 - (void)initWithPrivateKey:(NSString *)apiKey;
 
-- (void)checkForSdkInitAndExecute:(void (^)())block;
+- (void)checkForSdkInitAndExecute:(OBDeferredExecution)block;
 
 - (void)registerDeviceToken:(NSData *)deviceToken;
 
