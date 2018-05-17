@@ -45,6 +45,8 @@ static void OBReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
         if (returnValue != NULL) {
             returnValue->_reachabilityRef = reachability;
             returnValue->_alwaysReturnLocalWiFiStatus = NO;
+        } else {
+            CFRelease(reachability);
         }
     }
     return returnValue;
@@ -61,6 +63,8 @@ static void OBReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
         if (returnValue != NULL) {
             returnValue->_reachabilityRef = reachability;
             returnValue->_alwaysReturnLocalWiFiStatus = NO;
+        } else {
+            CFRelease(reachability);
         }
     }
     return returnValue;
