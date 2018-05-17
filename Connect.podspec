@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
   }
   s.author            = 'Zendesk'
   s.source            = { :git => "https://github.com/zendesk/connect-ios-sdk.git", :tag => s.version.to_s }
-  s.documentation_url = 'https://developer.zendesk.com/embeddables/docs/connect/introduction'
+  s.documentation_url = 'https://developer.zendesk.com/embeddables/docs/outbound/ios'
 
   s.platform          = :ios, '8.0'
   s.requires_arc      = true
