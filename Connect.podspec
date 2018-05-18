@@ -8,8 +8,8 @@
 #
 
 Pod::Spec.new do |s|
-  s.name              = "Connect"
-  s.version           = "1.1.0"
+  s.name              = "ZendeskConnect"
+  s.version           = "1.1.1"
   s.summary           = "Better Messages for Web and Mobile Apps"
   s.description       = <<-DESC
                         Connect makes it easy to send email and mobile messages based on user actions, then test how much each message helps your business.
