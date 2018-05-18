@@ -1,5 +1,5 @@
 # iOS
-Outbound's iOS SDK
+Connect iOS SDK
 
 If you don't have cocoapods yet:
 `sudo gem install cocoapods`
@@ -8,7 +8,7 @@ If you don't have any pods installed yet:
 `pod init`
 
 To install the Outbound SDK, add this to your `Podfile`:
-`pod 'Outbound'`
+`pod 'Connect'`
 
 Then run:
 `pod install`
