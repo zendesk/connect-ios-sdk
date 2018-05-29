@@ -9,12 +9,16 @@
 #import "OBCallsCache.h"
 #import "OBCall.h"
 #import "OBNetwork.h"
+#import "OBCallsCache+Testing.h"
 
 // Serialization keys
 #define OBCacheUser     @"user"
 #define OBCacheTempUser @"tempUser"
 #define OBCacheToken    @"token"
 #define OBCacheCalls    @"calls"
+
+// default number of retries for failed requests
+static NSUInteger maxRetryAttempts = 10;
 
 @interface OBCallsCache ()
 
@@ -126,6 +130,12 @@
     }
     
     return cache;
+}
+
++ (void)setMaxRetryAttempts:(NSUInteger)count {
+#ifdef DEBUG // only allow changes in debug builds
+    maxRetryAttempts = count;
+#endif
 }
 
 - (instancetype)init {
@@ -362,7 +372,7 @@
     [self.retryTimer invalidate];
     
     // Retry only 10 times
-    if (self.retryDelay <= pow(2, 9)) {
+    if (self.retryDelay < pow(2, maxRetryAttempts)) {
         // Execute the method after the delay
         OBDebug(@"Retrying failed request in %@ seconds", @(self.retryDelay));
         self.retryTimer = [NSTimer scheduledTimerWithTimeInterval:self.retryDelay target:self selector:method userInfo:nil repeats:NO];

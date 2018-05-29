@@ -68,7 +68,6 @@
     
     // Check unarchived object properties
     XCTAssertEqualObjects(cacheClone.userId, cache.userId);
-    XCTAssertNil(cacheClone.pushToken);
     XCTAssertEqual([cacheClone.calls count], 2);
 }
 
