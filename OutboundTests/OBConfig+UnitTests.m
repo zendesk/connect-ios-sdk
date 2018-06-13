@@ -10,21 +10,6 @@
 
 @implementation OBConfig (UnitTests)
 
-//+ (void)getSdkConfigWithCompletion:(void (^)(OBConfig *config))completion {
-//    OBConfig *mockConfig = [[OBConfig alloc] init];
-//    mockConfig.hasBeenPrompted = YES;
-//    mockConfig.gavePermission = YES;
-//    mockConfig.remoteKill = NO;
-//    mockConfig.pushToken = @"token";
-//    mockConfig.fetchDate = [NSDate date];
-//    mockConfig.promptAtEvent = nil;
-//    mockConfig.prePrompt = nil;
-//    mockConfig.promptForPermission = NO;
-//    mockConfig.promptAtInstall = NO;
-//    
-//    completion(mockConfig);
-//}
-
 + (NSString *)configFilePath {
     return nil;
 }

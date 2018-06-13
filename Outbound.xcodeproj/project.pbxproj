@@ -24,6 +24,16 @@
 /* Begin PBXBuildFile section */
 		03E54CB91FFC51DC0093217E /* NSURLSession+OBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E54CB71FFC51DC0093217E /* NSURLSession+OBJSON.h */; };
 		03E54CBA1FFC51DC0093217E /* NSURLSession+OBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E54CB81FFC51DC0093217E /* NSURLSession+OBJSON.m */; };
+		4863B20D20BE732000667C75 /* OBCallsCache+Testing.h in Headers */ = {isa = PBXBuildFile; fileRef = 4863B20C20BE732000667C75 /* OBCallsCache+Testing.h */; };
+		488BE1F820BB9DFD0014191F /* RetryTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488BE1F720BB9DFD0014191F /* RetryTimerTests.swift */; };
+		488BE1FA20BBBD360014191F /* OfflineCallsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488BE1F920BBBD360014191F /* OfflineCallsTests.swift */; };
+		488BE1FD20BBBE640014191F /* TestHelpersObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 488BE1FC20BBBE640014191F /* TestHelpersObjC.m */; };
+		488F1FF620BB881F00F6A4A6 /* ExecuteAfterConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F1FF520BB881F00F6A4A6 /* ExecuteAfterConfigTests.swift */; };
+		488F1FF820BB8A1A00F6A4A6 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488F1FF720BB8A1A00F6A4A6 /* TestHelpers.swift */; };
+		489A4C4520B57BFF00426B09 /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489A4C4420B57BFF00426B09 /* ConfigTests.swift */; };
+		48EFDAD120AF132E00C06701 /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48EFDAD020AF132D00C06701 /* OHHTTPStubs.framework */; };
+		48EFDAD720AF13FE00C06701 /* OHHTTPStubs.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 48EFDAD020AF132D00C06701 /* OHHTTPStubs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		48EFDAE420B451D400C06701 /* TrackEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFDAE320B451D400C06701 /* TrackEventTests.swift */; };
 		4B090F9F2005E04D00C6093D /* Outbound.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDD8AEE1AE2B3210032826A /* Outbound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EB0BC9D11AE9804D002E2C5A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5ED0A81AE7EC3200839AA9 /* AudioToolbox.framework */; };
 		EB0BC9D21AE9804D002E2C5A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD90F5F1AE58C3E008B4149 /* Foundation.framework */; };
@@ -31,12 +41,8 @@
 		EB0BC9D41AE9804D002E2C5A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD90F611AE58C44008B4149 /* UIKit.framework */; };
 		EB0BC9E31AE983D6002E2C5A /* OBCallTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0BC9E21AE983D6002E2C5A /* OBCallTests.m */; };
 		EB0BC9F01AE987C6002E2C5A /* libOCMock.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB0BC9E51AE987C6002E2C5A /* libOCMock.a */; };
-		EB0BC9FA1AE9B705002E2C5A /* OBOnlineCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0BC9F91AE9B705002E2C5A /* OBOnlineCacheTests.m */; };
-		EB35FA511AE8200F008807CF /* OBOfflineCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB35FA501AE8200F008807CF /* OBOfflineCacheTests.m */; };
 		EB3813981C524DA900A33E48 /* OBConfig+UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3813971C524DA900A33E48 /* OBConfig+UnitTests.m */; };
 		EB38139B1C52624700A33E48 /* OBCallsCache+UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB38139A1C52624700A33E48 /* OBCallsCache+UnitTests.m */; };
-		EB38139D1C5262C100A33E48 /* OBConfigTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB38139C1C5262C100A33E48 /* OBConfigTests.m */; };
-		EB3813A81C5C9E9C00A33E48 /* OBNetwork+UnitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3813A71C5C9E9C00A33E48 /* OBNetwork+UnitTests.m */; };
 		EB5F73511AEDB02B0090A8D7 /* OBPopupContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = EB5F73491AEDB02B0090A8D7 /* OBPopupContentView.h */; };
 		EB5F73521AEDB02B0090A8D7 /* OBPopupContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F734A1AEDB02B0090A8D7 /* OBPopupContentView.m */; };
 		EB5F73531AEDB02B0090A8D7 /* OBPopupWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = EB5F734B1AEDB02B0090A8D7 /* OBPopupWindow.h */; };
@@ -87,6 +93,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		48EFDAD620AF13F700C06701 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				48EFDAD720AF13FE00C06701 /* OHHTTPStubs.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EBDD8AE91AE2B3210032826A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -102,6 +118,17 @@
 /* Begin PBXFileReference section */
 		03E54CB71FFC51DC0093217E /* NSURLSession+OBJSON.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+OBJSON.h"; sourceTree = "<group>"; };
 		03E54CB81FFC51DC0093217E /* NSURLSession+OBJSON.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+OBJSON.m"; sourceTree = "<group>"; };
+		4863B20C20BE732000667C75 /* OBCallsCache+Testing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OBCallsCache+Testing.h"; sourceTree = "<group>"; };
+		488BE1F720BB9DFD0014191F /* RetryTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryTimerTests.swift; sourceTree = "<group>"; };
+		488BE1F920BBBD360014191F /* OfflineCallsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineCallsTests.swift; sourceTree = "<group>"; };
+		488BE1FB20BBBE640014191F /* TestHelpersObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestHelpersObjC.h; sourceTree = "<group>"; };
+		488BE1FC20BBBE640014191F /* TestHelpersObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestHelpersObjC.m; sourceTree = "<group>"; };
+		488F1FF520BB881F00F6A4A6 /* ExecuteAfterConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecuteAfterConfigTests.swift; sourceTree = "<group>"; };
+		488F1FF720BB8A1A00F6A4A6 /* TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		489A4C4420B57BFF00426B09 /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
+		48EFDAD020AF132D00C06701 /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = SOURCE_ROOT; };
+		48EFDAE220B451D400C06701 /* OutboundTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OutboundTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		48EFDAE320B451D400C06701 /* TrackEventTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackEventTests.swift; sourceTree = "<group>"; };
 		EB0BC9E21AE983D6002E2C5A /* OBCallTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBCallTests.m; sourceTree = "<group>"; };
 		EB0BC9E51AE987C6002E2C5A /* libOCMock.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libOCMock.a; sourceTree = "<group>"; };
 		EB0BC9E61AE987C6002E2C5A /* NSNotificationCenter+OCMAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+OCMAdditions.h"; sourceTree = "<group>"; };
@@ -120,8 +147,6 @@
 		EB3813991C52624700A33E48 /* OBCallsCache+UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OBCallsCache+UnitTests.h"; sourceTree = "<group>"; };
 		EB38139A1C52624700A33E48 /* OBCallsCache+UnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OBCallsCache+UnitTests.m"; sourceTree = "<group>"; };
 		EB38139C1C5262C100A33E48 /* OBConfigTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBConfigTests.m; sourceTree = "<group>"; };
-		EB3813A61C5C9E9C00A33E48 /* OBNetwork+UnitTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OBNetwork+UnitTests.h"; sourceTree = "<group>"; };
-		EB3813A71C5C9E9C00A33E48 /* OBNetwork+UnitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OBNetwork+UnitTests.m"; sourceTree = "<group>"; };
 		EB5ED0A81AE7EC3200839AA9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		EB5F73491AEDB02B0090A8D7 /* OBPopupContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OBPopupContentView.h; sourceTree = "<group>"; };
 		EB5F734A1AEDB02B0090A8D7 /* OBPopupContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OBPopupContentView.m; sourceTree = "<group>"; };
@@ -176,6 +201,7 @@
 				EB0BC9D11AE9804D002E2C5A /* AudioToolbox.framework in Frameworks */,
 				EB0BC9D21AE9804D002E2C5A /* Foundation.framework in Frameworks */,
 				EB0BC9D31AE9804D002E2C5A /* SystemConfiguration.framework in Frameworks */,
+				48EFDAD120AF132E00C06701 /* OHHTTPStubs.framework in Frameworks */,
 				EB0BC9F01AE987C6002E2C5A /* libOCMock.a in Frameworks */,
 				EB0BC9D41AE9804D002E2C5A /* UIKit.framework in Frameworks */,
 				EBDD8AF71AE2B3220032826A /* libOutbound.a in Frameworks */,
@@ -233,8 +259,6 @@
 				EB3813971C524DA900A33E48 /* OBConfig+UnitTests.m */,
 				EB3813991C52624700A33E48 /* OBCallsCache+UnitTests.h */,
 				EB38139A1C52624700A33E48 /* OBCallsCache+UnitTests.m */,
-				EB3813A61C5C9E9C00A33E48 /* OBNetwork+UnitTests.h */,
-				EB3813A71C5C9E9C00A33E48 /* OBNetwork+UnitTests.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -286,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				EBB25DF01AE446770058917B /* OBCallsCache.h */,
+				4863B20C20BE732000667C75 /* OBCallsCache+Testing.h */,
 				EBB25DF11AE446770058917B /* OBCallsCache.m */,
 				EBD90F5A1AE564D4008B4149 /* OBCall.h */,
 				EBD90F5B1AE564D4008B4149 /* OBCall.m */,
@@ -348,13 +373,23 @@
 		EBDD8AFA1AE2B3220032826A /* OutboundTests */ = {
 			isa = PBXGroup;
 			children = (
+				48EFDAD020AF132D00C06701 /* OHHTTPStubs.framework */,
 				EB0BC9E41AE987BB002E2C5A /* OCMock */,
 				EBDD8AFB1AE2B3220032826A /* Supporting Files */,
 				EB35FA501AE8200F008807CF /* OBOfflineCacheTests.m */,
 				EB0BC9F91AE9B705002E2C5A /* OBOnlineCacheTests.m */,
 				EB0BC9E21AE983D6002E2C5A /* OBCallTests.m */,
 				EB38139C1C5262C100A33E48 /* OBConfigTests.m */,
+				48EFDAE320B451D400C06701 /* TrackEventTests.swift */,
+				489A4C4420B57BFF00426B09 /* ConfigTests.swift */,
+				488F1FF520BB881F00F6A4A6 /* ExecuteAfterConfigTests.swift */,
+				488BE1F720BB9DFD0014191F /* RetryTimerTests.swift */,
+				488BE1F920BBBD360014191F /* OfflineCallsTests.swift */,
+				488F1FF720BB8A1A00F6A4A6 /* TestHelpers.swift */,
+				488BE1FB20BBBE640014191F /* TestHelpersObjC.h */,
+				488BE1FC20BBBE640014191F /* TestHelpersObjC.m */,
 				EB3813951C524D8100A33E48 /* Categories */,
+				48EFDAE220B451D400C06701 /* OutboundTests-Bridging-Header.h */,
 			);
 			path = OutboundTests;
 			sourceTree = "<group>";
@@ -379,6 +414,7 @@
 				EBB25DF21AE446770058917B /* OBCallsCache.h in Headers */,
 				EBD90F5C1AE564D4008B4149 /* OBCall.h in Headers */,
 				EB5F73511AEDB02B0090A8D7 /* OBPopupContentView.h in Headers */,
+				4863B20D20BE732000667C75 /* OBCallsCache+Testing.h in Headers */,
 				EB5F73531AEDB02B0090A8D7 /* OBPopupWindow.h in Headers */,
 				EB5F73551AEDB02B0090A8D7 /* OBWindow.h in Headers */,
 				EB6132551B3380DF008F03DC /* OBDigitField.h in Headers */,
@@ -419,6 +455,7 @@
 				EBDD8AF21AE2B3220032826A /* Sources */,
 				EBDD8AF31AE2B3220032826A /* Frameworks */,
 				EBDD8AF41AE2B3220032826A /* Resources */,
+				48EFDAD620AF13F700C06701 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -447,6 +484,7 @@
 					};
 					EBDD8AF51AE2B3220032826A = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0920;
 					};
 				};
 			};
@@ -522,13 +560,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB38139D1C5262C100A33E48 /* OBConfigTests.m in Sources */,
 				EB38139B1C52624700A33E48 /* OBCallsCache+UnitTests.m in Sources */,
+				488BE1F820BB9DFD0014191F /* RetryTimerTests.swift in Sources */,
+				488F1FF620BB881F00F6A4A6 /* ExecuteAfterConfigTests.swift in Sources */,
 				EB3813981C524DA900A33E48 /* OBConfig+UnitTests.m in Sources */,
-				EB3813A81C5C9E9C00A33E48 /* OBNetwork+UnitTests.m in Sources */,
-				EB0BC9FA1AE9B705002E2C5A /* OBOnlineCacheTests.m in Sources */,
+				488BE1FA20BBBD360014191F /* OfflineCallsTests.swift in Sources */,
+				48EFDAE420B451D400C06701 /* TrackEventTests.swift in Sources */,
+				488BE1FD20BBBE640014191F /* TestHelpersObjC.m in Sources */,
+				489A4C4520B57BFF00426B09 /* ConfigTests.swift in Sources */,
+				488F1FF820BB8A1A00F6A4A6 /* TestHelpers.swift in Sources */,
 				EB0BC9E31AE983D6002E2C5A /* OBCallTests.m in Sources */,
-				EB35FA511AE8200F008807CF /* OBOfflineCacheTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -704,11 +745,14 @@
 		EBDD8B031AE2B3220032826A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -735,17 +779,23 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.outbound.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OutboundTests/OutboundTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		EBDD8B041AE2B3220032826A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -768,6 +818,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.outbound.sdk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "OutboundTests/OutboundTests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

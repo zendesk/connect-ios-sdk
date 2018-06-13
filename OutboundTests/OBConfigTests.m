@@ -10,7 +10,6 @@
 #import "OBMainController.h"
 #import "Outbound.h"
 #import <OCMock/OCMock.h>
-#import "OBNetwork+UnitTests.h"
 
 @interface OBConfigTests : XCTestCase
 
@@ -24,8 +23,6 @@
     XCTAssertTrue(config.promptForPermission);
     XCTAssertEqualObjects(config.promptAtEvent, @"testEvent");
     XCTAssertFalse(config.promptAtInstall);
-    XCTAssertFalse(config.hasBeenPrompted);
-    XCTAssertFalse(config.gavePermission);
     XCTAssertFalse(config.remoteKill);
     XCTAssertNotNil(config.fetchDate);
 }

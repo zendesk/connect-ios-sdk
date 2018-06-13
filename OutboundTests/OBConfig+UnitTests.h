@@ -9,5 +9,5 @@
 #import "OBConfig.h"
 
 @interface OBConfig (UnitTests)
-
++ (NSString *)configFilePath;
 @end
