@@ -1,10 +1,12 @@
-//
-//  OBMainController.m
-//  Outbound
-//
-//  Created by Emilien on 2015-04-19.
-//  Copyright (c) 2015 Outbound.io. All rights reserved.
-//
+/*
+ *  Copyright (c) 2018 Zendesk. All rights reserved.
+ *
+ *  By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
+ *  Subscription Agreement https://www.zendesk.com/company/customers-partners/master-subscription-agreement and Application Developer and API License
+ *  Agreement https://www.zendesk.com/company/customers-partners/application-developer-api-license-agreement and
+ *  acknowledge that such terms govern Your use of and access to the Mobile SDK.
+ *
+ */
 
 #import <UserNotifications/UserNotifications.h>
 
@@ -12,6 +14,8 @@
 #import "OBPopupWindow.h"
 #import "OBAdminViewController.h"
 #import "OBNetwork.h"
+
+#import <ZendeskConnect/ZendeskConnect-Swift.h>
 
 static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermissions_granted";
 
@@ -72,6 +76,8 @@ static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermiss
         OBDebug(@"Failed to start Outbound: No API key");
         return;
     }
+    
+    self.connect = [[ZCNConnect alloc] initWithEnvironmentKey:apiKey];
 
     // Fetch and cache config.
     [OBConfig getSdkConfigWithCompletion:^(OBConfig *config) {
@@ -79,7 +85,7 @@ static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermiss
         
         if (self.config) {
             if (self.config.remoteKill) {
-                OBDebug(@"The SDK is disabled due to remote kill");
+                OBDebug(@"The SDK is disabled due to remote kill.");
             } else {
                 // Initialize calls cache
                 self.callsCache = [OBCallsCache callsCache];
@@ -107,7 +113,7 @@ static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermiss
     if (self.config) {
         // Has config
         if (self.config.remoteKill) {
-            OBDebug(@"The SDK is disabled due to remote kill");
+            OBDebug(@"The SDK is disabled due to remote kill.");
             return;
         } else {
             block();
@@ -208,22 +214,6 @@ static NSString * const OBUserDefaultPrePermissionsGrantedKey = @"_ob_prepermiss
     [self checkForSdkInitAndExecute:^{
         [self.callsCache addCall:@"i/ios/permissions/requested" withParameters:nil];
     }];
-}
-
-- (void)registerDeviceToken:(NSData *)deviceToken {
-    NSParameterAssert(deviceToken != nil);
-
-    NSMutableString *tokenString = [[NSMutableString alloc] init];
-
-    [deviceToken enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
-        for (int i = 0; i < byteRange.length; i++) {
-            [tokenString appendFormat:@"%02x", ((uint8_t *)bytes)[i]];
-        }
-    }];
-
-    self.config.pushToken = tokenString;
-    [self.callsCache addCall:@"v2/apns/register" withParameters:@{@"token": tokenString}];
-    [self.callsCache addCall:@"i/ios/permissions/granted" withParameters:nil];
 }
 
 #pragma mark - Admin panel gesture

@@ -1,10 +1,12 @@
-//
-//  AppDelegate.swift
-//  ConnectSample
-//
-//  Created by Alan Egan on 19/06/2018.
-//  Copyright © 2018 Outbound.io. All rights reserved.
-//
+/*
+ *  Copyright (c) 2018 Zendesk. All rights reserved.
+ *
+ *  By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
+ *  Subscription Agreement https://www.zendesk.com/company/customers-partners/master-subscription-agreement and Application Developer and API License
+ *  Agreement https://www.zendesk.com/company/customers-partners/application-developer-api-license-agreement and
+ *  acknowledge that such terms govern Your use of and access to the Mobile SDK.
+ *
+ */
 
 import UIKit
 
@@ -19,12 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         application.registerForRemoteNotifications()
         
         UNUserNotificationCenter.current().delegate = self
-        Outbound.initWithPrivateKey("32735b0ad93aaaf59e1e1bbb4e8a438a")
+        Outbound.initWithPrivateKey("<#enter-you-key#>")
         return true
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("Application registered for remote notifications (token: \(deviceToken)")
+        print("Application registered for remote notifications (token: \(deviceToken))")
         Outbound.registerDeviceToken(deviceToken)
     }
     

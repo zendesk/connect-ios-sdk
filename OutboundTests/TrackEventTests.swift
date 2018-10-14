@@ -1,15 +1,18 @@
-//
-//  TrackEventTests.swift
-//  OutboundTests
-//
-//  Created by Alan Egan on 22/05/2018.
-//  Copyright © 2018 Outbound.io. All rights reserved.
-//
+/*
+ *  Copyright (c) 2018 Zendesk. All rights reserved.
+ *
+ *  By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
+ *  Subscription Agreement https://www.zendesk.com/company/customers-partners/master-subscription-agreement and Application Developer and API License
+ *  Agreement https://www.zendesk.com/company/customers-partners/application-developer-api-license-agreement and
+ *  acknowledge that such terms govern Your use of and access to the Mobile SDK.
+ *
+ */
 
 import XCTest
 import OHHTTPStubs
+@testable import ZendeskConnect
 
-class TrackEventTests: XCTestCase {
+class ZCNEventTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -18,11 +21,15 @@ class TrackEventTests: XCTestCase {
         stub(condition: configEndpoint(), response: body(with: TestDefaults.configBodyString, expectation: configExpectation))
         Outbound.initWithPrivateKey(TestDefaults.apiKey)
         self.wait(for: [configExpectation], timeout: 1)
+        OBMainController.sharedInstance().connect.eventQueue.objectQueue.clear()
+        OBMainController.sharedInstance().connect.identifyQueue.objectQueue.clear()
     }
     
     override func tearDown() {
         super.tearDown()
         OHHTTPStubs.removeAllStubs()
+        OBMainController.sharedInstance().connect.eventQueue.objectQueue.clear()
+        OBMainController.sharedInstance().connect.identifyQueue.objectQueue.clear()
     }
     
     func testEventWithNillProperties() {

@@ -1,10 +1,12 @@
-//
-//  OBCallsCache.m
-//  Outbound
-//
-//  Created by Emilien on 2015-04-19.
-//  Copyright (c) 2015 Outbound.io. All rights reserved.
-//
+/*
+ *  Copyright (c) 2018 Zendesk. All rights reserved.
+ *
+ *  By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
+ *  Subscription Agreement https://www.zendesk.com/company/customers-partners/master-subscription-agreement and Application Developer and API License
+ *  Agreement https://www.zendesk.com/company/customers-partners/application-developer-api-license-agreement and
+ *  acknowledge that such terms govern Your use of and access to the Mobile SDK.
+ *
+ */
 
 #import "OBCallsCache.h"
 #import "OBCall.h"
@@ -304,25 +306,7 @@ static NSUInteger maxRetryAttempts = 10;
         }
     }
     
-    OBDebug(@"Setting user ID %@", newUserId);
-    
-    // and sometimes it is [self name]
-    if (self.tempUserId) {
-        // We were using a temporary user ID until now
-        // We need to identify previously stored calls
-        for (OBCall *call in self.calls) {
-            if (!call.userId) {
-                call.userId = newUserId;
-            }
-        }
-        
-        // And link the temp user ID to the new user ID
-        [self addCall:@"v2/identify" withParameters:@{@"user_id": newUserId, @"previous_id": self.tempUserId}];
-        self.tempUserId = nil;
-    }
-    
     _userId = newUserId;
-    [self saveCache];
 }
 
 - (void)sendStoredCalls {

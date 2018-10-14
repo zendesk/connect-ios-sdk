@@ -1,16 +1,19 @@
-//
-//  Outbound.m
-//  Outbound
-//
-//  Created by Emilien on 2015-04-18.
-//  Copyright (c) 2015 Outbound.io. All rights reserved.
-//
+/*
+ *  Copyright (c) 2018 Zendesk. All rights reserved.
+ *
+ *  By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
+ *  Subscription Agreement https://www.zendesk.com/company/customers-partners/master-subscription-agreement and Application Developer and API License
+ *  Agreement https://www.zendesk.com/company/customers-partners/application-developer-api-license-agreement and
+ *  acknowledge that such terms govern Your use of and access to the Mobile SDK.
+ *
+ */
 
 #import "Outbound.h"
 #import "OBMainController.h"
 #import "OBCallsCache.h"
 
 #import <UserNotifications/UserNotifications.h>
+#import <ZendeskConnect/ZendeskConnect-Swift.h>
 
 static NSString * const OBNotificationUserInfoKeyIdentifier = @"_oid";
 static NSString * const OBNotificationUserInfoKeyOTM = @"_otm";
@@ -32,13 +35,25 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 }
 
 + (void)identifyUserWithId:(NSString *)userId attributes:(NSDictionary *)attributes {
+    ZCNConnect *connect = [OBMainController sharedInstance].connect;
+    ZCNUser * user = [[ZCNUser alloc] initWithFirstName:attributes[@"first_name"]
+                                                         lastName:attributes[@"last_name"]
+                                                            email:attributes[@"email"]
+                                                       attributes:attributes[@"attributes"]
+                                                           userId:userId
+                                                       previousId:connect.currentUser.userId
+                                                      phoneNumber:attributes[@"phone_number"]
+                                                          groupId:nil
+                                                  groupAttributes:nil
+                                                         timezone:attributes[@"timezone"]
+                                                              gcm:attributes[@"gcm"]
+                                                             apns:attributes[@"apns"]];
+    
+    [connect identifyWithUser:user];
     OBMainController *mc = [OBMainController sharedInstance];
+    mc.callsCache.userId = userId;
+    
     [mc checkForSdkInitAndExecute:^{
-        NSMutableDictionary* params = [NSMutableDictionary dictionaryWithDictionary:attributes];
-        mc.callsCache.userId = userId;
-        params[@"timezone"] = [[NSTimeZone systemTimeZone] name];
-        [mc.callsCache addCall:@"v2/identify" withParameters:params];
-
         if (mc.config.promptAtInstall) {
             [mc promptForPermissions];
         }
@@ -47,23 +62,10 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 
 + (void)alias:(NSString *)newUserId {
     OBMainController *mc = [OBMainController sharedInstance];
-    // Get previous_id from callsCache
-    NSString* prevId;
-    if (mc.callsCache.userId) {
-        prevId = mc.callsCache.userId;
-    } else if (mc.callsCache.tempUserId) {
-        prevId = mc.callsCache.tempUserId;
-    }
+    ZCNUser * user = [ZCNUser aliasWithPreviousUser:mc.connect.currentUser newId:newUserId];
+    [mc.connect identifyWithUser:user];
     
-    mc.callsCache.userId = newUserId;
-    NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:newUserId, @"user_id", nil];
-    if (prevId) {
-        [attributes setValue:prevId forKey:@"previous_id"];
-    }
-
     [mc checkForSdkInitAndExecute:^{
-        [mc.callsCache addCall:@"v2/identify" withParameters:attributes];
-
         if (mc.config.promptAtInstall) {
             [mc promptForPermissions];
         }
@@ -72,15 +74,12 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 
 + (void)trackEvent:(NSString *)event withProperties:(NSDictionary *)properties {
     OBMainController *mc = [OBMainController sharedInstance];
+    ZCNEvent *trackEvent = [[ZCNEvent alloc] initWithUserId:mc.connect.currentUser.userId
+                                                 properties:properties
+                                                      event:event];
+    [mc.connect trackWithEvent:trackEvent];
+    
     [mc checkForSdkInitAndExecute:^{
-        // Create the params dict for the API call with the event and its properties
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        parameters[@"event"] = event;
-        if (properties && [properties isKindOfClass:[NSDictionary class]]) {
-            parameters[@"properties"] = properties;
-        }
-        [mc.callsCache addCall:@"v2/track" withParameters:parameters];
-
         // Ask for push notification permissions if appropriate.
         if (mc.config.promptAtEvent && [mc.config.promptAtEvent isEqualToString:event]) {
             [mc promptForPermissions];
@@ -89,49 +88,55 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 }
 
 + (void)registerDeviceToken:(NSData *)deviceToken {
-    OBMainController *mainController = [OBMainController sharedInstance];
+    ZCNConnect *connect = [OBMainController sharedInstance].connect;
     [self getNotificationAuthorizationStatusWithCompletion:^(BOOL isAuthorized) {
         // We want to send the token to Outbound only if the user gives permissions. If they don't
         // the token will still come through for "background app refresh", but it's not a real token.
         if (isAuthorized) {
-            [mainController checkForSdkInitAndExecute:^{
-                [mainController registerDeviceToken:deviceToken];
-            }];
+            [connect registerPushToken:deviceToken];
+            [[OBMainController sharedInstance].callsCache addCall:@"i/ios/permissions/granted" withParameters:nil];
         }
     }];
 }
 
 + (void)disableDeviceToken {
     OBMainController *mc = [OBMainController sharedInstance];
-    [mc checkForSdkInitAndExecute:^{
-        if (mc.config.pushToken != nil) {
-            [mc.callsCache addCall:@"v2/apns/disable" withParameters:@{@"token": mc.config.pushToken}];
-            mc.config.pushToken = nil;
-        }
-    }];
+    if (mc.config.pushToken != nil) {
+        [mc.connect disablePushToken];
+        mc.config.pushToken = nil;
+    }
 }
 
 + (void)identifyGroupWithId:(NSString *)groupId userId:(NSString *)userId groupAttributes:(NSDictionary *)groupAttributes andUserAttributes:(NSDictionary *)userAttributes {
-    OBMainController *mc = [OBMainController sharedInstance];
-    [mc checkForSdkInitAndExecute:^{
-        // Create the params dict for the API call with the group ID, its attributes, and user attributes
-        // The user ID is added separately by OBCallsCache when necessary
-        NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-        parameters[@"group_id"] = groupId;
-        if (groupAttributes && [groupAttributes isKindOfClass:[NSDictionary class]]) {
-            parameters[@"group_attributes"] = groupAttributes;
-        }
+    
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    parameters[@"group_id"] = groupId;
+    if (groupAttributes && [groupAttributes isKindOfClass:[NSDictionary class]]) {
+        parameters[@"group_attributes"] = groupAttributes;
+    }
+    
+    if (userAttributes && [userAttributes isKindOfClass:[NSDictionary class]]) {
+        parameters[@"attributes"] = [NSMutableDictionary dictionaryWithDictionary:userAttributes];
+    } else {
+        parameters[@"attributes"] = [NSMutableDictionary dictionary];
+    }
+    parameters[@"attributes"][@"timezone"] = [[NSTimeZone systemTimeZone] name];
 
-        if (userAttributes && [userAttributes isKindOfClass:[NSDictionary class]]) {
-            parameters[@"attributes"] = [NSMutableDictionary dictionaryWithDictionary:userAttributes];
-        } else {
-            parameters[@"attributes"] = [NSMutableDictionary dictionary];
-        }
-        parameters[@"attributes"][@"timezone"] = [[NSTimeZone systemTimeZone] name];
-
-        mc.callsCache.userId = userId;
-        [mc.callsCache addCall:@"v2/identify" withParameters:parameters];
-    }];
+    ZCNConnect *connect = [OBMainController sharedInstance].connect;
+    ZCNUser * user = [[ZCNUser alloc] initWithFirstName:parameters[@"first_name"]
+                                                         lastName:parameters[@"last_name"]
+                                                            email:parameters[@"email"]
+                                                       attributes:parameters[@"attributes"]
+                                                           userId:userId
+                                                       previousId:nil
+                                                      phoneNumber:parameters[@"phone_number"]
+                                                          groupId:parameters[@"group_id"]
+                                                  groupAttributes:parameters[@"group_attributes"]
+                                                         timezone:parameters[@"timezone"]
+                                                              gcm:parameters[@"gcm"]
+                                                             apns:parameters[@"apns"]];
+    
+    [connect identifyWithUser:user];
 }
 
 + (void)handleNotificationResponse:(UNNotificationResponse *)response {
@@ -205,7 +210,7 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
 
     OBMainController *mc = [OBMainController sharedInstance];
     if (mc.config && [mc.config remoteKill]) {
-        OBDebug(@"The SDK is disabled due to remote kill");
+        OBDebug(@"The SDK is disabled due to remote kill.");
         completion(YES);
         return;
     }
@@ -273,6 +278,7 @@ static NSString * const OBNotificationUserInfoKeyOGP = @"_ogp";
     OBMainController* mc = [OBMainController sharedInstance];
     mc.callsCache.userId = @"";
     mc.callsCache.tempUserId = @"";
+    [mc.connect logout];
 }
 
 @end

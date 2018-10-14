@@ -9,31 +9,26 @@
 
 Pod::Spec.new do |s|
   s.name              = "ZendeskConnect"
-  s.version           = "1.1.1"
+  s.version           = "1.2.0"
   s.summary           = "Better Messages for Web and Mobile Apps"
   s.description       = <<-DESC
                         Connect makes it easy to send email and mobile messages based on user actions, then test how much each message helps your business.
                         DESC
   s.homepage          = "https://www.zendesk.com/"
-  s.license           = { 
-    :type => 'Commercial', 
-    :text => <<-LICENSE
-    Copyright (c) 2017 Zendesk. All rights reserved.
-    By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
-    Subscription Agreement https://www.zendesk.com/company/customers-partners/#master-subscription-agreement and Application Developer and API License
-    Agreement https://www.zendesk.com/company/customers-partners/#application-developer-api-license-agreement and
-    acknowledge that such terms govern Your use of and access to the Mobile SDK.
-    LICENSE
-  }
-  s.author            = 'Zendesk'
-  s.source            = { :git => "https://github.com/zendesk/connect-ios-sdk.git", :tag => s.version.to_s }
-  s.documentation_url = 'https://developer.zendesk.com/embeddables/docs/outbound/ios'
+  s.author              = 'Zendesk'
+  s.source              = { :git => "https://github.com/zendesk/connect-ios-sdk.git", :tag => s.version.to_s }
+  s.documentation_url   = 'https://developer.zendesk.com/embeddables/docs/outbound/ios'
+  s.swift_version       = '4.0'
 
-  s.platform          = :ios, '8.0'
-  s.requires_arc      = true
+  s.platform            = :ios, '8.0'
+  s.requires_arc        = true
 
-  s.source_files       = 'Outbound/*.{h,m}'
-  s.prefix_header_file = 'Outbound/Outbound-Prefix.pch'
+  s.source_files        = 'Outbound/*.{h,m}', 'Connect/**/*.swift'
+  s.prefix_header_file  = 'Outbound/Outbound-Prefix.pch'
   
-  s.frameworks        = 'UIKit'
+  s.frameworks          = 'UIKit'
+  s.license           = { 
+    :type => 'Apache 2.0',
+    :file => 'LICENSE'
+  }
 end

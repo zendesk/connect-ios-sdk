@@ -1,6 +1,15 @@
+/*
+ *  Copyright (c) 2018 Zendesk. All rights reserved.
+ *
+ *  By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
+ *  Subscription Agreement https://www.zendesk.com/company/customers-partners/master-subscription-agreement and Application Developer and API License
+ *  Agreement https://www.zendesk.com/company/customers-partners/application-developer-api-license-agreement and
+ *  acknowledge that such terms govern Your use of and access to the Mobile SDK.
+ *
+ */
 
 /**
- SDK Version 1.1.0
+ SDK Version 1.2.0
  
  Outbound sends automated email, SMS and push notifications
  based on the actions users take or do not take in your app. The Outbound API 
