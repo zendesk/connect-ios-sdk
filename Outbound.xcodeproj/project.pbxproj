@@ -94,7 +94,7 @@
 		489A4C4520B57BFF00426B09 /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489A4C4420B57BFF00426B09 /* ConfigTests.swift */; };
 		489A4DD22170E28B00E6AE4C /* OBConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = FC612FF01B31AE92008E88B5 /* OBConfig.h */; };
 		489A4DD32170E28B00E6AE4C /* OBConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = FC612FF21B342586008E88B5 /* OBConfig.m */; };
-		489A4DD42170E28B00E6AE4C /* Outbound.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDD8AEE1AE2B3210032826A /* Outbound.h */; };
+		489A4DD42170E28B00E6AE4C /* Outbound.h in Headers */ = {isa = PBXBuildFile; fileRef = EBDD8AEE1AE2B3210032826A /* Outbound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		489A4DD52170E28B00E6AE4C /* Outbound.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDD8AF01AE2B3210032826A /* Outbound.m */; };
 		489A4DD62170E28B00E6AE4C /* OBMainController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBB25DE01AE3F74E0058917B /* OBMainController.m */; };
 		489A4DD72170E28B00E6AE4C /* OBMainController.h in Headers */ = {isa = PBXBuildFile; fileRef = EBB25DDF1AE3F74E0058917B /* OBMainController.h */; };
