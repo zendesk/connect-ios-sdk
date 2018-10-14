@@ -17,7 +17,7 @@
  Sdk versioning
  */
 #define OBClientName @"ios"
-#define OBClientVersion @"1.1.0"
+#define OBClientVersion @"1.2.0"
 
 /**
  Singleton helper

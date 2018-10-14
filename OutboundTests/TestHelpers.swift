@@ -1,14 +1,17 @@
-//
-//  TestHelpers.swift
-//  OutboundTests
-//
-//  Created by Alan Egan on 28/05/2018.
-//  Copyright © 2018 Outbound.io. All rights reserved.
-//
+/*
+ *  Copyright (c) 2018 Zendesk. All rights reserved.
+ *
+ *  By downloading or using the Zendesk Mobile SDK, You agree to the Zendesk Master
+ *  Subscription Agreement https://www.zendesk.com/company/customers-partners/master-subscription-agreement and Application Developer and API License
+ *  Agreement https://www.zendesk.com/company/customers-partners/application-developer-api-license-agreement and
+ *  acknowledge that such terms govern Your use of and access to the Mobile SDK.
+ *
+ */
 
 import Foundation
 import XCTest
 import OHHTTPStubs
+@testable import ZendeskConnect
 
 
 /// Default values for testing
@@ -40,7 +43,7 @@ enum TestDefaults {
 func headers(apiKey: String = TestDefaults.apiKey) -> OHHTTPStubsTestBlock {
     return { request in
         let headers = request.allHTTPHeaderFields ?? [:]
-        let xClient = headers["X-Outbound-Client"] == "ios/1.1.0"
+        let xClient = headers["X-Outbound-Client"] == "\(ZendeskConnect.PlatformString)/\(ZendeskConnect.ConnectVersionString)"
         let xGuid = headers["X-Outbound-GUID"] != nil
         let xKey = headers["X-Outbound-Key"] == apiKey
         XCTAssert(xClient, "X-Outbound-Client faild to match")
