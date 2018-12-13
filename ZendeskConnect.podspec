@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name              = "ZendeskConnect"
-  s.version           = "1.2.0"
+  s.version           = "2.0.0"
   s.summary           = "Better Messages for Web and Mobile Apps"
   s.description       = <<-DESC
                         Connect makes it easy to send email and mobile messages based on user actions, then test how much each message helps your business.
@@ -18,13 +18,12 @@ Pod::Spec.new do |s|
   s.author              = 'Zendesk'
   s.source              = { :git => "https://github.com/zendesk/connect-ios-sdk.git", :tag => s.version.to_s }
   s.documentation_url   = 'https://developer.zendesk.com/embeddables/docs/outbound/ios'
-  s.swift_version       = '4.0'
+  s.swift_version       = '4.2'
 
-  s.platform            = :ios, '8.0'
+  s.platform            = :ios, '9.0'
   s.requires_arc        = true
 
-  s.source_files        = 'Outbound/*.{h,m}', 'Connect/**/*.swift'
-  s.prefix_header_file  = 'Outbound/Outbound-Prefix.pch'
+  s.source_files        = 'ZendeskConnect/ZendeskConnect/**/*.swift'
   
   s.frameworks          = 'UIKit'
   s.license           = { 

@@ -1,0 +1,7 @@
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+ZEN_SDK_VERSION=2.0.0
+ZEN_SDK_VERSION_FILE=${SRCROOT}/${PRODUCT_NAME}/Connect.swift
+ZEN_SDK_PODSPEC_FILE=${SRCROOT}/../${PRODUCT_NAME}.podspec
+ZEN_SCRIPTS_DIR=${SRCROOT}/../scripts
