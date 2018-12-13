@@ -16,7 +16,7 @@ pod init
 
 To install the Outbound SDK, add this to your `Podfile`:
 ```
-pod 'ZendeskConnect', ~> '2.0'
+pod 'ZendeskConnect', '~> 2.0'
 ```
 
 Then run:
