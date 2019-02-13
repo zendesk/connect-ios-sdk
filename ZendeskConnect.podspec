@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name              = "ZendeskConnect"
-  s.version           = "2.0.0"
+  s.version           = "2.0.1"
   s.summary           = "Better Messages for Web and Mobile Apps"
   s.description       = <<-DESC
                         Connect makes it easy to send email and mobile messages based on user actions, then test how much each message helps your business.
@@ -24,6 +24,7 @@ Pod::Spec.new do |s|
   s.requires_arc        = true
 
   s.source_files        = 'ZendeskConnect/ZendeskConnect/**/*.swift'
+  s.resource            = 'ZendeskConnect/ZendeskConnect/**/*.storyboard'
   
   s.frameworks          = 'UIKit'
   s.license           = { 
