@@ -11,7 +11,7 @@
 import Foundation
 import UserNotifications
 
-let ConnectVersionString = "2.0.0"
+let ConnectVersionString = "2.0.1"
 
 fileprivate let ConnectInitLogMessage = "Connect is not initialised. Call the init with environment before using other methods."
 
