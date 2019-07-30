@@ -73,7 +73,7 @@ public final class Connect: NSObject {
     /// - Returns: Returns the shared instance configured with the private key.
     @objc
     @discardableResult
-    public func `init`(privateKey: String) -> Connect {
+    public func initialize(privateKey: String) -> Connect {
         connectShadow = ConnectShadowFactory.createConnectShadow(privateKey: privateKey,
                                                                  userStorageType: UserStorage.self,
                                                                  configStorageType: ConfigStorage.self,

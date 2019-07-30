@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             UNUserNotificationCenter.current().delegate = self
         }
 
-        Connect.instance.init(privateKey:"d24426956432b8bc005fff1e51dc6fcf")
+        Connect.instance.initialize(privateKey:"d24426956432b8bc005fff1e51dc6fcf")
         return true
     }
     
