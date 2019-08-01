@@ -55,27 +55,27 @@ class QueueFile {
                 shrinkFile()
             }
             
-            // offset to end of current last element
-            // if we're empty we use the default value for the last element
+            // Offset to end of current last element.
+            // If we're empty we use the default value for the last element.
             let newOffset = isEmpty ? lastElement.offset : lastElement.next()
             
-            // create new last element
+            // Create new last element.
             let newLastElement = FileElement(offset: newOffset,
                                              length: entry.count)
             
-            // write new element to file
+            // Write new element to file.
             write(element: newLastElement, to: fileHandle)
             
-            // write new data to file
+            // Write new data to file.
             fileHandle.syncWrite(entry, at: newLastElement.valueOffset())
             
-            // update last element to be new last element
+            // Update last element to be new last element.
             lastElement = newLastElement
             if isEmpty {
                 firstElement = lastElement
             }
             
-            // update the file header with the new last element
+            // Update the file header with the new last element.
             header = FileHeader(elementCount: header.elementCount + 1,
                                 firstOffset: firstElement.offset,
                                 lastOffset: lastElement.offset)
@@ -105,7 +105,7 @@ class QueueFile {
         }
         
         modQueue.sync {
-            // take the first offset
+            // Take the first offset.
             var newFirstElementOffset = firstElement.offset
             for _ in 1...amount {
                 let element = readElement(at: newFirstElementOffset, from: fileHandle)
@@ -115,10 +115,10 @@ class QueueFile {
                 fileHandle.syncWrite(zeros, at: element.offset)
             }
             
-            // load new first element
+            // Load new first element.
             firstElement = readElement(at: newFirstElementOffset, from: fileHandle)
             
-            // update the file header with new element count
+            // Update the file header with new element count.
             header = FileHeader(elementCount: newElementCount,
                                 firstOffset: firstElement.offset,
                                 lastOffset: lastElement.offset)
@@ -129,20 +129,20 @@ class QueueFile {
     func clear() {
         modQueue.sync {
             
-            // reset elements
+            // Reset elements.
             lastElement = FileElement(offset: FileHeader.headerLength,
                                       length: 0)
             firstElement = lastElement
             
-            // write an element to file
+            // Write an element to file
             // in the default state both first and last elements
-            // ocupy the same space in the file
+            // occupy the same space in the file.
             write(element: lastElement, to: fileHandle)
             
-            // truncate file
+            // Truncate file.
             fileHandle.truncateFile(atOffset: lastElement.valueOffset())
             
-            // update the file header with new element count
+            // Update the file header with new element count.
             header = FileHeader(elementCount: 0,
                                 firstOffset: firstElement.offset,
                                 lastOffset: lastElement.offset)
@@ -229,37 +229,35 @@ extension QueueFile: Sequence {
 
 
 private extension FileHandle {
-    
     /// Seeks to the offset provided before writing the data
     /// and synchronizing.
     ///
     /// - Parameters:
-    ///   - data: data to write.
-    ///   - offset: offset in file to write from.
+    ///   - data: The data to write.
+    ///   - offset: The offset in file to write from.
     func syncWrite(_ data: Data, at offset: UInt64 = 0) {
         seek(toFileOffset: offset)
         write(data)
         synchronizeFile()
     }
-    
-    
+
     /// Checks if offset is within the bounds of the file.
     ///
     /// - Parameters:
-    ///   - offset: offset to test.
-    ///   - fileHandle: file to be tested.
-    /// - Returns: true if the offset is within the file. false otherwise.
+    ///   - offset: The offset to test.
+    ///   - fileHandle: The file to be tested.
+    /// - Returns: `true` if the offset is within the file. `false` otherwise.
     func boundsCheck(_ offset: UInt64) -> Bool {
         return seekToEndOfFile() >= offset
     }
 }
 
-/// Writes an Element to the file handle. Seeks to the first possition of
-/// the file and then writes the bytes of the file header to the file.
+/// Writes a `FileHeader` to the `FileHandle`. Seeks to the first position of
+/// the file and then writes the bytes of the header to the file.
 ///
 /// - Parameters:
-///   - header: FileHeader to write.
-///   - fileHandle: File to write to.
+///   - header: The header to write.
+///   - fileHandle: The file to write to.
 private func write(header: FileHeader, to fileHandle: FileHandle) {
     var header = header
     withUnsafeBytes(of: &header) { bytes in
@@ -267,12 +265,12 @@ private func write(header: FileHeader, to fileHandle: FileHandle) {
     }
 }
 
-/// Writes an Element to the file handle. Seeks to the element
+/// Writes a `FileElement` to the `FileHandle`. Seeks to the element
 /// offset and then writes the bytes of the element to the file.
 ///
 /// - Parameters:
-///   - element: Element to write.
-///   - fileHandle: File to write to.
+///   - element: The element to write.
+///   - fileHandle: The file to write to.
 private func write(element: FileElement, to fileHandle: FileHandle) {
     var element = element
     let offset = element.offset
@@ -281,12 +279,11 @@ private func write(element: FileElement, to fileHandle: FileHandle) {
     }
 }
 
-
-/// Reads a FileHeader from the file handle.
-/// Assumes a file header is found at the first position in the file.
+/// Reads a `FileHeader` from the `FileHandle`.
+/// Assumes a header is found at the first position in the file.
 ///
 /// - Parameter fileHandle: The file to read from.
-/// - Returns: A file header.
+/// - Returns: A `FileHeader`.
 private func readHeader(from fileHandle: FileHandle) -> FileHeader {
     guard let header: FileHeader = read(from: fileHandle) else {
         return FileHeader.default
@@ -294,14 +291,13 @@ private func readHeader(from fileHandle: FileHandle) -> FileHeader {
     return header
 }
 
-
-/// Reads an Element from the file handle at the offset provided.
-/// Used whene reading elements specified in a FileHeader.
+/// Reads a `FileElement` from the `FileHandle` at the offset provided.
+/// Used when reading elements specified in a `FileHeader`.
 ///
 /// - Parameters:
 ///   - offset: Where in the file to read.
 ///   - fileHandle: The file to read from.
-/// - Returns: An element.
+/// - Returns: A `FileElement`.
 private func readElement(at offset: UInt64, from fileHandle: FileHandle) -> FileElement {
     guard let element: FileElement = read(from: fileHandle, at: offset) else {
         return FileElement(offset: FileHeader.default.firstOffset,
@@ -310,32 +306,30 @@ private func readElement(at offset: UInt64, from fileHandle: FileHandle) -> File
     return element
 }
 
-
-/// Reads a T from file handle. Seeks in the file to the offset provided,
-/// reading N bytes from the file. N is determined by using MemoryLayout.size.
-/// The data read from the file is then marsheled into an object using UnsafeRawBufferPointer.load().
+/// Reads a T from `FileHandle`. Seeks in the file to the offset provided,
+/// reading N bytes from the file. N is determined by using `MemoryLayout.size`.
+/// The data read from the file is then marshaled into an object using `UnsafeRawBufferPointer.load()`.
 ///
 /// - Parameters:
-///   - fileHandle: file to read from.
-///   - offset: where in the file to start reading from.
-/// - Returns: a T loaded from data in the file.
+///   - fileHandle: The file to read from.
+///   - offset: Where in the file to start reading from.
+/// - Returns: A T loaded from data in the file.
 private func read<T>(from fileHandle: FileHandle, at offset: UInt64 = 0) -> T? {
     let length = MemoryLayout<T>.size
     guard fileHandle.boundsCheck(offset + UInt64(length)) else { return nil }
     fileHandle.seek(toFileOffset: offset)
-    var data = fileHandle.readData(ofLength: length)
-    return data.withUnsafeBytes { (bytes: UnsafePointer<UInt8>) in
-        let buffer = UnsafeRawBufferPointer.init(start: bytes, count: data.count)
+    let data = fileHandle.readData(ofLength: length)
+    return data.withUnsafeBytes { buffer -> T in
         return buffer.load(as: T.self)
     }
 }
 
-/// Reads data associated with an element from the file handle.
+/// Reads data associated with a `FileElement` from the `FileHandle`.
 ///
 /// - Parameters:
-///   - fileHandle: file to read from.
-///   - element: element to read.
-/// - Returns: data if the element is located in the file. Nil otherwise.
+///   - fileHandle: The file to read from.
+///   - element: The element to read.
+/// - Returns: `Data` if the element is located in the file. `nil` otherwise.
 private func readData(_ fileHandle: FileHandle, element: FileElement) -> Data? {
     guard fileHandle.boundsCheck(element.next()) else { return nil }
     

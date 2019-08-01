@@ -25,9 +25,7 @@ class InMemoryObjectQueueTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
         objectQueue = ObjectQueue<T>.createInMemory()
         objectQueue.add(T(value: "one"))
         objectQueue.add(T(value: "two"))
@@ -39,11 +37,6 @@ class InMemoryObjectQueueTests: XCTestCase {
         objectQueue.add(T(value: "eight"))
         objectQueue.add(T(value: "nine"))
         objectQueue.add(T(value: "ten"))
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
     }
     
     func testSize() {
@@ -91,7 +84,7 @@ class FileObjectQueueTests: XCTestCase {
     var objectQueue: ObjectQueue<T>!
     
     func newQueueFile() throws -> QueueFile {
-        let fileUrl =  try FileUtility.url(name: "tests.dat")
+        let fileUrl = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("object_queue_tests.dat")
         let fileHandle = try FileUtility.handle(url: fileUrl)
         fileHandle.truncateFile(atOffset: 0)
         let queue = QueueFile(fileHandle: fileHandle)
@@ -100,8 +93,7 @@ class FileObjectQueueTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
         do {
             objectQueue = try ObjectQueue<T>.create(newQueueFile(), converter: DefaultConverter())
             objectQueue.add(T(value: "one"))
@@ -115,13 +107,8 @@ class FileObjectQueueTests: XCTestCase {
             objectQueue.add(T(value: "nine"))
             objectQueue.add(T(value: "ten"))
         } catch {
-            XCTFail("Couldn't cerate queue file")
+            XCTFail("Couldn't create queue file")
         }
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
     }
     
     func testSize() {

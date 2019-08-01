@@ -12,7 +12,7 @@ import Foundation
 
 extension UIAlertController {
 
-    /// Creates a window and adds the alert controller as root.
+    /// Creates a `UIWindow` and adds a `UIViewController` as root.
     /// The window is set at a window level above alerts.
     func show() {
         let win = UIWindow(frame: UIScreen.main.bounds)
@@ -27,13 +27,13 @@ extension UIAlertController {
     typealias AlertAction = (UIAlertAction) -> Void
 
 
-    /// Convienience method for creating an alert for push registration pre prompt.
+    /// Convenience method for creating an alert for push registration pre prompt.
     ///
     /// - Parameters:
-    ///   - prePrompt: the pre prompt model.
-    ///   - cancelAction: cancel action. Handles dismissing the alert.
-    ///   - confirmAction: confirm action. Handles dismissing the alert.
-    /// - Returns: An alert controller configured with the pre prompt model.
+    ///   - prePrompt: The `PrePrompt` model.
+    ///   - cancelAction: Cancel action. Handles dismissing the alert.
+    ///   - confirmAction: Confirm action. Handles dismissing the alert.
+    /// - Returns: A `UIAlertController` configured with the `PrePrompt` model.
     static func create(withPrePrompt prePrompt: PrePrompt,
                        cancelAction: AlertAction? = nil,
                        confirmAction: AlertAction? = nil) -> UIAlertController {
@@ -51,44 +51,5 @@ extension UIAlertController {
         }))
 
         return alert
-    }
-
-
-    /// Convienience method for creating an alert for push handling pre prompt.
-    /// Currently only used for push handling in app on iOS 9. 
-    ///
-    /// - Parameters:
-    ///   - userInfo: should come from a remote notification.
-    ///   - cancelAction: cancel action. Handles dismissing the alert.
-    ///   - confirmAction: confirm action. Handles dismissing the alert.
-    /// - Returns: An alert controller configured with the alert defined aps part of the push notification userInfo.
-    static func create(withUserInfo userInfo: [AnyHashable: Any],
-                       cancelAction: AlertAction? = nil,
-                       confirmAction: AlertAction? = nil) -> UIAlertController? {
-
-        guard
-            let aps = userInfo["aps"] as? [String: Any] else {
-                return nil
-        }
-
-        let alert = aps["alert"]
-
-        var title: String?
-        var body: String?
-
-        if let alert = alert as? String {
-            body = alert
-        }
-
-        if let alert = alert as? [String: String] {
-            title = alert["title"]
-            body = alert["body"]
-        }
-
-        let alertController = UIAlertController(title: title, message: body, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: SystemLocalizedString.ok, style: .default, handler: confirmAction))
-        alertController.addAction(UIAlertAction(title: SystemLocalizedString.cancel, style: .cancel, handler: cancelAction))
-
-        return alertController
     }
 }

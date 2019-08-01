@@ -27,8 +27,8 @@ class AdminPanelViewController: UIViewController {
 
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         super.dismiss(animated: flag, completion: completion)
-        // Let the delegate know that we're dismissing,
-        // this is so we can clean up the window used to present this controller.
+        // Let the delegate know that we're dismissing.
+        // This is so we can clean up the window used to present this controller.
         delegate?.adminPanelViewController(self, didDismissAnimated: flag)
     }
 
@@ -38,7 +38,7 @@ class AdminPanelViewController: UIViewController {
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // dismiss if the user taps outside the code entry area
+        // Dismiss if the user taps outside the code entry area.
         guard
             let touch = touches.first,
             popupPanel.frame.contains(touch.location(in: popupPanel)) == false else {
@@ -49,7 +49,7 @@ class AdminPanelViewController: UIViewController {
 
     private func updateSubtitle(_ success: Bool) {
 
-        // check for failure
+        // Check for failure.
         guard success == false else {
             subtitle.text = "Success!";
             subtitle.textColor = .green
@@ -104,13 +104,13 @@ class AdminPanelViewController: UIViewController {
 
         guard let deviceToken = userStorage?.readToken() else {
             Logger.debug("Pairing failed. No push device token in storage.")
-            // if there is no token we may need to do trigger a register.
+            // If there is no token we may need to trigger a register.
             UIApplication.shared.registerForRemoteNotifications()
             resultBlock(false)
             return
         }
 
-        // do the submission of the code
+        // Do the submission of the code.
         connectClient?.testSend(code: intValue, deviceToken: deviceToken) { success in
             onMain { resultBlock(success) } 
         }

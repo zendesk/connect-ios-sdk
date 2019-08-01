@@ -36,7 +36,7 @@ public enum Logger {
     
     /// Logs a message.
     ///
-    /// - Parameter message: message to be logged. Prepended with the string "[DEBUG]: "
+    /// - Parameter message: Message to be logged. Prepended with the string "[DEBUG]: "
     static func debug(_ message: String) {
         guard enabled else { return }
         print("[DEBUG]: \(message)")

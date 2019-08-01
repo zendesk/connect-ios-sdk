@@ -17,10 +17,10 @@ Pod::Spec.new do |s|
   s.homepage          = "https://www.zendesk.com/"
   s.author              = 'Zendesk'
   s.source              = { :git => "https://github.com/zendesk/connect-ios-sdk.git", :tag => s.version.to_s }
-  s.documentation_url   = 'https://developer.zendesk.com/embeddables/docs/outbound/ios'
-  s.swift_version       = '4.2'
+  s.documentation_url   = 'https://developer.zendesk.com/embeddables/docs/connect/ios'
+  s.swift_version       = '5.0'
 
-  s.platform            = :ios, '9.0'
+  s.platform            = :ios, '10.0'
   s.requires_arc        = true
 
   s.source_files        = 'ZendeskConnect/ZendeskConnect/**/*.swift'

@@ -12,7 +12,7 @@ import Foundation
 
 struct Empty: Codable {}
 
-/// Resource is a model used to encapsulate the data required to make a HTTP request and handle JSON encoding and decoding
+/// Resource is a model used to encapsulate the data required to make a HTTP request and handle JSON encoding and decoding.
 struct Resource<A: Codable, R: Codable> {
     let url: URL
     let method: HttpMethod<Data>
@@ -23,10 +23,10 @@ extension Resource {
     /// Init
     ///
     /// - Parameters:
-    ///   - url: Partial url of the resource to which the request will be made for
-    ///   - method: HTTP method being encoded/decoded
-    ///   - response: response type
-    ///   - keyEncodingStrategy: key encoding strategy. Defaults to convertToSnakeCase
+    ///   - url: Partial `URL` of the resource to which the request will be made for.
+    ///   - method: `HttpMethod` being encoded/decoded.
+    ///   - response: `Response` type.
+    ///   - keyEncodingStrategy: `KeyEncodingStrategy`. Defaults to `convertToSnakeCase`.
     init(url: URL, method: HttpMethod<A> = .get, response: R.Type, keyEncodingStrategy: JSONEncoder.KeyEncodingStrategy = .convertToSnakeCase) {
         self.url = url
         self.method = method.map { model in
@@ -56,7 +56,9 @@ extension Resource {
                 return Result<R>.success(model, urlResponse)
             }
 
-            return Result<R>.failure(NSError(domain: "com.zendesk", code: 1111, userInfo: [NSLocalizedDescriptionKey: "Unknown error has occurred, model is nil but didn't fail parsing"]))
+            return Result<R>.failure(NSError(domain: "com.zendesk",
+                                             code: 1111,
+                                             userInfo: [NSLocalizedDescriptionKey: "Unknown error has occurred, model is nil but didn't fail parsing"]))
         }
     }
 }

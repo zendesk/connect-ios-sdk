@@ -12,9 +12,9 @@ import Foundation
 
 extension User {
 
-    /// Creates a blank user with a UUID for a user id.
+    /// Creates a blank user with a UUID for a userId.
     ///
-    /// - Returns: an anonymous user.
+    /// - Returns: An anonymous user.
     static func createAnonymous() -> User {
         return User(userId: UUID().uuidString)
     }
@@ -22,8 +22,8 @@ extension User {
 
     /// Returns a new copy of user with userId replaced with aliasId.
     ///
-    /// - Parameter aliasId: new id to replace user id.
-    /// - Returns: a new copy of user with userId replaced with aliasId.
+    /// - Parameter aliasId: New id to replace userId.
+    /// - Returns: A new copy of user with userId replaced with aliasId.
     public func aliased(aliasId: String) -> User {
         return User(firstName: firstName,
                     lastName: lastName,

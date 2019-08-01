@@ -16,28 +16,33 @@ enum ConnectShadowFactory {
                                     userStorageType: UserStorable.Type,
                                     configStorageType: ConfigStorable.Type,
                                     environmentStorableType: EnvironmentStorable.Type,
+                                    silentPushStrategyFactoryType: SilentPushStrategyFactory.Type,
                                     currentInstance: ConnectShadow?) -> ConnectShadow? {
 
         // The only case where we return early is when:
-        //      - connect is not nil
-        //      - privateKey is equal to connect.privateKey
+        //  - connect is not nil.
+        //  - privateKey is equal to connect.privateKey.
         if let currentInstance = currentInstance,
             currentInstance.privateKey == privateKey {
             return currentInstance
         }
 
-        // From now on intialising a new instance will happen
+        // From now on intializing a new instance will happen.
         let client = Client(host: URL(string: "https://\(OutboundHostDomain)")!,
                             requestDecorator: [OutboundClientDecorator(with: "\(PlatformString)/\(ConnectVersionString)"),
                                                OutboundKeyDecorator(with: privateKey),
                                                ConnectGUIDDecorator()])
-        let connectClient = ConnectApiClient(client: client)
 
+        let eventQueue: Queue<Event> = Queue<Event>.create(fileName: "events.dat")
+        let identifyQueue: Queue<User> = Queue<User>.create(fileName: "identities.dat")
+
+        let connectClient = ConnectAPIClient(client: client,
+                                             identifyQueue: identifyQueue,
+                                             eventQueue: eventQueue)
 
         let userStorage = userStorageType.init()
         let configStorage = configStorageType.init()
 
-        // Do we need to clear storage before intialising?
         var environmentStorage = environmentStorableType.init()
 
         if let storedKey = environmentStorage.privateKey,
@@ -48,9 +53,13 @@ enum ConnectShadowFactory {
 
         environmentStorage.privateKey = privateKey
 
+        let coordinator = IPMCoordinator(connectAPI: connectClient)
+        let silentPushStrategyFactory = silentPushStrategyFactoryType.init(coordinator: coordinator)
+
         return ConnectShadow.init(privateKey: privateKey,
                                   userStorage: userStorage,
                                   configStorage: configStorage,
-                                  connectClient: connectClient)
+                                  connectClient: connectClient,
+                                  silentPushFactory: silentPushStrategyFactory)
     }
 }

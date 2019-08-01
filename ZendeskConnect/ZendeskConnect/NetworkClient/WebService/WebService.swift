@@ -10,24 +10,24 @@
 
 import Foundation
 
-/// WebsService is a simple class representing the act of making HTTP request
+/// WebService is a simple class representing the act of making a HTTP request.
 final class WebService {
     let client: Client
 
     /// Init
     ///
     /// - Parameters:
-    ///   - session: A configured URLSession instance
-    ///   - host: URL host to which requests will be made
+    ///   - session: A configured `URLSession` instance.
+    ///   - host: `URL` host to which requests will be made.
     init(with client: Client) {
         self.client = client
     }
 
-    /// Load method takes a configured Resource model and fetches the required data and calls the delegated parse method in Resource
+    /// Load method takes a configured `Resource` model, fetches the required data and calls the delegated parse method in `Resource`.
     ///
     /// - Parameters:
-    ///   - resource: Resource instance
-    ///   - completion: Completion block that gets executed on completion of the underlying HTTP call
+    ///   - resource: `Resource` instance.
+    ///   - completion: Completion block that gets executed on completion of the underlying HTTP call.
     func load<A, R>(resource: Resource<A, R>, completion: @escaping (Result<R>) -> Void) {
         var urlRequest = NSMutableURLRequest(resource: resource, host: client.host) as URLRequest
 

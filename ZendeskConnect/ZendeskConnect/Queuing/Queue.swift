@@ -10,27 +10,6 @@
 
 import Foundation
 
-protocol Queueable {
-    associatedtype QueueThing
-     var size: UInt { get }
-     func add(entry: QueueThing)
-     func peek() -> QueueThing?
-     func peek(_ max: UInt) -> [QueueThing]
-     func remove()
-     func remove(_ n: UInt)
-}
-
-
-protocol OtherQueueable {
-    
-    var size: UInt { get }
-    func add<Object>(entry: Object)
-    func peek<Object>() -> Object?
-    func peek<Object>(_ max: UInt) -> [Object]
-    func remove()
-    func remove(_ n: UInt)
-}
-
 class Queue<Object: Codable> {
 
     static func create<T>(fileName: String) -> Queue<T> {
@@ -50,7 +29,7 @@ class Queue<Object: Codable> {
         return objectQueue.size
     }
     
-    var objectQueue: ObjectQueue<Object>
+    private var objectQueue: ObjectQueue<Object>
     
     init(objectQueue: ObjectQueue<Object>) {
         self.objectQueue = objectQueue

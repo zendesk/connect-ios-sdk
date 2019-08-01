@@ -96,11 +96,11 @@ class ConnectShadowFactoryTests: XCTestCase {
     
     func testColdStartWithNothingStoredInAnyStorage() {
 
-        
         let connect = ConnectShadowFactory.createConnectShadow(privateKey: "testing",
                                                                userStorageType: TestUserStorage.self,
                                                                configStorageType: TestConfigStorage.self,
                                                                environmentStorableType: TestEnvironmentStorage.self,
+                                                               silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                                currentInstance: nil)
 
         XCTAssertNotNil(connect)
@@ -113,6 +113,7 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                              userStorageType: TestUserStorage.self,
                                                              configStorageType: TestConfigStorage.self,
                                                              environmentStorableType: TestEnvironmentStorage.self,
+                                                             silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                              currentInstance: nil)
         XCTAssertNotNil(first)
 
@@ -120,6 +121,7 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                               userStorageType: TestUserStorage.self,
                                                               configStorageType: TestConfigStorage.self,
                                                               environmentStorableType: TestEnvironmentStorage.self,
+                                                              silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                               currentInstance: first)
         XCTAssertNotNil(second)
         XCTAssertEqual(first, second)
@@ -131,6 +133,7 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                              userStorageType: TestUserStorage.self,
                                                              configStorageType: TestConfigStorage.self,
                                                              environmentStorableType: TestEnvironmentStorage.self,
+                                                             silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                              currentInstance: nil)
         XCTAssertNotNil(first)
 
@@ -138,6 +141,7 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                              userStorageType: TestUserStorage.self,
                                                              configStorageType: TestConfigStorage.self,
                                                              environmentStorableType: TestEnvironmentStorage.self,
+                                                             silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                              currentInstance: first) // pass the second instance in
 
         XCTAssertNotEqual(first, second)
@@ -154,6 +158,7 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                                userStorageType: TestUserStorage.self,
                                                                configStorageType: TestConfigStorage.self,
                                                                environmentStorableType: TestEnvironmentStorage.self,
+                                                               silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                                currentInstance: nil)
 
         XCTAssertNotNil(connectShadow)
@@ -172,11 +177,12 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                                userStorageType: TestUserStorage.self,
                                                                configStorageType: TestConfigStorage.self,
                                                                environmentStorableType: TestEnvironmentStorage.self,
+                                                               silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                                currentInstance: nil)
 
         XCTAssertNotNil(connectShadow)
         XCTAssertEqual("testing", connectShadow?.privateKey)
-        // User should be cleared and have a temp ID
+        // User should be cleared and have a temp ID.
         XCTAssertNotEqual(testUser.userId, connectShadow?.user.userId)
     }
 
@@ -188,10 +194,11 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                                userStorageType: TestUserStorage.self,
                                                                configStorageType: TestConfigStorage.self,
                                                                environmentStorableType: TestEnvironmentStorage.self,
+                                                               silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                                currentInstance: nil)
 
         XCTAssertNotNil(connectShadow)
-        // Should be the same as the test config
+        // Should be the same as the test config.
         XCTAssertFalse((connectShadow?.configuration.enabled)!)
         XCTAssertNotNil(connectShadow?.configuration.account)
     }
@@ -204,10 +211,11 @@ class ConnectShadowFactoryTests: XCTestCase {
                                                                userStorageType: TestUserStorage.self,
                                                                configStorageType: TestConfigStorage.self,
                                                                environmentStorableType: TestEnvironmentStorage.self,
+                                                               silentPushStrategyFactoryType: ConnectSilentPushStrategyFactory.self,
                                                                currentInstance: nil)
 
         XCTAssertNotNil(connectShadow)
-        // config should be wiped and default values provided
+        // Config should be wiped and default values provided.
         XCTAssertTrue((connectShadow?.configuration.enabled)!)
         XCTAssertNil(connectShadow?.configuration.account)
     }

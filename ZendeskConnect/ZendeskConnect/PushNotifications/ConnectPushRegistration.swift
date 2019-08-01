@@ -84,20 +84,13 @@ class ConnectPushRegistrationDelegate: PushRegistrationDelegate {
 
     func requestAuthorization() {
         let app = UIApplication.shared
-        if #available(iOS 10.0, *) {
-            let options: UNAuthorizationOptions = [.badge, .sound, .alert, .carPlay]
-            UNUserNotificationCenter.current().requestAuthorization(options: options) { (granted, error) in
-                DispatchQueue.main.async {
-                    if granted {
-                        app.registerForRemoteNotifications()
-                    }
+        let options: UNAuthorizationOptions = [.badge, .sound, .alert, .carPlay]
+        UNUserNotificationCenter.current().requestAuthorization(options: options) { (granted, error) in
+            DispatchQueue.main.async {
+                if granted {
+                    app.registerForRemoteNotifications()
                 }
             }
-        } else {
-            // Fallback on earlier versions
-            let setttings = UIUserNotificationSettings.init(types: [.alert, .badge, .sound], categories: nil)
-            app.registerUserNotificationSettings(setttings)
-            app.registerForRemoteNotifications()
         }
     }
 }

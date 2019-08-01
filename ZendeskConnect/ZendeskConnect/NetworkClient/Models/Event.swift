@@ -23,8 +23,8 @@ public struct Event: Codable {
     ///
     /// - Parameters:
     ///   - userId: User id to associate this event with.
-    ///   - timestamp: timestamp for the event.
-    ///   - properties: any extra information to send along with the event.
+    ///   - timestamp: Timestamp for the event.
+    ///   - properties: Any extra information to send along with the event.
     ///   - event: An event with the specified data.
     init(userId: String?, timestamp: TimeInterval = Date().timeIntervalSince1970, properties: [String: Any]?, event: String) {
         self.userId = userId
