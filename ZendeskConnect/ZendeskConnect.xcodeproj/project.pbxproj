@@ -7,6 +7,56 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C0E0AB222E1B2F10099533B /* StoreIPMOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0E0AB122E1B2F10099533B /* StoreIPMOperation.swift */; };
+		1C0E0AB422E213960099533B /* ConnectUserNotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0E0AB322E213960099533B /* ConnectUserNotificationCenterWrapper.swift */; };
+		1C0E0AB822E214A90099533B /* MockUserNotificationCenterWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0E0AB722E214A90099533B /* MockUserNotificationCenterWrapper.swift */; };
+		1C0E0ABA22E5B2310099533B /* StoreIPMOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0E0AB922E5B2310099533B /* StoreIPMOperationTests.swift */; };
+		1C0E0ABC22E5B5CB0099533B /* MockCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0E0ABB22E5B5CB0099533B /* MockCoordinator.swift */; };
+		1C1E4C68228423A60096A801 /* ConnectNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C67228423A60096A801 /* ConnectNotification.swift */; };
+		1C1E4C6E228486090096A801 /* SilentPushStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C6D228486090096A801 /* SilentPushStrategy.swift */; };
+		1C1E4C702284863E0096A801 /* UninstallSilentPushStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C6F2284863E0096A801 /* UninstallSilentPushStrategy.swift */; };
+		1C1E4C75228580EC0096A801 /* ConnectPushRegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C73228580EC0096A801 /* ConnectPushRegistrationTests.swift */; };
+		1C1E4C77228581480096A801 /* ConnectNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C76228581480096A801 /* ConnectNotificationTests.swift */; };
+		1C1E4C79228582620096A801 /* UninstallSilentPushStrategyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C78228582620096A801 /* UninstallSilentPushStrategyTests.swift */; };
+		1C1E4C7B2285A8750096A801 /* PushStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C7A2285A8750096A801 /* PushStrategy.swift */; };
+		1C1E4C8322899CF70096A801 /* ConnectSilentPushStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C8222899CF60096A801 /* ConnectSilentPushStrategyFactory.swift */; };
+		1C1E4C892289A0020096A801 /* SilentPushStrategyFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C882289A0020096A801 /* SilentPushStrategyFactoryTests.swift */; };
+		1C1E4C8D228ACDFD0096A801 /* NotificationResponseWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C8C228ACDFD0096A801 /* NotificationResponseWrapper.swift */; };
+		1C1E4C8F228AD25E0096A801 /* PushStrategyFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C8E228AD25E0096A801 /* PushStrategyFactoryTests.swift */; };
+		1C1E4C91228AD37D0096A801 /* MockNotificationResponseWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C90228AD37D0096A801 /* MockNotificationResponseWrapper.swift */; };
+		1C1E4C93228AF3750096A801 /* BasicPushStrategyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C92228AF3750096A801 /* BasicPushStrategyTests.swift */; };
+		1C1E4C97228C6EE80096A801 /* DeepLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C96228C6EE80096A801 /* DeepLink.swift */; };
+		1C1E4C99228DA6670096A801 /* DeepLinkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C98228DA6670096A801 /* DeepLinkTests.swift */; };
+		1C1E4C9B228DA6C20096A801 /* MockConnectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C9A228DA6C20096A801 /* MockConnectAPI.swift */; };
+		1C1E4C9D228DA7220096A801 /* MockDeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C9C228DA7220096A801 /* MockDeepLinkHandler.swift */; };
+		1C1E4C9F228DA7D10096A801 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C9E228DA7D10096A801 /* UIApplicationExtension.swift */; };
+		1C1E4CA1228DAAB50096A801 /* OnMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4CA0228DAAB50096A801 /* OnMain.swift */; };
+		1C5B1F6722E0A6AA00DE1C94 /* IPMSharedStorageModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5B1F6622E0A6AA00DE1C94 /* IPMSharedStorageModule.swift */; };
+		1CAD6C5F2267298900E7345A /* ZendeskKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CAD6C5E2267298900E7345A /* ZendeskKeys.plist */; };
+		1CAD6C6122672B9F00E7345A /* KeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C6022672B9F00E7345A /* KeyViewController.swift */; };
+		1CAD6C6322672F5100E7345A /* ZendeskKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C6222672F5100E7345A /* ZendeskKey.swift */; };
+		1CAD6C652267597200E7345A /* ZendeskKeyReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C642267597200E7345A /* ZendeskKeyReader.swift */; };
+		1CAD6C672267609400E7345A /* ZendeskKeyStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C662267609400E7345A /* ZendeskKeyStorage.swift */; };
+		1CAD6C692269CBFB00E7345A /* IPM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C682269CBFB00E7345A /* IPM.swift */; };
+		1CAD6C6B2269F0C300E7345A /* IPMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C6A2269F0C300E7345A /* IPMTests.swift */; };
+		1CAD6C6D226F632800E7345A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C6C226F632800E7345A /* UIColorExtension.swift */; };
+		1CAD6C6F226F65E700E7345A /* UIColorExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C6E226F65E700E7345A /* UIColorExtensionTests.swift */; };
+		1CAD6C7122706FFA00E7345A /* UIColorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CAD6C7022706FFA00E7345A /* UIColorHelper.swift */; };
+		1CCAB56E22A90AEE0089AF7D /* ConnectAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCAB56D22A90AEE0089AF7D /* ConnectAPIClientTests.swift */; };
+		1CCAB57022A90BC50089AF7D /* MockMetricsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCAB56F22A90BC50089AF7D /* MockMetricsProvider.swift */; };
+		1CE27B1622E8504900D5098A /* ConnectAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CE27B1522E8504900D5098A /* ConnectAssets.xcassets */; };
+		1CE27B1822E86CF800D5098A /* DictionaryDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CE27B1722E86CF800D5098A /* DictionaryDecoder.swift */; };
+		1CEEEBE22297F151004CCB65 /* IPMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEEEBE02297F151004CCB65 /* IPMViewController.swift */; };
+		1CEEEBE32297F151004CCB65 /* IPMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CEEEBE12297F151004CCB65 /* IPMViewController.xib */; };
+		1CEEEBEA229D25A9004CCB65 /* IPMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEEEBE9229D25A8004CCB65 /* IPMCoordinator.swift */; };
+		1CEEEBEC229D25FD004CCB65 /* IPMWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEEEBEB229D25FD004CCB65 /* IPMWindow.swift */; };
+		1CEEEBF6229ED5B4004CCB65 /* CustomTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEEEBF5229ED5B4004CCB65 /* CustomTransitionDelegate.swift */; };
+		1CEEEBF8229ED5E2004CCB65 /* CustomPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CEEEBF7229ED5E2004CCB65 /* CustomPresentationController.swift */; };
+		483839512297F7220054365F /* DefaultSilentPushStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483839502297F7220054365F /* DefaultSilentPushStrategy.swift */; };
+		483839532297F8770054365F /* HostAppPushStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483839522297F8770054365F /* HostAppPushStrategy.swift */; };
+		483839552297FC150054365F /* BasicPushStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483839542297FC150054365F /* BasicPushStrategy.swift */; };
+		48383959229C22720054365F /* IPMSilentPushStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48383958229C22720054365F /* IPMSilentPushStrategy.swift */; };
+		4838395D229C24260054365F /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4838395C229C24260054365F /* Coordinator.swift */; };
 		484BE67F21930525002AE77F /* Connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE67D21930524002AE77F /* Connect.swift */; };
 		484BE6D821930687002AE77F /* EventOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6A221930687002AE77F /* EventOperation.swift */; };
 		484BE6D921930687002AE77F /* IdentifyResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6A421930687002AE77F /* IdentifyResource.swift */; };
@@ -19,7 +69,6 @@
 		484BE6E021930687002AE77F /* ConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6AB21930687002AE77F /* ConfigProvider.swift */; };
 		484BE6E121930687002AE77F /* ConfigResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6AC21930687002AE77F /* ConfigResource.swift */; };
 		484BE6E221930687002AE77F /* BaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6AD21930687002AE77F /* BaseProvider.swift */; };
-		484BE6E321930687002AE77F /* ConnectApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6AE21930687002AE77F /* ConnectApiClient.swift */; };
 		484BE6E421930687002AE77F /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6B021930687002AE77F /* Event.swift */; };
 		484BE6E521930687002AE77F /* PushRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6B121930687002AE77F /* PushRegistration.swift */; };
 		484BE6E621930687002AE77F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE6B221930687002AE77F /* Config.swift */; };
@@ -63,16 +112,17 @@
 		484BE725219336E2002AE77F /* ZendeskConnect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BFD9B421919B0000747562 /* ZendeskConnect.framework */; };
 		484BE726219336E2002AE77F /* ZendeskConnect.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 48BFD9B421919B0000747562 /* ZendeskConnect.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		484BE72921933885002AE77F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 484BE72821933885002AE77F /* LoginViewController.swift */; };
+		485205E422B29D0C000AAC7E /* ConnectIPMMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485205E322B29D0C000AAC7E /* ConnectIPMMetric.swift */; };
+		4863FF09228C395700F5483D /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48FED98A21C10D9800D8975D /* OHHTTPStubs.framework */; };
 		486CDC5721B93080009E58A3 /* SystemLocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486CDC5621B93080009E58A3 /* SystemLocalizedString.swift */; };
-		486CDC5921B982A8009E58A3 /* ConnectPushNotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486CDC5821B982A7009E58A3 /* ConnectPushNotificationHandler.swift */; };
-		486CDC6021BACF2A009E58A3 /* ConnectPushNotificationHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486CDC5F21BACF2A009E58A3 /* ConnectPushNotificationHandlerTests.swift */; };
 		486CDC6221BE71A6009E58A3 /* ConnectPushRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486CDC6121BE71A6009E58A3 /* ConnectPushRegistration.swift */; };
 		4879BA9721ADAF0D00BF4042 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4879BA9621ADAF0D00BF4042 /* Storage.swift */; };
 		4879BA9921AED3D600BF4042 /* EnvironmentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4879BA9821AED3D600BF4042 /* EnvironmentStorage.swift */; };
-		4894716A21AD8C1D00400A29 /* ConnectPushRegistrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4894716921AD8C1D00400A29 /* ConnectPushRegistrationTests.swift */; };
+		48BEEE3D22F32C35004E795C /* ConnectAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BEEE3C22F32C35004E795C /* ConnectAPIClient.swift */; };
 		48BFD9B921919B0000747562 /* ZendeskConnect.h in Headers */ = {isa = PBXBuildFile; fileRef = 48BFD9B721919B0000747562 /* ZendeskConnect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		48BFD9F92191B4CF00747562 /* ConnectShadowFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48BFD9F82191B4CF00747562 /* ConnectShadowFactoryTests.swift */; };
 		48BFD9FB2191B4CF00747562 /* ZendeskConnect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48BFD9B421919B0000747562 /* ZendeskConnect.framework */; };
+		48C4C01F22E8616B00E4A5AC /* IPMViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C4C01E22E8616B00E4A5AC /* IPMViewModel.swift */; };
 		48C51A7F21A31A890040CFE8 /* PushBasicMetric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C51A7C21A31A890040CFE8 /* PushBasicMetric.swift */; };
 		48C51A8021A31A890040CFE8 /* UninstallTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C51A7D21A31A890040CFE8 /* UninstallTracker.swift */; };
 		48C51A8121A31A890040CFE8 /* PairDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C51A7E21A31A890040CFE8 /* PairDevice.swift */; };
@@ -89,8 +139,19 @@
 		48CBDC4D21B698170028D6B8 /* AdminPanel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48CBDC4C21B698170028D6B8 /* AdminPanel.storyboard */; };
 		48CBDC4F21B698650028D6B8 /* AdminPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48CBDC4E21B698650028D6B8 /* AdminPanelViewController.swift */; };
 		48D0F4AB21B7DAE400288239 /* CodeEntryProgressionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48D0F4AA21B7DAE400288239 /* CodeEntryProgressionController.swift */; };
+		48EFCCC122E0689E002FBEF6 /* ImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCC022E0689E002FBEF6 /* ImageResource.swift */; };
+		48EFCCC322E068B7002FBEF6 /* ImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCC222E068B7002FBEF6 /* ImageOperation.swift */; };
+		48EFCCC522E068FF002FBEF6 /* ApplicationStateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCC422E068FF002FBEF6 /* ApplicationStateOperation.swift */; };
+		48EFCCC722E06934002FBEF6 /* MessagePresentationOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCC622E06934002FBEF6 /* MessagePresentationOperation.swift */; };
+		48EFCCCA22E072DC002FBEF6 /* ApplicationStateOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCC922E072DC002FBEF6 /* ApplicationStateOperationTests.swift */; };
+		48EFCCCC22E07D83002FBEF6 /* ImageOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCCB22E07D83002FBEF6 /* ImageOperationTests.swift */; };
+		48EFCCD322E081C5002FBEF6 /* test-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 48EFCCD222E081C5002FBEF6 /* test-image.png */; };
+		48EFCCD522E081DA002FBEF6 /* EventFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCD422E081D9002FBEF6 /* EventFactoryTests.swift */; };
+		48EFCCD722E083D9002FBEF6 /* MessagePresentationOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCD622E083D9002FBEF6 /* MessagePresentationOperationTests.swift */; };
+		48EFCCD922E5C1AF002FBEF6 /* EnqueueUserNotificationOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCD822E5C1AF002FBEF6 /* EnqueueUserNotificationOperation.swift */; };
+		48EFCCDA22E5CC98002FBEF6 /* PushStrategyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1E4C8422899D6A0096A801 /* PushStrategyFactory.swift */; };
+		48EFCCDC22E6FDDB002FBEF6 /* MockIPMStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48EFCCDB22E6FDDB002FBEF6 /* MockIPMStorage.swift */; };
 		48FED98921BF45B000D8975D /* AdminPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FED98821BF45B000D8975D /* AdminPresenter.swift */; };
-		48FED98B21C10D9800D8975D /* OHHTTPStubs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48FED98A21C10D9800D8975D /* OHHTTPStubs.framework */; };
 		48FED98F21C1104800D8975D /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FED98E21C1104800D8975D /* ConfigTests.swift */; };
 		48FED99121C1109F00D8975D /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FED99021C1109F00D8975D /* TestHelpers.swift */; };
 		48FED99321C115BB00D8975D /* TrackEventTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FED99221C115BB00D8975D /* TrackEventTests.swift */; };
@@ -128,6 +189,57 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C0E0AB122E1B2F10099533B /* StoreIPMOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreIPMOperation.swift; sourceTree = "<group>"; };
+		1C0E0AB322E213960099533B /* ConnectUserNotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectUserNotificationCenterWrapper.swift; sourceTree = "<group>"; };
+		1C0E0AB722E214A90099533B /* MockUserNotificationCenterWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserNotificationCenterWrapper.swift; sourceTree = "<group>"; };
+		1C0E0AB922E5B2310099533B /* StoreIPMOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreIPMOperationTests.swift; sourceTree = "<group>"; };
+		1C0E0ABB22E5B5CB0099533B /* MockCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoordinator.swift; sourceTree = "<group>"; };
+		1C1E4C67228423A60096A801 /* ConnectNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectNotification.swift; sourceTree = "<group>"; };
+		1C1E4C6D228486090096A801 /* SilentPushStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilentPushStrategy.swift; sourceTree = "<group>"; };
+		1C1E4C6F2284863E0096A801 /* UninstallSilentPushStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UninstallSilentPushStrategy.swift; sourceTree = "<group>"; };
+		1C1E4C73228580EC0096A801 /* ConnectPushRegistrationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPushRegistrationTests.swift; sourceTree = "<group>"; };
+		1C1E4C76228581480096A801 /* ConnectNotificationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectNotificationTests.swift; sourceTree = "<group>"; };
+		1C1E4C78228582620096A801 /* UninstallSilentPushStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UninstallSilentPushStrategyTests.swift; sourceTree = "<group>"; };
+		1C1E4C7A2285A8750096A801 /* PushStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushStrategy.swift; sourceTree = "<group>"; };
+		1C1E4C8222899CF60096A801 /* ConnectSilentPushStrategyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectSilentPushStrategyFactory.swift; sourceTree = "<group>"; };
+		1C1E4C8422899D6A0096A801 /* PushStrategyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushStrategyFactory.swift; sourceTree = "<group>"; };
+		1C1E4C882289A0020096A801 /* SilentPushStrategyFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SilentPushStrategyFactoryTests.swift; sourceTree = "<group>"; };
+		1C1E4C8C228ACDFD0096A801 /* NotificationResponseWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationResponseWrapper.swift; sourceTree = "<group>"; };
+		1C1E4C8E228AD25E0096A801 /* PushStrategyFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushStrategyFactoryTests.swift; sourceTree = "<group>"; };
+		1C1E4C90228AD37D0096A801 /* MockNotificationResponseWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNotificationResponseWrapper.swift; sourceTree = "<group>"; };
+		1C1E4C92228AF3750096A801 /* BasicPushStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicPushStrategyTests.swift; sourceTree = "<group>"; };
+		1C1E4C96228C6EE80096A801 /* DeepLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLink.swift; sourceTree = "<group>"; };
+		1C1E4C98228DA6670096A801 /* DeepLinkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkTests.swift; sourceTree = "<group>"; };
+		1C1E4C9A228DA6C20096A801 /* MockConnectAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConnectAPI.swift; sourceTree = "<group>"; };
+		1C1E4C9C228DA7220096A801 /* MockDeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDeepLinkHandler.swift; sourceTree = "<group>"; };
+		1C1E4C9E228DA7D10096A801 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		1C1E4CA0228DAAB50096A801 /* OnMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnMain.swift; sourceTree = "<group>"; };
+		1C5B1F6622E0A6AA00DE1C94 /* IPMSharedStorageModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMSharedStorageModule.swift; sourceTree = "<group>"; };
+		1CAD6C5E2267298900E7345A /* ZendeskKeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ZendeskKeys.plist; sourceTree = "<group>"; };
+		1CAD6C6022672B9F00E7345A /* KeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyViewController.swift; sourceTree = "<group>"; };
+		1CAD6C6222672F5100E7345A /* ZendeskKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskKey.swift; sourceTree = "<group>"; };
+		1CAD6C642267597200E7345A /* ZendeskKeyReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskKeyReader.swift; sourceTree = "<group>"; };
+		1CAD6C662267609400E7345A /* ZendeskKeyStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZendeskKeyStorage.swift; sourceTree = "<group>"; };
+		1CAD6C682269CBFB00E7345A /* IPM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPM.swift; sourceTree = "<group>"; };
+		1CAD6C6A2269F0C300E7345A /* IPMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMTests.swift; sourceTree = "<group>"; };
+		1CAD6C6C226F632800E7345A /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		1CAD6C6E226F65E700E7345A /* UIColorExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensionTests.swift; sourceTree = "<group>"; };
+		1CAD6C7022706FFA00E7345A /* UIColorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorHelper.swift; sourceTree = "<group>"; };
+		1CCAB56D22A90AEE0089AF7D /* ConnectAPIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAPIClientTests.swift; sourceTree = "<group>"; };
+		1CCAB56F22A90BC50089AF7D /* MockMetricsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMetricsProvider.swift; sourceTree = "<group>"; };
+		1CE27B1522E8504900D5098A /* ConnectAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ConnectAssets.xcassets; sourceTree = "<group>"; };
+		1CE27B1722E86CF800D5098A /* DictionaryDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryDecoder.swift; sourceTree = "<group>"; };
+		1CEEEBE02297F151004CCB65 /* IPMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMViewController.swift; sourceTree = "<group>"; };
+		1CEEEBE12297F151004CCB65 /* IPMViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IPMViewController.xib; sourceTree = "<group>"; };
+		1CEEEBE9229D25A8004CCB65 /* IPMCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMCoordinator.swift; sourceTree = "<group>"; };
+		1CEEEBEB229D25FD004CCB65 /* IPMWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMWindow.swift; sourceTree = "<group>"; };
+		1CEEEBF5229ED5B4004CCB65 /* CustomTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransitionDelegate.swift; sourceTree = "<group>"; };
+		1CEEEBF7229ED5E2004CCB65 /* CustomPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPresentationController.swift; sourceTree = "<group>"; };
+		483839502297F7220054365F /* DefaultSilentPushStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSilentPushStrategy.swift; sourceTree = "<group>"; };
+		483839522297F8770054365F /* HostAppPushStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostAppPushStrategy.swift; sourceTree = "<group>"; };
+		483839542297FC150054365F /* BasicPushStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicPushStrategy.swift; sourceTree = "<group>"; };
+		48383958229C22720054365F /* IPMSilentPushStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMSilentPushStrategy.swift; sourceTree = "<group>"; };
+		4838395C229C24260054365F /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		484BE67D21930524002AE77F /* Connect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connect.swift; sourceTree = "<group>"; };
 		484BE6A221930687002AE77F /* EventOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventOperation.swift; sourceTree = "<group>"; };
 		484BE6A421930687002AE77F /* IdentifyResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentifyResource.swift; sourceTree = "<group>"; };
@@ -140,7 +252,6 @@
 		484BE6AB21930687002AE77F /* ConfigProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigProvider.swift; sourceTree = "<group>"; };
 		484BE6AC21930687002AE77F /* ConfigResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigResource.swift; sourceTree = "<group>"; };
 		484BE6AD21930687002AE77F /* BaseProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseProvider.swift; sourceTree = "<group>"; };
-		484BE6AE21930687002AE77F /* ConnectApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectApiClient.swift; sourceTree = "<group>"; };
 		484BE6B021930687002AE77F /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		484BE6B121930687002AE77F /* PushRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushRegistration.swift; sourceTree = "<group>"; };
 		484BE6B221930687002AE77F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -185,19 +296,21 @@
 		484BE71D21932100002AE77F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		484BE72821933885002AE77F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		484BE72A21933AA0002AE77F /* ZendeskConnectSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZendeskConnectSample.entitlements; sourceTree = "<group>"; };
+		485205E322B29D0C000AAC7E /* ConnectIPMMetric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectIPMMetric.swift; sourceTree = "<group>"; };
+		4856A66F2279A96500598DF2 /* PusherKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PusherKit.framework; path = ../Carthage/Build/iOS/PusherKit.framework; sourceTree = "<group>"; };
 		486CDC5621B93080009E58A3 /* SystemLocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemLocalizedString.swift; sourceTree = "<group>"; };
-		486CDC5821B982A7009E58A3 /* ConnectPushNotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPushNotificationHandler.swift; sourceTree = "<group>"; };
-		486CDC5F21BACF2A009E58A3 /* ConnectPushNotificationHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPushNotificationHandlerTests.swift; sourceTree = "<group>"; };
 		486CDC6121BE71A6009E58A3 /* ConnectPushRegistration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectPushRegistration.swift; sourceTree = "<group>"; };
 		4879BA9621ADAF0D00BF4042 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		4879BA9821AED3D600BF4042 /* EnvironmentStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentStorage.swift; sourceTree = "<group>"; };
-		4894716921AD8C1D00400A29 /* ConnectPushRegistrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectPushRegistrationTests.swift; sourceTree = "<group>"; };
+		4898D969227AF4400086E6CF /* Swifter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swifter.framework; path = ../Carthage/Build/iOS/Swifter.framework; sourceTree = "<group>"; };
+		48BEEE3C22F32C35004E795C /* ConnectAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectAPIClient.swift; sourceTree = "<group>"; };
 		48BFD9B421919B0000747562 /* ZendeskConnect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ZendeskConnect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48BFD9B721919B0000747562 /* ZendeskConnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZendeskConnect.h; sourceTree = "<group>"; };
 		48BFD9B821919B0000747562 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48BFD9F62191B4CF00747562 /* ZendeskConnectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZendeskConnectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48BFD9F82191B4CF00747562 /* ConnectShadowFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectShadowFactoryTests.swift; sourceTree = "<group>"; };
 		48BFD9FA2191B4CF00747562 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48C4C01E22E8616B00E4A5AC /* IPMViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPMViewModel.swift; sourceTree = "<group>"; };
 		48C51A5F2195E4970040CFE8 /* ZendeskConnect-Common.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "ZendeskConnect-Common.xcconfig"; sourceTree = "<group>"; };
 		48C51A7C21A31A890040CFE8 /* PushBasicMetric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushBasicMetric.swift; sourceTree = "<group>"; };
 		48C51A7D21A31A890040CFE8 /* UninstallTracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UninstallTracker.swift; sourceTree = "<group>"; };
@@ -215,6 +328,17 @@
 		48CBDC4C21B698170028D6B8 /* AdminPanel.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AdminPanel.storyboard; sourceTree = "<group>"; };
 		48CBDC4E21B698650028D6B8 /* AdminPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPanelViewController.swift; sourceTree = "<group>"; };
 		48D0F4AA21B7DAE400288239 /* CodeEntryProgressionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeEntryProgressionController.swift; sourceTree = "<group>"; };
+		48EFCCC022E0689E002FBEF6 /* ImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResource.swift; sourceTree = "<group>"; };
+		48EFCCC222E068B7002FBEF6 /* ImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOperation.swift; sourceTree = "<group>"; };
+		48EFCCC422E068FF002FBEF6 /* ApplicationStateOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStateOperation.swift; sourceTree = "<group>"; };
+		48EFCCC622E06934002FBEF6 /* MessagePresentationOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePresentationOperation.swift; sourceTree = "<group>"; };
+		48EFCCC922E072DC002FBEF6 /* ApplicationStateOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationStateOperationTests.swift; sourceTree = "<group>"; };
+		48EFCCCB22E07D83002FBEF6 /* ImageOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageOperationTests.swift; sourceTree = "<group>"; };
+		48EFCCD222E081C5002FBEF6 /* test-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "test-image.png"; sourceTree = "<group>"; };
+		48EFCCD422E081D9002FBEF6 /* EventFactoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventFactoryTests.swift; sourceTree = "<group>"; };
+		48EFCCD622E083D9002FBEF6 /* MessagePresentationOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePresentationOperationTests.swift; sourceTree = "<group>"; };
+		48EFCCD822E5C1AF002FBEF6 /* EnqueueUserNotificationOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnqueueUserNotificationOperation.swift; sourceTree = "<group>"; };
+		48EFCCDB22E6FDDB002FBEF6 /* MockIPMStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockIPMStorage.swift; sourceTree = "<group>"; };
 		48FED98821BF45B000D8975D /* AdminPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPresenter.swift; sourceTree = "<group>"; };
 		48FED98A21C10D9800D8975D /* OHHTTPStubs.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OHHTTPStubs.framework; path = ../Carthage/Build/iOS/OHHTTPStubs.framework; sourceTree = "<group>"; };
 		48FED98E21C1104800D8975D /* ConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
@@ -242,7 +366,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48FED98B21C10D9800D8975D /* OHHTTPStubs.framework in Frameworks */,
+				4863FF09228C395700F5483D /* OHHTTPStubs.framework in Frameworks */,
 				48BFD9FB2191B4CF00747562 /* ZendeskConnect.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -250,12 +374,77 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C1E4C71228580880096A801 /* PushNotifications */ = {
+			isa = PBXGroup;
+			children = (
+				1C1E4C73228580EC0096A801 /* ConnectPushRegistrationTests.swift */,
+				1C1E4C76228581480096A801 /* ConnectNotificationTests.swift */,
+				1C1E4C78228582620096A801 /* UninstallSilentPushStrategyTests.swift */,
+				1C1E4C92228AF3750096A801 /* BasicPushStrategyTests.swift */,
+				1C1E4C882289A0020096A801 /* SilentPushStrategyFactoryTests.swift */,
+				1C1E4C8E228AD25E0096A801 /* PushStrategyFactoryTests.swift */,
+				1C1E4C98228DA6670096A801 /* DeepLinkTests.swift */,
+				1C1E4C90228AD37D0096A801 /* MockNotificationResponseWrapper.swift */,
+				1C1E4C9A228DA6C20096A801 /* MockConnectAPI.swift */,
+				1C1E4C9C228DA7220096A801 /* MockDeepLinkHandler.swift */,
+			);
+			path = PushNotifications;
+			sourceTree = "<group>";
+		};
+		1CEEEBDF2297F124004CCB65 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1CEEEBE02297F151004CCB65 /* IPMViewController.swift */,
+				1CEEEBE12297F151004CCB65 /* IPMViewController.xib */,
+				4838395C229C24260054365F /* Coordinator.swift */,
+				1CEEEBE9229D25A8004CCB65 /* IPMCoordinator.swift */,
+				1CEEEBEB229D25FD004CCB65 /* IPMWindow.swift */,
+				485205E322B29D0C000AAC7E /* ConnectIPMMetric.swift */,
+				1CEEEBF5229ED5B4004CCB65 /* CustomTransitionDelegate.swift */,
+				1CEEEBF7229ED5E2004CCB65 /* CustomPresentationController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		4838394D2297F5830054365F /* PushStrategies */ = {
+			isa = PBXGroup;
+			children = (
+				1C1E4C7A2285A8750096A801 /* PushStrategy.swift */,
+				483839542297FC150054365F /* BasicPushStrategy.swift */,
+				483839522297F8770054365F /* HostAppPushStrategy.swift */,
+			);
+			path = PushStrategies;
+			sourceTree = "<group>";
+		};
+		4838394E2297F5A80054365F /* SilentPushStrategies */ = {
+			isa = PBXGroup;
+			children = (
+				48EFCCC822E06956002FBEF6 /* IPMOperations */,
+				1C1E4C6D228486090096A801 /* SilentPushStrategy.swift */,
+				1C1E4C6F2284863E0096A801 /* UninstallSilentPushStrategy.swift */,
+				48383958229C22720054365F /* IPMSilentPushStrategy.swift */,
+				483839502297F7220054365F /* DefaultSilentPushStrategy.swift */,
+			);
+			path = SilentPushStrategies;
+			sourceTree = "<group>";
+		};
+		4838394F2297F5C70054365F /* PushHandling */ = {
+			isa = PBXGroup;
+			children = (
+				4838394E2297F5A80054365F /* SilentPushStrategies */,
+				1C1E4C8222899CF60096A801 /* ConnectSilentPushStrategyFactory.swift */,
+				4838394D2297F5830054365F /* PushStrategies */,
+				1C1E4C8422899D6A0096A801 /* PushStrategyFactory.swift */,
+			);
+			path = PushHandling;
+			sourceTree = "<group>";
+		};
 		484BE6A121930687002AE77F /* NetworkClient */ = {
 			isa = PBXGroup;
 			children = (
+				48BEEE3C22F32C35004E795C /* ConnectAPIClient.swift */,
 				484BE6A221930687002AE77F /* EventOperation.swift */,
 				484BE6A321930687002AE77F /* Providers */,
-				484BE6AE21930687002AE77F /* ConnectApiClient.swift */,
 				484BE6AF21930687002AE77F /* Models */,
 				484BE6B721930687002AE77F /* WebService */,
 				484BE6C321930687002AE77F /* IdentifyOperation.swift */,
@@ -345,6 +534,10 @@
 				484BE6CA21930687002AE77F /* FileUtility.swift */,
 				486CDC5621B93080009E58A3 /* SystemLocalizedString.swift */,
 				48CBDC4721B02C830028D6B8 /* UIAlertControllerExtensions.swift */,
+				1CAD6C6C226F632800E7345A /* UIColorExtension.swift */,
+				1C1E4C9E228DA7D10096A801 /* UIApplicationExtension.swift */,
+				1C1E4CA0228DAAB50096A801 /* OnMain.swift */,
+				1CE27B1722E86CF800D5098A /* DictionaryDecoder.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -356,6 +549,8 @@
 				484BE6CD21930687002AE77F /* ZCNUser.swift */,
 				48CB4A8621C270BA00A0CC32 /* EventFactory.swift */,
 				48CB4A8821C2740C00A0CC32 /* UserExtensions.swift */,
+				1CAD6C682269CBFB00E7345A /* IPM.swift */,
+				48C4C01E22E8616B00E4A5AC /* IPMViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -385,14 +580,19 @@
 		484BE710219320FF002AE77F /* ZendeskConnectSample */ = {
 			isa = PBXGroup;
 			children = (
-				484BE72A21933AA0002AE77F /* ZendeskConnectSample.entitlements */,
-				484BE72821933885002AE77F /* LoginViewController.swift */,
 				484BE711219320FF002AE77F /* AppDelegate.swift */,
-				484BE713219320FF002AE77F /* ViewController.swift */,
-				484BE715219320FF002AE77F /* Main.storyboard */,
 				484BE71821932100002AE77F /* Assets.xcassets */,
-				484BE71A21932100002AE77F /* LaunchScreen.storyboard */,
 				484BE71D21932100002AE77F /* Info.plist */,
+				1CAD6C6022672B9F00E7345A /* KeyViewController.swift */,
+				484BE71A21932100002AE77F /* LaunchScreen.storyboard */,
+				484BE72821933885002AE77F /* LoginViewController.swift */,
+				484BE715219320FF002AE77F /* Main.storyboard */,
+				484BE713219320FF002AE77F /* ViewController.swift */,
+				484BE72A21933AA0002AE77F /* ZendeskConnectSample.entitlements */,
+				1CAD6C5E2267298900E7345A /* ZendeskKeys.plist */,
+				1CAD6C6222672F5100E7345A /* ZendeskKey.swift */,
+				1CAD6C642267597200E7345A /* ZendeskKeyReader.swift */,
+				1CAD6C662267609400E7345A /* ZendeskKeyStorage.swift */,
 			);
 			path = ZendeskConnectSample;
 			sourceTree = "<group>";
@@ -400,6 +600,8 @@
 		484BE723219336DA002AE77F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4898D969227AF4400086E6CF /* Swifter.framework */,
+				4856A66F2279A96500598DF2 /* PusherKit.framework */,
 				48FED98A21C10D9800D8975D /* OHHTTPStubs.framework */,
 			);
 			name = Frameworks;
@@ -408,8 +610,11 @@
 		486CDC5E21BABEE0009E58A3 /* PushNotifications */ = {
 			isa = PBXGroup;
 			children = (
-				486CDC5821B982A7009E58A3 /* ConnectPushNotificationHandler.swift */,
+				4838394F2297F5C70054365F /* PushHandling */,
 				486CDC6121BE71A6009E58A3 /* ConnectPushRegistration.swift */,
+				1C1E4C67228423A60096A801 /* ConnectNotification.swift */,
+				1C1E4C8C228ACDFD0096A801 /* NotificationResponseWrapper.swift */,
+				1C1E4C96228C6EE80096A801 /* DeepLink.swift */,
 			);
 			path = PushNotifications;
 			sourceTree = "<group>";
@@ -444,6 +649,7 @@
 				484BE6D621930687002AE77F /* Queuing */,
 				484BE6C521930687002AE77F /* Utils */,
 				486CDC5E21BABEE0009E58A3 /* PushNotifications */,
+				1CEEEBDF2297F124004CCB65 /* UI */,
 				484BE67D21930524002AE77F /* Connect.swift */,
 				48CBDC4321AF098A0028D6B8 /* ConnectShadow.swift */,
 				48CBDC4521AF0ADA0028D6B8 /* ConnectShadowFactory.swift */,
@@ -451,6 +657,7 @@
 				48BFD9B721919B0000747562 /* ZendeskConnect.h */,
 				48C51A5F2195E4970040CFE8 /* ZendeskConnect-Common.xcconfig */,
 				48BFD9B821919B0000747562 /* Info.plist */,
+				1CE27B1522E8504900D5098A /* ConnectAssets.xcassets */,
 			);
 			path = ZendeskConnect;
 			sourceTree = "<group>";
@@ -458,16 +665,29 @@
 		48BFD9F72191B4CF00747562 /* ZendeskConnectTests */ = {
 			isa = PBXGroup;
 			children = (
-				484BE70721931D54002AE77F /* ObjectQueueTests.swift */,
+				48EFCCD422E081D9002FBEF6 /* EventFactoryTests.swift */,
+				48EFCCD222E081C5002FBEF6 /* test-image.png */,
+				1C1E4C71228580880096A801 /* PushNotifications */,
 				48FED98E21C1104800D8975D /* ConfigTests.swift */,
-				48FED99221C115BB00D8975D /* TrackEventTests.swift */,
-				48FED99021C1109F00D8975D /* TestHelpers.swift */,
+				48BFD9F82191B4CF00747562 /* ConnectShadowFactoryTests.swift */,
+				48BFD9FA2191B4CF00747562 /* Info.plist */,
+				1CAD6C6A2269F0C300E7345A /* IPMTests.swift */,
+				484BE70721931D54002AE77F /* ObjectQueueTests.swift */,
 				484BE70621931D54002AE77F /* QueueFileTests.swift */,
 				484BE70521931D54002AE77F /* StorageTests.swift */,
-				48BFD9F82191B4CF00747562 /* ConnectShadowFactoryTests.swift */,
-				4894716921AD8C1D00400A29 /* ConnectPushRegistrationTests.swift */,
-				486CDC5F21BACF2A009E58A3 /* ConnectPushNotificationHandlerTests.swift */,
-				48BFD9FA2191B4CF00747562 /* Info.plist */,
+				48FED99021C1109F00D8975D /* TestHelpers.swift */,
+				48FED99221C115BB00D8975D /* TrackEventTests.swift */,
+				1CAD6C6E226F65E700E7345A /* UIColorExtensionTests.swift */,
+				1CAD6C7022706FFA00E7345A /* UIColorHelper.swift */,
+				1CCAB56D22A90AEE0089AF7D /* ConnectAPIClientTests.swift */,
+				1CCAB56F22A90BC50089AF7D /* MockMetricsProvider.swift */,
+				48EFCCC922E072DC002FBEF6 /* ApplicationStateOperationTests.swift */,
+				48EFCCCB22E07D83002FBEF6 /* ImageOperationTests.swift */,
+				48EFCCD622E083D9002FBEF6 /* MessagePresentationOperationTests.swift */,
+				1C0E0AB722E214A90099533B /* MockUserNotificationCenterWrapper.swift */,
+				1C0E0AB922E5B2310099533B /* StoreIPMOperationTests.swift */,
+				1C0E0ABB22E5B5CB0099533B /* MockCoordinator.swift */,
+				48EFCCDB22E6FDDB002FBEF6 /* MockIPMStorage.swift */,
 			);
 			path = ZendeskConnectTests;
 			sourceTree = "<group>";
@@ -477,8 +697,23 @@
 			children = (
 				4879BA9621ADAF0D00BF4042 /* Storage.swift */,
 				48CBDC4A21B53E940028D6B8 /* PushSharedStorageModule.swift */,
+				1C5B1F6622E0A6AA00DE1C94 /* IPMSharedStorageModule.swift */,
 			);
 			path = SharedStorage;
+			sourceTree = "<group>";
+		};
+		48EFCCC822E06956002FBEF6 /* IPMOperations */ = {
+			isa = PBXGroup;
+			children = (
+				48EFCCC022E0689E002FBEF6 /* ImageResource.swift */,
+				48EFCCC222E068B7002FBEF6 /* ImageOperation.swift */,
+				48EFCCC422E068FF002FBEF6 /* ApplicationStateOperation.swift */,
+				48EFCCC622E06934002FBEF6 /* MessagePresentationOperation.swift */,
+				1C0E0AB122E1B2F10099533B /* StoreIPMOperation.swift */,
+				48EFCCD822E5C1AF002FBEF6 /* EnqueueUserNotificationOperation.swift */,
+				1C0E0AB322E213960099533B /* ConnectUserNotificationCenterWrapper.swift */,
+			);
+			path = IPMOperations;
 			sourceTree = "<group>";
 		};
 		48FED98721BF41CF00D8975D /* AdminPanel */ = {
@@ -569,12 +804,13 @@
 		48BFD9AB21919B0000747562 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Zendesk;
 				TargetAttributes = {
 					484BE70E219320FE002AE77F = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -586,10 +822,11 @@
 					};
 					48BFD9B321919B0000747562 = {
 						CreatedOnToolsVersion = 10.0;
-						LastSwiftMigration = 1000;
+						LastSwiftMigration = 1020;
 					};
 					48BFD9F52191B4CF00747562 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -621,6 +858,7 @@
 				484BE71C21932100002AE77F /* LaunchScreen.storyboard in Resources */,
 				484BE71921932100002AE77F /* Assets.xcassets in Resources */,
 				484BE717219320FF002AE77F /* Main.storyboard in Resources */,
+				1CAD6C5F2267298900E7345A /* ZendeskKeys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +866,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CEEEBE32297F151004CCB65 /* IPMViewController.xib in Resources */,
+				1CE27B1622E8504900D5098A /* ConnectAssets.xcassets in Resources */,
 				48CBDC4D21B698170028D6B8 /* AdminPanel.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,6 +876,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48EFCCD322E081C5002FBEF6 /* test-image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,6 +929,10 @@
 			files = (
 				484BE72921933885002AE77F /* LoginViewController.swift in Sources */,
 				484BE714219320FF002AE77F /* ViewController.swift in Sources */,
+				1CAD6C672267609400E7345A /* ZendeskKeyStorage.swift in Sources */,
+				1CAD6C6122672B9F00E7345A /* KeyViewController.swift in Sources */,
+				1CAD6C652267597200E7345A /* ZendeskKeyReader.swift in Sources */,
+				1CAD6C6322672F5100E7345A /* ZendeskKey.swift in Sources */,
 				484BE712219320FF002AE77F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -696,14 +941,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48EFCCDA22E5CC98002FBEF6 /* PushStrategyFactory.swift in Sources */,
 				484BE6FC21930687002AE77F /* ZCNUser.swift in Sources */,
+				48EFCCC322E068B7002FBEF6 /* ImageOperation.swift in Sources */,
+				48C4C01F22E8616B00E4A5AC /* IPMViewModel.swift in Sources */,
 				484BE6F621930687002AE77F /* UserStorage.swift in Sources */,
+				1CEEEBF6229ED5B4004CCB65 /* CustomTransitionDelegate.swift in Sources */,
 				484BE6F521930687002AE77F /* BaseOperation.swift in Sources */,
 				484BE70121930687002AE77F /* FileHeader.swift in Sources */,
+				1CAD6C692269CBFB00E7345A /* IPM.swift in Sources */,
 				484BE70321930687002AE77F /* Converter.swift in Sources */,
 				484BE6F221930687002AE77F /* Codable+Extension.swift in Sources */,
 				484BE70021930687002AE77F /* FileObjectQueue.swift in Sources */,
+				1C0E0AB422E213960099533B /* ConnectUserNotificationCenterWrapper.swift in Sources */,
 				48C51A8121A31A890040CFE8 /* PairDevice.swift in Sources */,
+				1C1E4C6E228486090096A801 /* SilentPushStrategy.swift in Sources */,
+				1C1E4C68228423A60096A801 /* ConnectNotification.swift in Sources */,
 				484BE6DF21930687002AE77F /* PushProvider.swift in Sources */,
 				48CBDC4F21B698650028D6B8 /* AdminPanelViewController.swift in Sources */,
 				48CB4A8921C2740C00A0CC32 /* UserExtensions.swift in Sources */,
@@ -713,54 +966,78 @@
 				484BE6F321930687002AE77F /* Client.swift in Sources */,
 				484BE6DA21930687002AE77F /* IdentifyProvider.swift in Sources */,
 				484BE6DB21930687002AE77F /* RequestDecorators.swift in Sources */,
+				1C1E4C8322899CF70096A801 /* ConnectSilentPushStrategyFactory.swift in Sources */,
 				48FED98921BF45B000D8975D /* AdminPresenter.swift in Sources */,
 				486CDC6221BE71A6009E58A3 /* ConnectPushRegistration.swift in Sources */,
 				484BE6F421930687002AE77F /* IdentifyOperation.swift in Sources */,
+				4838395D229C24260054365F /* Coordinator.swift in Sources */,
 				484BE6EA21930687002AE77F /* Accountconfig.swift in Sources */,
+				48383959229C22720054365F /* IPMSilentPushStrategy.swift in Sources */,
+				48EFCCC722E06934002FBEF6 /* MessagePresentationOperation.swift in Sources */,
 				484BE6FB21930687002AE77F /* ZCNEvent.swift in Sources */,
 				4879BA9921AED3D600BF4042 /* EnvironmentStorage.swift in Sources */,
 				484BE6DE21930687002AE77F /* EventProvider.swift in Sources */,
+				48EFCCD922E5C1AF002FBEF6 /* EnqueueUserNotificationOperation.swift in Sources */,
 				484BE6FE21930687002AE77F /* FileElement.swift in Sources */,
 				48CBDC4421AF098A0028D6B8 /* ConnectShadow.swift in Sources */,
-				484BE6E321930687002AE77F /* ConnectApiClient.swift in Sources */,
 				484BE6ED21930687002AE77F /* Resource.swift in Sources */,
 				484BE6E721930687002AE77F /* User.swift in Sources */,
+				1CEEEBEC229D25FD004CCB65 /* IPMWindow.swift in Sources */,
 				484BE6F021930687002AE77F /* HTTPMethod.swift in Sources */,
 				484BE6F721930687002AE77F /* ConfigStorage.swift in Sources */,
+				1C1E4C97228C6EE80096A801 /* DeepLink.swift in Sources */,
+				483839532297F8770054365F /* HostAppPushStrategy.swift in Sources */,
 				48CBDC4621AF0ADA0028D6B8 /* ConnectShadowFactory.swift in Sources */,
 				484BE6FD21930687002AE77F /* ObjectQueue.swift in Sources */,
 				484BE6DC21930687002AE77F /* EventResource.swift in Sources */,
 				484BE6FF21930687002AE77F /* QueueFile.swift in Sources */,
+				48BEEE3D22F32C35004E795C /* ConnectAPIClient.swift in Sources */,
 				48CBDC4821B02C830028D6B8 /* UIAlertControllerExtensions.swift in Sources */,
 				484BE6EC21930687002AE77F /* Result.swift in Sources */,
+				48EFCCC122E0689E002FBEF6 /* ImageResource.swift in Sources */,
+				1C1E4C702284863E0096A801 /* UninstallSilentPushStrategy.swift in Sources */,
+				1C1E4C7B2285A8750096A801 /* PushStrategy.swift in Sources */,
 				484BE6D821930687002AE77F /* EventOperation.swift in Sources */,
+				1CEEEBEA229D25A9004CCB65 /* IPMCoordinator.swift in Sources */,
 				484BE67F21930525002AE77F /* Connect.swift in Sources */,
+				1C5B1F6722E0A6AA00DE1C94 /* IPMSharedStorageModule.swift in Sources */,
+				483839552297FC150054365F /* BasicPushStrategy.swift in Sources */,
+				1C1E4C9F228DA7D10096A801 /* UIApplicationExtension.swift in Sources */,
 				484BE6E121930687002AE77F /* ConfigResource.swift in Sources */,
+				1C1E4C8D228ACDFD0096A801 /* NotificationResponseWrapper.swift in Sources */,
+				48EFCCC522E068FF002FBEF6 /* ApplicationStateOperation.swift in Sources */,
 				484BE6D921930687002AE77F /* IdentifyResource.swift in Sources */,
 				484BE6EE21930687002AE77F /* String+Extension.swift in Sources */,
 				48C51A7F21A31A890040CFE8 /* PushBasicMetric.swift in Sources */,
+				1CEEEBF8229ED5E2004CCB65 /* CustomPresentationController.swift in Sources */,
 				484BE6FA21930687002AE77F /* FileUtility.swift in Sources */,
+				1CE27B1822E86CF800D5098A /* DictionaryDecoder.swift in Sources */,
 				484BE70221930687002AE77F /* InMemoryObjectQueue.swift in Sources */,
 				484BE6F121930687002AE77F /* WebService.swift in Sources */,
 				484BE6F821930687002AE77F /* Logger.swift in Sources */,
 				484BE6E921930687002AE77F /* PrePrompt.swift in Sources */,
+				485205E422B29D0C000AAC7E /* ConnectIPMMetric.swift in Sources */,
 				48C51A8021A31A890040CFE8 /* UninstallTracker.swift in Sources */,
 				48C51A8621A31A930040CFE8 /* MetricsResource.swift in Sources */,
 				48C51A8721A31A930040CFE8 /* TestSendResource.swift in Sources */,
 				48C51A8921A31A930040CFE8 /* TestSendProvider.swift in Sources */,
+				1CEEEBE22297F151004CCB65 /* IPMViewController.swift in Sources */,
 				484BE6EB21930687002AE77F /* RequestDecorator.swift in Sources */,
 				48C51A8821A31A930040CFE8 /* MetricsProvider.swift in Sources */,
 				484BE6F921930687002AE77F /* Reachability.swift in Sources */,
 				484BE6E421930687002AE77F /* Event.swift in Sources */,
 				484BE6E621930687002AE77F /* Config.swift in Sources */,
+				1C0E0AB222E1B2F10099533B /* StoreIPMOperation.swift in Sources */,
 				48CBDC4B21B53E940028D6B8 /* PushSharedStorageModule.swift in Sources */,
-				486CDC5921B982A8009E58A3 /* ConnectPushNotificationHandler.swift in Sources */,
+				1CAD6C6D226F632800E7345A /* UIColorExtension.swift in Sources */,
 				484BE6E221930687002AE77F /* BaseProvider.swift in Sources */,
 				48CB4A8721C270BA00A0CC32 /* EventFactory.swift in Sources */,
 				4879BA9721ADAF0D00BF4042 /* Storage.swift in Sources */,
+				483839512297F7220054365F /* DefaultSilentPushStrategy.swift in Sources */,
 				484BE6E521930687002AE77F /* PushRegistration.swift in Sources */,
 				484BE6EF21930687002AE77F /* NSMutableURLRequest+Extension.swift in Sources */,
 				486CDC5721B93080009E58A3 /* SystemLocalizedString.swift in Sources */,
+				1C1E4CA1228DAAB50096A801 /* OnMain.swift in Sources */,
 				484BE70421930687002AE77F /* Queue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -769,14 +1046,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48EFCCD522E081DA002FBEF6 /* EventFactoryTests.swift in Sources */,
+				1C1E4C8F228AD25E0096A801 /* PushStrategyFactoryTests.swift in Sources */,
+				1C0E0ABA22E5B2310099533B /* StoreIPMOperationTests.swift in Sources */,
+				1CAD6C6B2269F0C300E7345A /* IPMTests.swift in Sources */,
+				1C1E4C91228AD37D0096A801 /* MockNotificationResponseWrapper.swift in Sources */,
 				484BE70A21931D54002AE77F /* ObjectQueueTests.swift in Sources */,
+				1C1E4C99228DA6670096A801 /* DeepLinkTests.swift in Sources */,
+				1C1E4C79228582620096A801 /* UninstallSilentPushStrategyTests.swift in Sources */,
+				1C1E4C93228AF3750096A801 /* BasicPushStrategyTests.swift in Sources */,
 				48BFD9F92191B4CF00747562 /* ConnectShadowFactoryTests.swift in Sources */,
+				1CAD6C7122706FFA00E7345A /* UIColorHelper.swift in Sources */,
 				48FED98F21C1104800D8975D /* ConfigTests.swift in Sources */,
+				48EFCCD722E083D9002FBEF6 /* MessagePresentationOperationTests.swift in Sources */,
+				1CCAB57022A90BC50089AF7D /* MockMetricsProvider.swift in Sources */,
+				1C0E0ABC22E5B5CB0099533B /* MockCoordinator.swift in Sources */,
+				1CAD6C6F226F65E700E7345A /* UIColorExtensionTests.swift in Sources */,
+				1C1E4C75228580EC0096A801 /* ConnectPushRegistrationTests.swift in Sources */,
 				48FED99321C115BB00D8975D /* TrackEventTests.swift in Sources */,
+				1C1E4C9B228DA6C20096A801 /* MockConnectAPI.swift in Sources */,
 				484BE70821931D54002AE77F /* StorageTests.swift in Sources */,
-				4894716A21AD8C1D00400A29 /* ConnectPushRegistrationTests.swift in Sources */,
-				486CDC6021BACF2A009E58A3 /* ConnectPushNotificationHandlerTests.swift in Sources */,
+				1C0E0AB822E214A90099533B /* MockUserNotificationCenterWrapper.swift in Sources */,
+				1C1E4C892289A0020096A801 /* SilentPushStrategyFactoryTests.swift in Sources */,
 				484BE70921931D54002AE77F /* QueueFileTests.swift in Sources */,
+				1C1E4C9D228DA7220096A801 /* MockDeepLinkHandler.swift in Sources */,
+				48EFCCCC22E07D83002FBEF6 /* ImageOperationTests.swift in Sources */,
+				1C1E4C77228581480096A801 /* ConnectNotificationTests.swift in Sources */,
+				48EFCCDC22E6FDDB002FBEF6 /* MockIPMStorage.swift in Sources */,
+				1CCAB56E22A90AEE0089AF7D /* ConnectAPIClientTests.swift in Sources */,
+				48EFCCCA22E072DC002FBEF6 /* ApplicationStateOperationTests.swift in Sources */,
 				48FED99121C1109F00D8975D /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -832,7 +1130,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.ZendeskConnectSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -853,7 +1152,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.ZendeskConnectSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -910,7 +1210,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -968,7 +1268,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -985,7 +1285,7 @@
 			baseConfigurationReference = 48C51A5F2195E4970040CFE8 /* ZendeskConnect-Common.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7529UAQB93;
@@ -1004,7 +1304,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1014,7 +1314,7 @@
 			baseConfigurationReference = 48C51A5F2195E4970040CFE8 /* ZendeskConnect-Common.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7529UAQB93;
@@ -1032,7 +1332,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1054,7 +1354,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.ZendeskConnectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1076,7 +1376,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.zendesk.ZendeskConnectTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

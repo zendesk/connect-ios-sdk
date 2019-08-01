@@ -12,7 +12,7 @@ import Foundation
 
 class OutboundClientDecorator: RequestDecorator {
 
-    var  headerKey: String { return "X-Outbound-Client" }
+    var headerKey: String { return "X-Outbound-Client" }
 
     let headerValue: String
 
@@ -23,7 +23,7 @@ class OutboundClientDecorator: RequestDecorator {
 
 class OutboundGUIDDecorator: RequestDecorator {
     
-    var  headerKey: String { return "X-Outbound-GUID" }
+    var headerKey: String { return "X-Outbound-GUID" }
     
     var headerValue: String {
         return UUID().uuidString
@@ -43,7 +43,7 @@ class ConnectGUIDDecorator: OutboundGUIDDecorator {
 
 class OutboundKeyDecorator: RequestDecorator {
     
-    var  headerKey: String { return "X-Outbound-Key" }
+    var headerKey: String { return "X-Outbound-Key" }
     
     let headerValue: String
     

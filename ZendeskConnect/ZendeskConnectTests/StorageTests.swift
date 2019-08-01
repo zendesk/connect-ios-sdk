@@ -102,7 +102,6 @@ class ConfigStorageTests: XCTestCase {
         XCTAssertNil(configStorage.readConfig())
     }
 
-    
     func testConfigStorageAndRetrieval() {
         configStorage.store(config: config)
         

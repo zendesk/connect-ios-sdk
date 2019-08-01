@@ -14,7 +14,23 @@ import ZendeskConnect
 class ViewController: UIViewController {
     
     @IBOutlet weak var userLabel: UILabel!
+    @IBOutlet weak var selectedKeyLabel: UILabel!
     @IBAction func unwind(segue:UIStoryboardSegue) { }
+    private var keyStorage: ZendeskKeyStorage = ZendeskKeyStorage.init()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        useSelectedKey()
+    }
+    
+    private func useSelectedKey() {
+        guard let selectedKey = keyStorage.selectedZendeskKey else {
+            return
+        }
+        
+        Connect.instance.initialize(privateKey: selectedKey.keyID)
+        selectedKeyLabel.text = "\(selectedKey.name) (\(selectedKey.environmentType))"
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -48,6 +64,12 @@ class ViewController: UIViewController {
         let event = EventFactory.createEvent(event: "testEvent", properties: ["foo": "bar"])
         Connect.instance.trackEvent(event)
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "KeySegue", let viewController = segue.destination as? KeyViewController {
+            viewController.delegate = self
+        }
+    }
 }
 
 extension ViewController: LoginDelegate {
@@ -64,6 +86,15 @@ extension ViewController: LoginDelegate {
                         phoneNumber: userDetails["phone_number"])
 
         Connect.instance.identifyUser(user)
+    }
+}
+
+extension ViewController: KeyViewControllerDelegate {
+    
+    func didSelectKey(key: ZendeskKey, from viewController: UIViewController) {
+        navigationController?.popViewController(animated: true)
+        keyStorage.selectedZendeskKey = key
+        useSelectedKey()
     }
 }
 

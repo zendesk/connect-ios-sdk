@@ -11,20 +11,20 @@
 import Foundation
 
 
-/// Creates urls in a application subirectory for connect, as well as creating FileHandle's for those urls.
+/// Creates `URL`s in a application subirectory for Connect, as well as creating `FileHandle`s for those `URL`s.
 ///
-/// - failedToGetApplicationSupport: Thrown when FileUtility is unable to get a url for the application support directory.
-/// - faildToCreateHandle: Thrown when FileUtility fails to create a FileHandle.
+/// - failedToGetApplicationSupport: Thrown when `FileUtility` is unable to get a `URL` for the application support directory.
+/// - failedToCreateHandle: Thrown when `FileUtility` fails to create a `FileHandle`.
 enum FileUtility: Error {
     
     case failedToGetApplicationSupport
-    case faildToCreateHandle
+    case failedToCreateHandle
     
     
-    /// Creates a file url in a directory of the application support director.
+    /// Creates a file `URL` in a directory of the application support directory.
     ///
-    /// - Returns: a file url with the last component being the name provided.
-    /// - Throws: FileUtility.failedToGetApplicationSupport
+    /// - Returns: A file `URL` with the last component being the name provided.
+    /// - Throws: `FileUtility.failedToGetApplicationSupport`.
     static func url(name: String) throws -> URL {
         guard let url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
             throw FileUtility.failedToGetApplicationSupport
@@ -33,19 +33,19 @@ enum FileUtility: Error {
     }
     
     
-    /// Creates a file handle for the given URL. This will attempt to create a file
-    /// if no file exists at the provided url.
+    /// Creates a `FileHandle` for the given `URL`. This will attempt to create a file
+    /// if no file exists at the provided `URL`.
     ///
-    /// - Parameter url: file url for creating the FileHandle
-    /// - Returns: A file handle for the given url.
-    /// - Throws: FileUtility.faildToCreateHandle
+    /// - Parameter url: File `URL` for creating the `FileHandle`.
+    /// - Returns: A `FileHandle` for the given `URL`.
+    /// - Throws: `FileUtility.failedToCreateHandle`.
     static func handle(url: URL) throws -> FileHandle {
         do {
             let handle = try FileHandle(forUpdating: url)
             Logger.debug("Created handle for \(url.lastPathComponent) file.")
             return handle
         } catch {
-            Logger.debug("Failed to create handle for \(url.lastPathComponent) file. Attempting to create file at url: \(url)")
+            Logger.debug("Failed to create handle for \(url.lastPathComponent) file. Attempting to create file at URL: \(url)")
             do {
                 try FileManager.default.createDirectory(at: url.deletingLastPathComponent(),
                                                         withIntermediateDirectories: true,
@@ -56,7 +56,7 @@ enum FileUtility: Error {
                 Logger.debug("Created handle for \(url.lastPathComponent) file.")
                 return handle
             } catch {
-                throw FileUtility.faildToCreateHandle
+                throw FileUtility.failedToCreateHandle
             }
         }
     }

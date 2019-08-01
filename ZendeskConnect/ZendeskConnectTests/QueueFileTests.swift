@@ -12,7 +12,8 @@ import XCTest
 @testable import ZendeskConnect
 
 class QueueFileTests: XCTestCase {
-    
+
+    var fileUrl: URL!
     var testData = [
         "one".data(using: .utf8)!,
         "two".data(using: .utf8)!,
@@ -27,7 +28,6 @@ class QueueFileTests: XCTestCase {
     ]
     
     func newFileHandle() throws -> FileHandle {
-        let fileUrl =  try FileUtility.url(name: "tests.dat")
         let fileHandle = try FileUtility.handle(url: fileUrl)
         return fileHandle
     }
@@ -43,7 +43,7 @@ class QueueFileTests: XCTestCase {
         super.setUp()
         
         do {
-            let fileUrl =  try FileUtility.url(name: "tests.dat")
+            fileUrl =  URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("queue_file_tests.dat")
             let fileHandle = try FileUtility.handle(url: fileUrl)
             fileHandle.truncateFile(atOffset: 0)
         } catch {
@@ -51,13 +51,7 @@ class QueueFileTests: XCTestCase {
         }
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
     func testAddingAnElement() {
-        
         do {
             var queue = try newQueueFile()
             let expected = testData[0]
@@ -75,7 +69,6 @@ class QueueFileTests: XCTestCase {
     
     func testClearTruncatesFile() {
         do {
-            let fileUrl =  try FileUtility.url(name: "tests.dat")
             let fileHandle = try FileUtility.handle(url: fileUrl)
             let queue = QueueFile(fileHandle: fileHandle)
             let expected = testData[0]
@@ -125,7 +118,6 @@ class QueueFileTests: XCTestCase {
     
     func testRemovingAnElementWithSizeOfTwo() {
         do {
-            let fileUrl =  try FileUtility.url(name: "tests.dat")
             let fileHandle = try FileUtility.handle(url: fileUrl)
             let queue = QueueFile(fileHandle: fileHandle)
             let expectedOne = testData[0]
@@ -135,14 +127,14 @@ class QueueFileTests: XCTestCase {
             
             // Confirm that the data was in the file before we cleared.
             let firstOffset = FileHeader.headerLength + FileElement.headerLength
-            do { // first is as expected
+            do { // First is as expected.
                 fileHandle.seek(toFileOffset: firstOffset)
                 let data = fileHandle.readData(ofLength: expectedOne.count)
                 XCTAssertEqual(expectedOne, data)
             }
             
             let secondOffset = firstOffset + UInt64(expectedOne.count) + FileElement.headerLength
-            do { // second is as expected
+            do { // Second is as expected
                 fileHandle.seek(toFileOffset: secondOffset)
                 let data = fileHandle.readData(ofLength: expectedTwo.count)
                 XCTAssertEqual(expectedTwo, data)
@@ -150,10 +142,10 @@ class QueueFileTests: XCTestCase {
             
             queue.remove(1)
             
-            // second should still be there
+            // Second should still be there.
             XCTAssertEqual(queue.peek()!, expectedTwo)
             
-            do { // first should be gone
+            do { // First should be gone.
                 fileHandle.seek(toFileOffset: firstOffset)
                 let data = fileHandle.readData(ofLength: expectedOne.count)
                 XCTAssertEqual(data, Data.init(repeating: 0, count: expectedOne.count))

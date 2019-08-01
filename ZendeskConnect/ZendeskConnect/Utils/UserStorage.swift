@@ -10,7 +10,6 @@
 
 import Foundation
 
-
 final class UserStorage {
     static let name = "com.zendesk.connect.user"
     private let defaults: UserDefaults

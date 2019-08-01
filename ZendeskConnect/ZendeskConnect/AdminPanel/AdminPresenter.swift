@@ -19,7 +19,7 @@ fileprivate let PressDuration: TimeInterval = 8
 #endif
 
 
-/// Manages presenting the admin panel from a
+/// Manages presenting the admin panel.
 final class AdminPresenter: NSObject, AdminPanelViewControllerDelegate {
 
     private var userStorage: UserStorable
@@ -30,23 +30,23 @@ final class AdminPresenter: NSObject, AdminPanelViewControllerDelegate {
         self.connectClient = connectClient
     }
 
-    /// Stored while dispalying an AdbinPanelViewController. Set to nil after panel is dismissed.
+    /// Stored while displaying an `AdminPanelViewController`. Set to `nil` after panel is dismissed.
     private static var window: UIWindow?
     private static let gesture = UILongPressGestureRecognizer(target: nil, action: nil)
 
     static func addGestureTarget(_ target: Any, action: Selector) {
-        // remove previous target and action
+        // Remove previous target and action.
         gesture.removeTarget(nil, action: nil)
         gesture.addTarget(target, action: action)
         gesture.cancelsTouchesInView = true
         gesture.numberOfTouchesRequired = TouchesRequired
         gesture.minimumPressDuration = PressDuration
 
-        // Key window may have changed, ensure gesture isn't on any other window.
+        // Key window may have changed. Ensure gesture isn't on any other window.
         let app = UIApplication.shared
         app.windows.forEach { $0.removeGestureRecognizer(AdminPresenter.gesture) }
 
-        if app.keyWindow == nil { // if being called from app startup there is a race condition for key window to be non null. 
+        if app.keyWindow == nil { // If being called from app startup there is a race condition for key window to be non null. 
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { app.keyWindow?.addGestureRecognizer(gesture) }
         } else {
             app.keyWindow?.addGestureRecognizer(gesture)
@@ -64,7 +64,7 @@ final class AdminPresenter: NSObject, AdminPanelViewControllerDelegate {
             return
         }
 
-        // set up the delegat so we can dismiss on valid code entry.
+        // Set up the delegate so we can dismiss on valid code entry.
         adminVC.delegate = self
 
         adminVC.connectClient = connectClient
@@ -79,13 +79,13 @@ final class AdminPresenter: NSObject, AdminPanelViewControllerDelegate {
         window.rootViewController = UIViewController(nibName: nil, bundle: nil)
         window.rootViewController?.present(adminVC, animated: true, completion: nil)
 
-        // keep the windo around so it isn't dealocated.
+        // Keep the window around so it isn't deallocated.
         AdminPresenter.window = window
     }
 
     func adminPanelViewController(_ viewController: AdminPanelViewController, didDismissAnimated flag: Bool) {
         // Give the view controller time to animate off screen.
-        // Then resing key and hide so the host app is passed touch events.
+        // Then resign key and hide so the host app is passed touch events.
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
             AdminPresenter.window?.resignKey()
             AdminPresenter.window?.isHidden = true

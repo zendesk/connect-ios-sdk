@@ -10,11 +10,11 @@
 
 import Foundation
 
-/// RequestDecorator protocol used in order to standardize the delivery of the authentication token and auth error handling
+/// RequestDecorator protocol used in order to standardize the delivery of the authentication token and auth error handling.
 protocol RequestDecorator {
-    /// Returns a String of the current header value used for authentication, eg: `Authorization`
+    /// Returns a String of the current header value used for authentication, eg: `Authorization`.
     var headerKey: String { get }
 
-    /// Returns a string of the current authentication token, includes scheme pre-fix, eg: `Bearer ...`
+    /// Returns a string of the current authentication token, includes scheme pre-fix, eg: `Bearer ...`.
     var headerValue: String { get }
 }

@@ -18,7 +18,7 @@ public final class EventFactory: NSObject {
     /// Creates an event model with the specified data.
     ///
     /// - Parameters:
-    ///   - properties: any extra information to send along with the event.
+    ///   - properties: Any extra information to send along with the event.
     ///   - event: An event with the specified data.
     public static func createEvent(event: String, properties: [String: Any]? = nil) -> Event {
         return Event(userId: nil, properties: properties, event: event)
@@ -31,7 +31,7 @@ public final class ZCNEventFactory: NSObject {
     /// Creates an event model with the specified data.
     ///
     /// - Parameters:
-    ///   - properties: any extra information to send along with the event.
+    ///   - properties: Any extra information to send along with the event.
     ///   - event: An event with the specified data.
     @objc
     public static func createEvent(event: String, properties: [String: Any]?) -> ZCNEvent {

@@ -21,7 +21,6 @@ extension NSMutableURLRequest {
             httpBody = data
             break
         default:
-            // Intentionally empty
             break
         }
         if case let .post(data) = resource.method {

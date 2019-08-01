@@ -10,7 +10,6 @@
 
 import Foundation
 
-
 typealias RemoveHandler = (Result<Empty>) -> ()
 
 class BaseOperation<T: Codable>: Operation {

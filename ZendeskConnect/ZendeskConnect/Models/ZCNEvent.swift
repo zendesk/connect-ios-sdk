@@ -10,7 +10,7 @@
 
 import Foundation
 
-/// Objective C wrapper for swift Event model.
+/// Objective C wrapper for Swift Event model.
 @objc(ZCNEvent)
 public class ZCNEvent: NSObject {
     let internalEvent: Event

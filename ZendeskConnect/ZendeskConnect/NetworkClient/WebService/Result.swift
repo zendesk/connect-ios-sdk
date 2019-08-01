@@ -15,8 +15,8 @@ import Foundation
 /// - success: The request and all post processing operations were successful resulting in the serialization of the
 ///            provided associated value.
 ///
-/// - failure: The request encountered an error resulting in a failure. The associated values are the original data
-///            provided by the server as well as the error that caused the failure.
+/// - failure: The request encountered an error resulting in a failure. The associated value is the error that
+///            caused the failure.
 enum Result<Value> {
     case success(Value, URLResponse?)
     case failure(Error)

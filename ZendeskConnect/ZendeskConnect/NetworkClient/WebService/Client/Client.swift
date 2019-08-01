@@ -10,18 +10,17 @@
 
 import Foundation
 
-/// Client struct use to model the connection parameters for communicating with a Zendesk instance
+/// Client struct used to model the connection parameters for communicating with a Zendesk instance.
 struct Client {
     let requestDecorator: [RequestDecorator]
     let host: URL
     let session: URLSession
 
-    /// Init method of the client
+    /// Init method of the `Client`.
     ///
     /// - Parameters:
-    ///   - host: URL of the host the Client will connect to
-    ///   - userAgent: String User-Agent string to be sent on the out-going HTTP requests
-    ///   - requestDecorator: An instant which conforms to the RequestDecorator protocol, **Default is empty array**
+    ///   - host: `URL` of the host the `Client` will connect to.
+    ///   - requestDecorator: An array which conforms to the `RequestDecorator` protocol. **Default is empty array**.
     init(host: URL, requestDecorator: [RequestDecorator] = []) {
         self.host = host
         self.requestDecorator = requestDecorator

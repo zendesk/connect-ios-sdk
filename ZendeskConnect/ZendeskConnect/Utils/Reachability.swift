@@ -15,20 +15,20 @@ import Foundation
 /// Configure reachability for testing or production.
 protocol ReachabilityConfig {
     
-    /// The implementation of HostStatuse to use.
+    /// The implementation of `HostStatus` to use.
     static var statusType: HostStatus.Type {get}
 }
 
 protocol HostStatus {
     
     /// By default this returns whether the provided host is reachable.
-    /// SCNetworkReachabilityFlags can be passed in the flags param to test for
+    /// `SCNetworkReachabilityFlags` can be passed in the flags param to test for
     /// other statuses.
     ///
     /// - Parameters:
-    ///   - host: the host to test againts
-    ///   - flags: flags to check for, defaults to .reachable
-    /// - Returns: Whether the network rechability of the host contains all of the flags
+    ///   - host: The host to test against.
+    ///   - flags: Flags to check for, defaults to .reachable.
+    /// - Returns: Whether the network rechability of the host contains all of the flags.
     static func status(for host: String, flags: SCNetworkReachabilityFlags) -> Bool
 }
 
@@ -39,7 +39,7 @@ extension HostStatus where Self: ReachabilityConfig {
 }
 
 
-/// Used for testing only
+/// Used for testing only.
 enum TestingStatus: HostStatus {
     static var reachable = false
     static func status(for host: String, flags: SCNetworkReachabilityFlags = .reachable) -> Bool {
@@ -48,8 +48,8 @@ enum TestingStatus: HostStatus {
 }
 
 
-/// Actual reachability implementation. Tests
-/// against flags returned by SCNetworkReachabilityGetFlags.
+/// Actual reachability implementation.
+/// Tests against flags returned by `SCNetworkReachabilityGetFlags`.
 enum ProductionStatus: HostStatus {
     
     static func status(for host: String, flags: SCNetworkReachabilityFlags = .reachable) -> Bool {
@@ -64,7 +64,7 @@ enum ProductionStatus: HostStatus {
 enum Reachability: HostStatus, ReachabilityConfig {
     
     /// Defaults to false. For testing this can be flipped
-    /// to optionaly use TestingStatus in unit tests.
+    /// to optionally use TestingStatus in unit tests.
     #if DEBUG
     static var testing = false
     #else

@@ -14,57 +14,58 @@ import Foundation
 /// User model used to identify a user for tracking.
 public struct User: Codable {
 
-    /// first name of user if known.
+    /// First name of user if known.
     public let firstName: String?
 
-    /// last name of user if known.
+    /// Last name of user if known.
     public let lastName: String?
 
-    /// email of user if known.
+    /// Email of user if known.
     public let email: String?
 
-    /// any attributes to associate with the user.
+    /// Any attributes to associate with the user.
     public let attributes: [String: Any]?
 
-    /// an id for the user to be sent with track events.
+    /// An id for the user to be sent with track events.
     public let userId: String
 
-    /// used when aliasing a user. This will generaly be the value that was last used in userId.
+    /// Used when aliasing a user. This will generally be the value that was last used in userId.
     public let previousId: String?
 
-    /// phone number of user if known.
+    /// Phone number of user if known.
     public let phoneNumber: String?
 
-    /// grouping this user by id.
+    /// Grouping this user by id.
     public let groupId: String?
 
-    /// attributes for the group.
+    /// Attributes for the group.
     public let groupAttributes: [String: Any]?
 
-    /// the timezone of user if known.
+    /// The timezone of user if known.
     public let timezone: String?
-    /// not used on iOS.
+    
+    /// Not used on iOS.
     public let gcm: [String]?
 
-    /// array of apns tokens.
+    /// Array of apns tokens.
     public let apns: [String]?
 
     
     /// Creates a User with the details provided.
     ///
     /// - Parameters:
-    ///   - firstName: first name of user if known.
-    ///   - lastName: last name of user if known.
-    ///   - email: email of user if known.
-    ///   - attributes: any attributes to associate with the user.
-    ///   - userId: an id for the user to be sent with track events.
-    ///   - previousId: used when aliasing a user. This will generaly be the value that was last used in userId.
-    ///   - phoneNumber: phone number of user if known.
-    ///   - groupId: grouping this user by id.
-    ///   - groupAttributes: attributes for the group.
-    ///   - timezone: the timezone of user if known.
-    ///   - gcm: not use in iOS.
-    ///   - apns: array of apns tokens.
+    ///   - firstName: First name of user if known.
+    ///   - lastName: Last name of user if known.
+    ///   - email: Email of user if known.
+    ///   - attributes: Any attributes to associate with the user.
+    ///   - userId: An id for the user to be sent with track events.
+    ///   - previousId: Used when aliasing a user. This will generally be the value that was last used in userId.
+    ///   - phoneNumber: Phone number of user if known.
+    ///   - groupId: Grouping this user by id.
+    ///   - groupAttributes: Attributes for the group.
+    ///   - timezone: The timezone of user if known.
+    ///   - gcm: Not used in iOS.
+    ///   - apns: Array of apns tokens.
     public init(firstName: String? = nil,
                 lastName: String? = nil,
                 email: String? = nil,
